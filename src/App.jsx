@@ -111,6 +111,7 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart })
 
   const currentImage = activeVariant ? activeVariant.image : product.image;
   const currentPrice = activeVariant ? activeVariant.price : product.price;
+  const currentFlavor = activeVariant ? activeVariant.flavor : null;
 
   return (
     <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '12rem 5% 8rem' }}>
