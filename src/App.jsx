@@ -159,10 +159,8 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart })
             £{currentPrice.toFixed(2)}
           </div>
 
-          <p style={{ fontSize: '1.2rem', color: '#555', lineHeight: 1.8, marginBottom: '4rem', maxWidth: '600px' }}>{product.description}</p>
-
-          <div className="product-customizer-lux" style={{ borderTop: '1px solid #eee', paddingTop: '4rem' }}>
-            <div className="qty-section-lux" style={{ display: 'flex', alignItems: 'center', gap: '3rem', marginBottom: '4rem' }}>
+          <div className="product-customizer-lux" style={{ borderTop: '1px solid #eee', paddingTop: '2rem' }}>
+            <div className="qty-section-lux" style={{ display: 'flex', alignItems: 'center', gap: '3rem', marginBottom: '2rem' }}>
               <span style={{ fontWeight: 800, fontSize: '0.9rem', color: '#000', textTransform: 'uppercase', letterSpacing: '2px' }}>{t('quantity') || 'Quantità'}</span>
               <div className="qty-picker-lux" style={{ display: 'flex', alignItems: 'center', gap: '2rem', background: '#f8f8f8', padding: '14px 32px', borderRadius: '50px', border: '1px solid #eee' }}>
                 <button onClick={() => setQuantity(Math.max(1, quantity - 1))} style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: '1.6rem', fontWeight: 300 }}>-</button>
@@ -172,26 +170,31 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart })
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '15px' }}>
+          <div style={{ display: 'flex', gap: '15px', marginBottom: '3rem' }}>
             <button 
               onClick={() => addToCart && addToCart(product, quantity, currentFlavor, false)} 
               className="cart-btn-main-lux" 
-              style={{ flex: 1, padding: '1.5rem', background: '#fff', color: '#000', border: '2px solid #000', borderRadius: '24px', fontSize: '1.1rem', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', transition: 'all 0.3s' }} 
+              style={{ flex: 1, padding: '1.2rem 1rem', background: '#fff', color: '#000', border: '2px solid #000', borderRadius: '50px', fontSize: '1rem', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', transition: 'all 0.3s', whiteSpace: 'nowrap' }} 
               onMouseEnter={(e)=>e.currentTarget.style.background='#f0f0f0'} 
               onMouseLeave={(e)=>e.currentTarget.style.background='#fff'}
             >
-              <ShoppingBag size={22} />
-              <span>{t('add_to_cart')}</span>
+              <ShoppingBag size={20} />
+              <span>Aggiungi al carrello</span>
             </button>
             <button 
               onClick={() => addToCart && addToCart(product, quantity, currentFlavor, true)} 
               className="cart-btn-main-lux" 
-              style={{ flex: 1, padding: '1.5rem', background: '#000', color: '#fff', border: '2px solid #000', borderRadius: '24px', fontSize: '1.1rem', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s', boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }} 
-              onMouseEnter={(e)=>{e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 15px 30px rgba(0,0,0,0.15)';}} 
-              onMouseLeave={(e)=>{e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)';}}
+              style={{ flex: 1, padding: '1.2rem 1rem', background: '#000', color: '#fff', border: '2px solid #000', borderRadius: '50px', fontSize: '1.1rem', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s', boxShadow: '0 5px 15px rgba(0,0,0,0.1)', whiteSpace: 'nowrap' }} 
+              onMouseEnter={(e)=>{e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 10px 25px rgba(0,0,0,0.2)';}} 
+              onMouseLeave={(e)=>{e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 5px 15px rgba(0,0,0,0.1)';}}
             >
               Compra ora
             </button>
+          </div>
+
+          <div style={{ borderTop: '1px solid #f0f0f0', paddingTop: '2.5rem' }}>
+            <h4 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.01em' }}>Dettagli Prodotto</h4>
+            <p style={{ fontSize: '1.05rem', color: '#555', lineHeight: 1.8, maxWidth: '600px' }}>{product.description}</p>
           </div>
         </div>
       </div>
