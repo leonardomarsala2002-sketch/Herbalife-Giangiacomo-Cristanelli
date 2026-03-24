@@ -1,0 +1,51 @@
+:root {
+  --primary: #10B981; /* Emerald Modern Green */
+  --primary-glow: rgba(16, 185, 129, 0.4);
+  --bg: #FFFFFF;
+  --surface: #F9FAFB;
+  --text-main: #111827;
+  --text-muted: #6B7280;
+  --radius-xl: 32px;
+  --radius-lg: 16px;
+  --font-hero: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--text-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Scrollbar sleek */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gray-200);
+  border-radius: 10px;
+}

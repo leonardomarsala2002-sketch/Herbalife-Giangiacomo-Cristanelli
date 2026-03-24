@@ -1,0 +1,307 @@
+/* APP REBUILD - LUXURY WELLNESS LOOK */
+
+:root {
+  --primary: #10B981;
+  --bg-dots: rgba(16, 185, 129, 0.05);
+  --glass: rgba(255, 255, 255, 0.7);
+  --border: rgba(0, 0, 0, 0.04);
+}
+
+.app {
+  min-height: 100vh;
+  background: 
+    radial-gradient(circle at 0% 0%, var(--bg-dots) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, var(--bg-dots) 0%, transparent 50%),
+    var(--bg);
+}
+
+/* NAVBAR LUXURY */
+.navbar {
+  position: fixed;
+  top: calc(1.5rem + 70px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1200px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2000;
+  transition: all 0.3s;
+}
+
+.navbar.scrolled {
+  top: 0.5rem;
+  width: 95%;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.8rem 3rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.logo-lux {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: 1.4rem;
+  letter-spacing: -0.05em;
+  color: var(--text-main);
+  text-transform: lowercase;
+}
+
+.logo-accent {
+  color: var(--primary);
+  font-style: italic;
+}
+
+/* NAVIGATION STORIES */
+.category-nav {
+  padding: 2rem 0;
+  margin-bottom: 6rem;
+  display: flex;
+  flex-wrap: wrap; /* Added so it doesn't overflow horizontally */
+  justify-content: center;
+  gap: 3rem;
+  overflow: visible;
+}
+
+@media (max-width: 768px) {
+  .category-nav {
+    gap: 1.5rem;
+    padding: 0;
+  }
+}
+
+.cat-bubble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.cat-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s;
+}
+
+.cat-bubble:hover .cat-circle {
+  border-color: var(--primary);
+  transform: translateY(-8px);
+  background: white;
+  box-shadow: 0 15px 30px var(--bg-dots);
+}
+
+.cat-bubble span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+/* HERO MINIMAL CINEMATIC */
+.hero-lux {
+  padding: 12rem 0 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.hero-lux-content {
+  flex: 1;
+}
+
+.hero-sub {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.hero-title-lux {
+  font-family: 'Outfit', sans-serif;
+  font-size: 5rem;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.04em;
+}
+
+.hero-luxury-cta {
+  background: var(--text-main);
+  color: white;
+  padding: 1.2rem 3rem;
+  border-radius: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.2s;
+}
+
+.hero-luxury-cta:hover {
+  transform: scale(1.02);
+  background: #000;
+}
+
+.hero-visual {
+  flex: 1;
+  position: relative;
+}
+
+.hero-img-lux {
+  width: 100%;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+}
+
+/* PRODUCT SECTION LUXURY */
+.section-lux {
+  padding: 8rem 0;
+}
+
+.section-head-lux {
+  margin-bottom: 4rem;
+}
+
+.section-title-lux {
+  font-family: 'Outfit', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.grid-lux {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.grid-lux > * {
+  flex: 1 1 280px;
+  max-width: 380px;
+}
+
+/* PRODUCT CARD LUXURY */
+.card-lux {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-lux:hover {
+  background: var(--surface);
+  box-shadow: 0 30px 60px -12px rgba(16, 185, 129, 0.15), 0 18px 36px -18px rgba(0, 0, 0, 0.05);
+  border-color: var(--primary-glow);
+}
+
+.img-box-lux {
+  aspect-ratio: 1;
+  background: white;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s;
+  overflow: hidden;
+}
+
+.card-lux:hover .img-box-lux {
+  transform: scale(0.95);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+}
+
+.img-lux {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-lux:hover .img-lux {
+  transform: scale(1.1);
+}
+
+.card-content-lux {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.card-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--primary);
+  letter-spacing: 0.1em;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.card-footer-lux {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.price-lux {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: -0.05em;
+}
+
+.buy-btn-lux {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background: white;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.card-lux:hover .buy-btn-lux {
+  background: var(--text-main);
+  color: white;
+  border-color: var(--text-main);
+}
+
+/* FOOTER LUX */
+.footer-lux {
+  background: var(--text-main);
+  color: white;
+  padding: 6rem 0;
+  margin-top: 10rem;
+}
