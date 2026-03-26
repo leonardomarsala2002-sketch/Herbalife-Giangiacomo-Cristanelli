@@ -1024,7 +1024,11 @@ const App = () => {
         </div>
       </div>
 
-      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} style={{
+        background: scrolled ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.55)',
+        backdropFilter: 'blur(35px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(35px) saturate(180%)'
+      }}>
         {/* SVG BORDER CHASE EFFECT - DUAL BEAMS */}
         <div style={{ position: 'absolute', inset: -2, borderRadius: 'inherit', pointerEvents: 'none', zIndex: 0 }}>
           <svg width="calc(100% + 4px)" height="calc(100% + 4px)" style={{ position: 'absolute', top: -2, left: -2 }}>
