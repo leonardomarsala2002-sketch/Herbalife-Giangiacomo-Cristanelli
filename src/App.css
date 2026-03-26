@@ -5,14 +5,23 @@
 :root {
   --primary: #78BE20;
   --primary-glow: rgba(120, 190, 32, 0.2);
-  --bg-dots: rgba(120, 190, 32, 0.05);
+  --bg-dots: rgba(120, 190, 32, 0.08);
   --glass: rgba(255, 255, 255, 0.7);
   --border: rgba(0, 0, 0, 0.06);
   --text-main: #111111;
   --text-muted: #666666;
-  --bg: #ffffff;
-  --surface: #f9f9f9;
+  --bg: #fafbfa;
+  --surface: #f4f9f4;
   --radius-xl: 40px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+.no-scroll-lux, .no-scroll-lux body {
+  overflow: hidden !important;
 }
 
 .app {
@@ -31,25 +40,28 @@
   transform: translateX(-50%);
   width: 90%;
   max-width: 1200px;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  border: 1px solid var(--border);
+  background: rgba(244, 249, 244, 0.55);
+  backdrop-filter: blur(40px) saturate(190%);
+  -webkit-backdrop-filter: blur(40px) saturate(190%);
+  padding: 1.2rem 2.5rem;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 2000;
-  transition: all 0.3s;
+  z-index: 5000;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 }
 
 .navbar.scrolled {
-  top: 0.5rem;
+  top: 1rem;
   width: 95%;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 0.8rem 3rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  border-radius: 24px;
+  background: rgba(244, 249, 244, 0.75);
+  padding: 0.7rem 2rem;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.06);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 .logo-lux {
@@ -173,6 +185,8 @@
   top: calc(100% + 15px);
   left: 0;
   width: 280px;
+  max-height: 480px;
+  overflow-y: auto;
   background: #fff;
   border-radius: 24px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.15);
@@ -182,6 +196,12 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.cat-dropdown-lux::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .cat-item-lux {
@@ -200,18 +220,7 @@
   padding-left: 1.5rem;
 }
 
-.hero-bg-icon-lux {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 512px;
-  height: auto;
-  opacity: 1;
-  z-index: 0;
-  pointer-events: none;
-  mix-blend-mode: multiply;
-}
+
 
 .hero-title-lux {
   position: relative;
@@ -394,4 +403,87 @@
   color: white;
   padding: 6rem 0;
   margin-top: 10rem;
+}
+
+/* RESPONSIVE MOBILE FIXES */
+@media (max-width: 1024px) {
+  .navbar {
+    top: 75px;
+    width: calc(100% - 20px) !important;
+    padding: 0.6rem 0.8rem !important;
+    border-radius: 20px !important;
+  }
+  .navbar.scrolled {
+    top: 10px !important;
+  }
+  .logo-address-lux, .logo-contact-lux, .logo-sep-lux {
+    display: none !important;
+  }
+  .logo-name-lux {
+    font-size: 0.68rem !important;
+    white-space: nowrap !important;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hero-title-lux {
+    font-size: 3.5rem !important;
+  }
+  .nav-actions-lux {
+    gap: 0.5rem !important;
+  }
+  .cat-label-lux {
+    display: none !important;
+  }
+  .cart-lux span {
+    display: none !important;
+  }
+  .cart-lux {
+    padding: 0.5rem !important;
+    width: 38px !important;
+    height: 38px !important;
+    justify-content: center !important;
+  }
+  .category-nav {
+    gap: 1rem !important;
+    padding: 2rem 0 !important;
+  }
+  .logo-lux {
+    height: 24px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .announcement-row {
+    font-size: 0.6rem !important;
+    padding: 8px 10px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .hero-title-lux {
+    font-size: 2.5rem !important;
+  }
+  .hero-p-lux {
+    font-size: 1rem !important;
+    padding: 0 1rem !important;
+  }
+  .search-dropdown-lux {
+    position: fixed !important;
+    width: calc(100% - 20px) !important;
+    left: 10px !important;
+    right: 10px !important;
+    top: 110px !important; /* Below the mobile nav bit */
+    max-height: 70vh !important;
+  }
+  .cat-dropdown-lux {
+    width: 260px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: calc(100% + 10px) !important;
+  }
+  .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
 }
