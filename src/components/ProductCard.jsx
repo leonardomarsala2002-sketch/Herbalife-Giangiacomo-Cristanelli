@@ -2,9 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, ChevronDown } from 'lucide-react';
 
-const ProductCard = ({ product, addToCart, cartItems = [] }) => {
+const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   
@@ -33,7 +33,21 @@ const ProductCard = ({ product, addToCart, cartItems = [] }) => {
     if (isAdding) return;
     setIsAdding(true);
     addToCart && addToCart(product, 1, flavor);
-    setTimeout(() => setIsAdding(false), 800);
+    setTimeout(() => {
+      setIsAdding(false);
+      // ALWAYS trigger upsell modal after adding as per user requirement
+      triggerUpsell && triggerUpsell(product);
+    }, 800);
+  };
+
+  const handleBuyClick = (e) => {
+    e.stopPropagation();
+    // Ensure product is in cart
+    if (!isInCart) {
+        addToCart && addToCart(product, 1, flavor);
+    }
+    // ALWAYS trigger upsell modal before checkout
+    triggerUpsell && triggerUpsell(product);
   };
 
   const updateQuantity = (e, delta) => {
@@ -62,7 +76,9 @@ const ProductCard = ({ product, addToCart, cartItems = [] }) => {
         overflow: 'hidden', 
         cursor: 'pointer',
         background: '#fff',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
+        boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
+        display: 'flex',
+        flexDirection: 'column'
       }}
     >
       <div className="img-box-lux" style={{ 
@@ -98,85 +114,44 @@ const ProductCard = ({ product, addToCart, cartItems = [] }) => {
           <h3 className="p-title-lux" style={{ 
             fontSize: '1.2rem', 
             fontWeight: 800, 
-            lineHeight: 1.2, 
-            margin: '0.1rem 0 0',
-            color: 'var(--text-main)',
-            overflow: 'hidden',
+            lineHeight: 1.1,
+            margin: '0 0 10px',
+            color: '#000',
+            letterSpacing: '-0.02em',
             display: '-webkit-box',
             WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical'
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden'
           }}>{product.name}</h3>
         </div>
 
-        <div style={{ minHeight: '2.5rem', marginTop: '0.5rem' }}>
-          {product.isGrouped && product.variants?.length > 1 ? (
-             <div 
-               className="flavor-nav-lux" 
-               style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '5px', scrollbarWidth: 'none' }}
-               onClick={(e) => e.stopPropagation()} // Prevent navigation when selecting flavor
-             >
-               {product.variants.map((v, idx) => (
-                 <div 
-                   key={idx}
-                   onClick={() => setSelectedVariant(v)}
-                   style={{ 
-                     width: '18px', 
-                     height: '18px', 
-                     borderRadius: '50%', 
-                     border: selectedVariant?.id === v.id ? '2px solid var(--primary)' : '1px solid #ddd',
-                     background: '#f9f9f9',
-                     cursor: 'pointer',
-                     display: 'flex',
-                     alignItems: 'center',
-                     justifyContent: 'center',
-                     padding: '2px',
-                     flexShrink: 0
-                   }}
-                   title={v.flavor}
-                 >
-                   <img src={v.image} alt={v.flavor} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                 </div>
-               ))}
+        {product.isGrouped && (
+          <div className="flavor-chip-lux" style={{ marginBottom: '1.5rem' }}>
+             <div style={{ background: '#f8faf9', padding: '10px 14px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 700, color: '#666', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid #eee' }} onClick={(e) => { e.stopPropagation(); }}>
+               {flavor}
+               <ChevronDown size={14} />
              </div>
-          ) : null}
-          {selectedVariant && (
-            <span style={{ fontSize: '0.65rem', color: '#777', fontWeight: 700, display: 'block', marginTop: '4px' }}>
-               {selectedVariant.flavor}
-            </span>
-          )}
-        </div>
-        
-        <div className="p-footer-lux" style={{ 
-          borderTop: '1px solid #f0f0f0', 
-          paddingTop: '0.8rem', 
-          display: 'flex', 
-          flexDirection: 'column',
-          gap: '12px',
-          marginTop: 'auto'
-        }}>
-          <div className="p-price-box" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ fontSize: '0.95rem', color: '#999', textDecoration: 'line-through', fontWeight: 600, opacity: 0.7 }}>
-                £{(price * 1.2).toFixed(2)}
-              </span>
-              <span className="p-price-val" style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-main)', letterSpacing: '-0.03em' }}>
-                £{price.toFixed(2)}
-              </span>
-            </div>
+          </div>
+        )}
+
+        <div className="p-price-box-lux" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid #f8f8f8' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ fontSize: '0.85rem', color: '#bbb', textDecoration: 'line-through', fontWeight: 700, marginBottom: '2px' }}>£{(price * 1.2).toFixed(2)}</span>
+            <span style={{ fontSize: '1.6rem', fontWeight: 900, color: '#000', letterSpacing: '-0.03em' }}>£{price.toFixed(2)}</span>
+          </div>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             {isInCart && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f0fff4', padding: '6px 14px', borderRadius: '50px', border: '1px solid var(--primary)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#f0fff4', padding: '6px 12px', borderRadius: '50px', border: '1.5px solid var(--primary)' }}>
                 <div onClick={(e) => updateQuantity(e, -1)} style={{ cursor: 'pointer', fontSize: '1.3rem', fontWeight: 900, color: 'var(--primary)', width: '24px', textAlign: 'center' }}>−</div>
-                <span style={{ fontSize: '1rem', fontWeight: 900, color: 'var(--primary)', minWidth: '18px', textAlign: 'center' }}>{cartItem.quantity}</span>
+                <span style={{ fontSize: '1.1rem', fontWeight: 900, color: 'var(--primary)', minWidth: '16px', textAlign: 'center' }}>{cartItem.quantity}</span>
                 <div onClick={(e) => updateQuantity(e, 1)} style={{ cursor: 'pointer', fontSize: '1.3rem', fontWeight: 900, color: 'var(--primary)', width: '24px', textAlign: 'center' }}>+</div>
               </div>
             )}
           </div>
           
           <motion.button 
-            onClick={(e) => { 
-                e.stopPropagation(); 
-                if (isInCart) { navigate('/checkout'); } else { handleAddToCart(e); }
-            }}
+            onClick={handleBuyClick}
             className={`add-cart-btn-lux ${isAdding || isInCart ? 'active' : ''}`}
             animate={{ 
               scale: [1, 1.04, 1],
@@ -190,52 +165,21 @@ const ProductCard = ({ product, addToCart, cartItems = [] }) => {
               ease: "easeInOut" 
             }}
             style={{ 
-              width: '100%',
-              padding: '16px 20px',
+              padding: '12px 20px',
               background: (isAdding || isInCart) ? 'var(--primary)' : '#fff',
               color: (isAdding || isInCart) ? '#fff' : 'var(--primary)',
               border: '2px solid var(--primary)',
               borderRadius: '50px',
-              fontSize: '1rem',
+              fontSize: '0.9rem',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              gap: '12px',
-              position: 'relative',
-              overflow: 'hidden',
-              transition: 'background 0.5s ease, color 0.5s ease'
+              gap: '10px'
             }}
           >
-            {/* LINEAR CART CROSSING */}
-            {isAdding && (
-              <motion.div
-                initial={{ left: '-20%' }}
-                animate={{ left: '120%' }}
-                transition={{ duration: 0.8, ease: "linear" }}
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  zIndex: 2,
-                  pointerEvents: 'none',
-                  color: '#fff'
-                }}
-              >
-                <ShoppingCart size={22} fill="currentColor" />
-              </motion.div>
-            )}
-
-            <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '8px' }}>
-              {!isAdding && !isInCart && <ShoppingCart size={18} />}
-              <motion.span
-                animate={isAdding ? { opacity: [1, 0, 1] } : { opacity: 1 }}
-                transition={{ duration: 0.6 }}
-              >
-                {(isAdding || isInCart) ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello')}
-              </motion.span>
-            </span>
+            {isInCart ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi')}
+            {!isAdding && !isInCart && <ShoppingCart size={18} />}
           </motion.button>
         </div>
       </div>

@@ -84,18 +84,26 @@ const MemberDisclosure = ({ onClose }) => {
   );
 };
 
-const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, t }) => {
+const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, t, createCheckout }) => {
   if (!isOpen || !product) return null;
 
   const handleCheckoutOriginal = () => {
     onClose();
-    navigate('/checkout');
+    if (window.location.pathname === '/checkout') {
+       createCheckout && createCheckout();
+    } else {
+       navigate('/checkout');
+    }
   };
 
   const handleAddAndCheckout = (upsellProd) => {
     addToCart(upsellProd, 1, null, false, true); // isUpsell=true
     onClose();
-    navigate('/checkout');
+    if (window.location.pathname === '/checkout') {
+       createCheckout && createCheckout();
+    } else {
+       navigate('/checkout');
+    }
   };
 
   const suggested = products
@@ -172,7 +180,7 @@ const scrollToSection = (id) => {
   return true;
 };
 
-const Home = ({ products, t, addToCart, cartItems, scrollYProgress }) => {
+const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsell }) => {
   const navigate = useNavigate();
   
   // LOGO SCROLL ANIMATIONS: -20% in Hero (0.8) -> +60% in Sections (1.6)
@@ -327,7 +335,7 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress }) => {
             </div>
             <div className="grid-lux">
               {catProducts.map(p => (
-                <ProductCard key={p.id} product={p} addToCart={addToCart} cartItems={cartItems} />
+                <ProductCard key={p.id} product={p} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />
               ))}
             </div>
           </motion.div>
@@ -541,7 +549,7 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
   );
 };
 
-const Checkout = ({ cartItems, totalItems, totalPrice, navigate, t, createCheckout }) => {
+const Checkout = ({ cartItems, totalItems, totalPrice, navigate, t, createCheckout, triggerUpsell }) => {
   return (
     <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: '16rem 5% 8rem' }}>
        <button onClick={() => navigate(-1)} style={{ display: 'flex', alignItems: 'center', gap: '8px', border: 'none', background: 'none', cursor: 'pointer', marginBottom: '4rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.6, fontSize: '0.8rem' }}>
@@ -597,7 +605,7 @@ const Checkout = ({ cartItems, totalItems, totalPrice, navigate, t, createChecko
             <PaymentIcons />
           </div>
 
-          <button style={{ width: '100%', padding: '1.4rem', background: 'var(--primary)', color: '#fff', border: 'none', borderRadius: '50px', fontSize: '1.2rem', fontWeight: 800, cursor: 'pointer', boxShadow: '0 10px 30px rgba(120, 190, 32, 0.3)', transition: 'all 0.3s' }} onMouseEnter={(e)=>e.currentTarget.style.transform='translateY(-2px)'} onMouseLeave={(e)=>e.currentTarget.style.transform='translateY(0)'} onClick={createCheckout}>
+          <button style={{ width: '100%', padding: '1.4rem', background: 'var(--primary)', color: '#fff', border: 'none', borderRadius: '50px', fontSize: '1.2rem', fontWeight: 800, cursor: 'pointer', boxShadow: '0 10px 30px rgba(120, 190, 32, 0.3)', transition: 'all 0.3s' }} onMouseEnter={(e)=>e.currentTarget.style.transform='translateY(-2px)'} onMouseLeave={(e)=>e.currentTarget.style.transform='translateY(0)'} onClick={() => triggerUpsell()}>
             {t('pay_now')}
           </button>
         </div>
@@ -640,8 +648,12 @@ const App = () => {
   const [showUpsell, setShowUpsell] = useState(false);
   const [upsellTarget, setUpsellTarget] = useState(null);
 
-  const triggerUpsell = (targetProduct) => {
-    setUpsellTarget(targetProduct);
+  const triggerUpsell = (targetProduct = null) => {
+    if (!targetProduct && cartItems.length > 0) {
+      setUpsellTarget(cartItems[0]);
+    } else {
+      setUpsellTarget(targetProduct);
+    }
     setShowUpsell(true);
   };
 
@@ -1083,6 +1095,7 @@ const App = () => {
             addToCart={addToCart}
             navigate={navigate}
             t={t}
+            createCheckout={createCheckout}
           />
         )}
       </AnimatePresence>
@@ -1325,7 +1338,7 @@ const App = () => {
                     <span>£{totalCartPrice.toFixed(2)}</span>
                   </div>
                   <button 
-                    onClick={() => { setCartOpen(false); navigate('/checkout'); }}
+                    onClick={() => { setCartOpen(false); triggerUpsell(); }}
                     style={{ width: '100%', padding: '1.3rem', background: 'var(--primary)', color: '#fff', border: 'none', borderRadius: '24px', fontSize: '1.2rem', fontWeight: 800, cursor: 'pointer', boxShadow: '0 10px 20px rgba(120, 190, 32, 0.2)', transition: 'transform 0.2s' }} 
                     onMouseEnter={(e)=>e.currentTarget.style.transform='translateY(-2px)'} 
                     onMouseLeave={(e)=>e.currentTarget.style.transform='translateY(0)'}
@@ -1342,12 +1355,12 @@ const App = () => {
 
 
       <Routes>
-        <Route path="/" element={<Home products={products} t={t} addToCart={addToCart} cartItems={cartItems} scrollYProgress={scrollYProgress} />} />
+        <Route path="/" element={<Home products={products} t={t} addToCart={addToCart} cartItems={cartItems} scrollYProgress={scrollYProgress} triggerUpsell={triggerUpsell} />} />
         <Route path="/product/*" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />} />
         <Route path="/products/*" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />} />
         <Route path="/product/:id" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />} />
         <Route path="/products/:id" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />} />
-        <Route path="/checkout" element={<Checkout cartItems={cartItems} totalItems={totalCartItems} totalPrice={totalCartPrice} navigate={navigate} t={t} createCheckout={createCheckout} />} />
+        <Route path="/checkout" element={<Checkout cartItems={cartItems} totalItems={totalCartItems} totalPrice={totalCartPrice} navigate={navigate} t={t} createCheckout={createCheckout} triggerUpsell={triggerUpsell} />} />
         <Route path="/policies/refund-policy" element={<RefundPolicy />} />
         <Route path="/policies/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/policies/terms-of-service" element={<TermsOfService />} />
