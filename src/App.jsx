@@ -621,33 +621,37 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
   };
 
   return (
-    <div 
+    <motion.div 
       className="floating-bubbles-lux"
+      animate={{ 
+        opacity: scrolled ? 0 : 1, 
+        y: scrolled ? -20 : 0, 
+        scale: scrolled ? 0.95 : 1,
+        pointerEvents: scrolled ? 'none' : 'auto'
+      }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
       style={{
-        position: 'fixed',
+        position: 'absolute', 
         left: 0,
         right: 0,
-        top: scrolled ? 'calc(1rem + 85px)' : 'calc(100px + 90px)', 
+        top: 'calc(100px + 98px)', 
         width: '100vw',
         zIndex: 4900,
-        pointerEvents: 'none',
         display: 'flex',
         justifyContent: 'center',
         padding: '0',
         background: 'transparent',
         border: 'none',
-        boxShadow: 'none',
-        transition: 'all 0.4s'
+        boxShadow: 'none'
       }}
     >
       <div className="bubbles-inner-lux" style={{ 
         display: 'flex', 
-        gap: '14px', 
+        gap: '12px', 
         alignItems: 'flex-start', 
         justifyContent: 'flex-start',
         overflowX: 'auto', 
         padding: '10px 30px',
-        pointerEvents: 'auto',
         maxWidth: '100vw',
         background: 'transparent'
       }}>
@@ -679,37 +683,34 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
               width: '56px', 
               height: '56px', 
               borderRadius: '50%', 
-              background: 'rgba(255, 255, 255, 0.4)', 
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1.5px solid rgba(255, 255, 255, 0.5)',
-              boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.05)',
-              padding: '8px',
+              background: 'transparent', 
+              border: '1.5px solid rgba(120, 190, 32, 0.15)',
+              padding: '6px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               overflow: 'hidden',
               transition: 'all 0.3s ease'
             }} className="glass-icon-circle">
-              <img src={getCategoryImage(cat)} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
+              <img src={getCategoryImage(cat)} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <span className="cat-bubble-label" style={{ 
-              fontSize: '0.6rem', 
+              fontSize: '0.62rem', 
               fontWeight: 900, 
               textTransform: 'uppercase', 
               color: '#333',
-              letterSpacing: '0.5px',
+              letterSpacing: '0.4px',
               textAlign: 'center',
               lineHeight: 1.1,
               maxWidth: '72px',
               whiteSpace: 'normal',
-              transition: 'color 0.3s ease',
-              textShadow: '0 2px 4px rgba(255,255,255,0.9)'
+              textShadow: '0 2px 4px rgba(255,255,255,0.9)',
+              opacity: 1 // Always visible
             }}>{cat}</span>
           </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 const App = () => {
@@ -735,6 +736,7 @@ const App = () => {
   const [selFlavors, setSelFlavors] = useState({ shakes: [], teas: [] });
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [catMenuOpen, setCatMenuOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [catOpen, setCatOpen] = useState(false);
@@ -1314,6 +1316,70 @@ const App = () => {
               )}
             </AnimatePresence>
           </div>
+
+          <AnimatePresence>
+            {scrolled && (
+              <motion.button
+                key="cat-menu-btn"
+                initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.8, x: 20 }}
+                onClick={(e) => { e.stopPropagation(); setCatMenuOpen(!catMenuOpen); }}
+                className={`icon-btn-lux ${catMenuOpen ? 'active' : ''}`}
+                style={{ 
+                  background: catMenuOpen ? 'var(--primary)' : 'rgba(120, 190, 32, 0.08)',
+                  color: catMenuOpen ? '#fff' : 'var(--primary)',
+                  borderRadius: '12px', padding: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginLeft: '10px', cursor: 'pointer', border: 'none', transition: 'all 0.3s ease'
+                }}
+              >
+                <LayoutGrid size={22} />
+              </motion.button>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {scrolled && catMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 15, scale: 0.95 }}
+                style={{
+                  position: 'absolute', top: 'calc(100% + 20px)', right: '70px',
+                  background: 'rgba(255, 255, 255, 0.98)', backdropFilter: 'blur(30px)', borderRadius: '24px',
+                  padding: '15px', boxShadow: '0 25px 60px rgba(0,0,0,0.15)', width: '260px', zIndex: 11000,
+                  border: '1px solid rgba(120, 190, 32, 0.1)'
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', color: '#999', letterSpacing: '2px', marginBottom: '10px', padding: '0 10px' }}>{t('categories')}</span>
+                  {dynamicCategories.map(cat => (
+                    <div 
+                      key={cat}
+                      onClick={() => {
+                        const sectionId = slugify(cat);
+                        if (location.pathname !== '/') navigate('/', { state: { scrollTo: sectionId } });
+                        else scrollToSection(sectionId);
+                        setCatMenuOpen(false);
+                      }}
+                      style={{ 
+                        display: 'flex', alignItems: 'center', gap: '15px', padding: '10px', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s'
+                      }}
+                      onMouseEnter={(e)=>e.currentTarget.style.background='rgba(120, 190, 32, 0.05)'}
+                      onMouseLeave={(e)=>e.currentTarget.style.background='transparent'}
+                    >
+                      <div style={{ width: '32px', height: '32px', background: '#f8f8f8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px' }}>
+                         <img src={products.find(p => (t(p.type)||p.type) === cat || p.category === cat)?.image || 'https://via.placeholder.com/30'} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                      </div>
+                      <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#333' }}>{cat}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <motion.button 
             className="cart-lux" 
             onClick={() => setCartOpen(true)} 
@@ -1546,8 +1612,8 @@ const App = () => {
         .footer-email-btn:hover { background: #eee !important; }
         .bubbles-inner-lux { scrollbar-width: none !important; -ms-overflow-style: none !important; }
         .bubbles-inner-lux::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
-        .cat-bubble-label { opacity: 0; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .cat-bubble-item:hover .cat-bubble-label { opacity: 1 !important; color: var(--primary) !important; transform: translateY(0); }
+        .cat-bubble-label { opacity: 1; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .cat-bubble-item:hover .cat-bubble-label { color: var(--primary) !important; scale: 1.05; }
         .cat-bubble-item:hover .glass-icon-circle { border-color: var(--primary) !important; background: rgba(255, 255, 255, 0.7); }
         
         .global-announcement-lux {
