@@ -17,6 +17,7 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
   const flavor = selectedVariant ? selectedVariant.flavor : null;
 
   const [isAdding, setIsAdding] = React.useState(false);
+  const [swappingText, setSwappingText] = React.useState(false);
 
   const isInCart = cartItems.some(item => 
     item.id === product.id && 
@@ -33,8 +34,15 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
     if (isAdding) return;
     setIsAdding(true);
     addToCart && addToCart(product, 1, flavor);
+    
+    // TRANSFORMS TEXT AT 400ms (mid-way through animation)
+    setTimeout(() => {
+      setSwappingText(true);
+    }, 400);
+
     setTimeout(() => {
       setIsAdding(false);
+      setSwappingText(false);
     }, 900);
   };
 
@@ -162,7 +170,7 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
 
             <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '8px' }}>
               {!isAdding && !isInCart && <ShoppingCart size={16} />}
-              <span>{(isInCart && !isAdding) ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello')}</span>
+              <span>{(isInCart && (swappingText || !isAdding)) ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello')}</span>
             </span>
           </motion.button>
         </div>
