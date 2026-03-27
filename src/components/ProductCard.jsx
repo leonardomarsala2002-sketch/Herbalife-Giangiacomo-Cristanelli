@@ -77,21 +77,50 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
         </div>
 
         {product.isGrouped && (
-          <div style={{ marginBottom: '1.2rem', position: 'relative' }}>
-             <select 
-               onClick={(e) => e.stopPropagation()}
-               onChange={(e) => {
-                 const v = product.variants.find(v => v.flavor === e.target.value);
-                 if (v) setSelectedVariant(v);
-               }}
-               value={flavor}
-               style={{ width: '100%', background: '#fafafa', padding: '8px 14px', borderRadius: '50px', fontSize: '0.8rem', fontWeight: 700, color: '#666', border: '1px solid #f0f0f0', appearance: 'none', cursor: 'pointer' }}
-             >
-               {product.variants.map(v => (
-                 <option key={v.id} value={v.flavor}>{v.flavor}</option>
-               ))}
-             </select>
-             <ChevronDown size={14} style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', opacity: 0.3 }} />
+          <div className="variant-bubbles-lux" style={{ 
+            marginBottom: '1.5rem', 
+            display: 'flex', 
+            gap: '10px', 
+            overflowX: 'auto', 
+            paddingBottom: '5px',
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none'
+          }}>
+             {product.variants.map((v) => (
+                <motion.div
+                   key={v.id}
+                   whileHover={{ scale: 1.1 }}
+                   whileTap={{ scale: 0.95 }}
+                   onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedVariant(v);
+                   }}
+                   style={{
+                      width: '42px', 
+                      height: '42px', 
+                      borderRadius: '50%',
+                      padding: '2px',
+                      border: `2px solid ${flavor === v.flavor ? 'var(--primary)' : '#f0f0f0'}`,
+                      cursor: 'pointer', 
+                      flexShrink: 0,
+                      background: '#fff', 
+                      overflow: 'hidden',
+                      boxShadow: flavor === v.flavor ? '0 4px 12px rgba(120, 190, 32, 0.2)' : 'none',
+                      transition: 'all 0.3s ease'
+                   }}
+                >
+                   <img 
+                    src={v.image} 
+                    alt={v.flavor} 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'contain',
+                      opacity: flavor === v.flavor ? 1 : 0.6
+                    }} 
+                  />
+                </motion.div>
+             ))}
           </div>
         )}
 
