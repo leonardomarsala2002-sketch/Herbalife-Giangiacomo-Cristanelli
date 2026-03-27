@@ -627,7 +627,7 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
         position: 'fixed',
         left: 0,
         right: 0,
-        top: scrolled ? 'calc(1rem + 92px)' : 'calc(100px + 98px)', 
+        top: scrolled ? 'calc(1rem + 88px)' : 'calc(100px + 94px)', 
         width: '100vw',
         zIndex: 4900,
         pointerEvents: 'none',
@@ -637,14 +637,14 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
         background: 'transparent',
         border: 'none',
         boxShadow: 'none',
-        transition: 'all 0.5s'
+        transition: 'all 0.4s'
       }}
     >
       <div className="bubbles-inner-lux" style={{ 
         display: 'flex', 
-        gap: '14px', 
+        gap: '12px', 
         alignItems: 'flex-start', 
-        justifyContent: 'flex-start', // Prevent cutting off on left
+        justifyContent: 'flex-start',
         overflowX: 'auto', 
         padding: '10px 30px',
         pointerEvents: 'auto',
@@ -654,7 +654,7 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
         {categories.map(cat => (
           <motion.div
             key={cat}
-            whileHover={{ scale: 1.05, y: -4 }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
               const sectionId = slugify(cat);
@@ -668,38 +668,38 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '8px',
+              gap: '6px',
               cursor: 'pointer',
               flexShrink: 0,
-              minWidth: '70px'
+              minWidth: '68px'
             }}
           >
             <div style={{ 
-              width: '56px', 
-              height: '56px', 
+              width: '54px', 
+              height: '54px', 
               borderRadius: '50%', 
               background: '#fff', 
-              border: '1.5px solid rgba(120, 190, 32, 0.15)',
-              boxShadow: '0 6px 20px rgba(0,0,0,0.05)',
+              border: '2px solid rgba(120, 190, 32, 0.2)',
+              boxShadow: '0 4px 15px rgba(0,0,0,0.04)',
               padding: '6px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              overflow: 'hidden', // CRITICAL: Clip the square image
               transition: 'all 0.3s ease'
-            }} onMouseEnter={(e)=>e.currentTarget.style.borderColor='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.borderColor='rgba(120, 190, 32, 0.15)'}>
-              <img src={getCategoryImage(cat)} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+            }} onMouseEnter={(e)=>e.currentTarget.style.borderColor='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.borderColor='rgba(120, 190, 32, 0.2)'}>
+              <img src={getCategoryImage(cat)} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
             </div>
             <span style={{ 
-              fontSize: '0.58rem', 
+              fontSize: '0.55rem', 
               fontWeight: 900, 
               textTransform: 'uppercase', 
-              color: '#333',
+              color: '#444',
               letterSpacing: '0.4px',
               textAlign: 'center',
               lineHeight: 1.1,
-              maxWidth: '70px',
-              whiteSpace: 'normal',
-              textShadow: '0 2px 4px rgba(255,255,255,0.8)'
+              maxWidth: '68px',
+              whiteSpace: 'normal'
             }}>{cat}</span>
           </motion.div>
         ))}
