@@ -17,7 +17,6 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
   const flavor = selectedVariant ? selectedVariant.flavor : null;
 
   const [isAdding, setIsAdding] = React.useState(false);
-  const [swappingText, setSwappingText] = React.useState(false);
 
   const isInCart = cartItems.some(item => 
     item.id === product.id && 
@@ -35,14 +34,8 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
     setIsAdding(true);
     addToCart && addToCart(product, 1, flavor);
     
-    // TRANSFORMS TEXT AT 400ms (mid-way through animation)
-    setTimeout(() => {
-      setSwappingText(true);
-    }, 400);
-
     setTimeout(() => {
       setIsAdding(false);
-      setSwappingText(false);
     }, 900);
   };
 
@@ -170,7 +163,32 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
 
             <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '8px' }}>
               {!isAdding && !isInCart && <ShoppingCart size={16} />}
-              <span>{(isInCart && (swappingText || !isAdding)) ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello')}</span>
+              
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                {/* REVEAL LAYER: COMPRA ORA (Hidden initially) */}
+                <span style={{ 
+                  opacity: (isInCart || isAdding) ? 1 : 0,
+                  transition: 'opacity 0.2s',
+                  whiteSpace: 'nowrap'
+                }}>
+                  {t('buy_now') || 'Compra ora'}
+                </span>
+                
+                {/* WIPE LAYER: AGGIUNGI AL CARRELLO (Clipped out as icon passes) */}
+                <motion.span
+                  initial={false}
+                  animate={{ clipPath: isAdding ? 'inset(0 0 0 100%)' : 'inset(0 0 0 0%)' }}
+                  transition={{ duration: 0.8, ease: "linear" }}
+                  style={{ 
+                    position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                    whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    background: (isAdding || isInCart) ? 'var(--primary)' : '#fff', // Match button bg
+                    color: (isAdding || isInCart) ? '#fff' : 'var(--primary)'
+                  }}
+                >
+                   {t('add_to_cart') || 'Aggiungi al carrello'}
+                </motion.span>
+              </div>
             </span>
           </motion.button>
         </div>
