@@ -622,38 +622,37 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
 
   return (
     <div 
-      className={`floating-bubbles-container ${scrolled ? 'is-scrolled' : ''}`}
+      className="floating-bubbles-lux"
       style={{
         position: 'fixed',
         left: '50%',
         transform: 'translateX(-50%)',
-        top: scrolled ? 'calc(1rem + 75px)' : 'calc(100px + 78px)', 
-        width: '100vw', // Allow full-width overflow
+        top: scrolled ? 'calc(1rem + 80px)' : 'calc(100px + 82px)', 
+        width: '100vw',
         zIndex: 4900,
-        pointerEvents: 'none', // Allow clicking through to underlying content if needed
+        pointerEvents: 'none',
         display: 'flex',
         justifyContent: 'center',
         padding: '0 20px',
-        transition: 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)'
+        transition: 'all 0.4s'
       }}
     >
       <div style={{ 
         display: 'flex', 
-        gap: '12px', 
+        gap: '10px', 
         alignItems: 'center', 
         justifyContent: 'center',
         overflowX: 'auto', 
         scrollbarWidth: 'none', 
         msOverflowStyle: 'none',
         padding: '10px 40px',
-        pointerEvents: 'auto' // Re-enable clicks for the bubbles
+        pointerEvents: 'auto',
+        maxWidth: '100vw'
       }}>
         {categories.map(cat => (
           <motion.div
             key={cat}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            whileHover={{ scale: 1.08, y: -4, boxShadow: '0 15px 35px rgba(120, 190, 32, 0.2)' }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
               const sectionId = slugify(cat);
@@ -666,38 +665,35 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
+              gap: '8px',
               cursor: 'pointer',
               flexShrink: 0,
-              padding: '6px 18px 6px 8px',
-              background: 'rgba(255, 255, 255, 0.75)',
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              padding: '5px 14px 5px 6px',
+              background: '#fff',
               borderRadius: '50px',
-              border: '1px solid rgba(120, 190, 32, 0.12)',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
-              transition: 'background 0.3s, border-color 0.3s'
+              border: '1.5px solid rgba(120, 190, 32, 0.1)',
+              boxShadow: '0 8px 25px rgba(0,0,0,0.06)',
+              transition: 'all 0.3s ease'
             }}
           >
             <div style={{ 
-              width: '42px', 
-              height: '42px', 
+              width: '38px', 
+              height: '38px', 
               borderRadius: '50%', 
               background: '#fff', 
-              padding: '4px',
+              padding: '3px',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 10px rgba(0,0,0,0.04)'
+              justifyContent: 'center'
             }}>
               <img src={getCategoryImage(cat)} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <span style={{ 
-              fontSize: '0.65rem', 
+              fontSize: '0.62rem', 
               fontWeight: 900, 
               textTransform: 'uppercase', 
               color: '#333',
-              letterSpacing: '1px',
+              letterSpacing: '0.8px',
               whiteSpace: 'nowrap'
             }}>{cat}</span>
           </motion.div>
