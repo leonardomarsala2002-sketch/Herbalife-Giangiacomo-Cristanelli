@@ -282,20 +282,20 @@ html {
 
 .grid-lux {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2.5rem;
   justify-items: center;
 }
 
-@media (min-width: 1300px) {
+@media (min-width: 1400px) {
   .grid-lux {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 .grid-lux > * {
   width: 100%;
-  max-width: 320px;
+  max-width: 440px;
 }
 
 /* PRODUCT CARD LUXURY */

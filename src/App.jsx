@@ -1056,12 +1056,6 @@ const App = () => {
 
         <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="logo-container" style={{ cursor: 'pointer', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '15px' }}>
           <img src="/herbalife-logo.png" alt="Herbalife Logo" className="logo-lux" style={{ height: scrolled ? '28px' : '38px', transition: 'all 0.4s' }} />
-          <div className="logo-sep-lux" style={{ width: '1px', height: scrolled ? '34px' : '44px', background: 'rgba(0,0,0,0.15)', transition: 'all 0.4s' }} />
-          <div className="logo-info-lux" style={{ textAlign: 'left', lineHeight: 1.3, color: '#666', transition: 'all 0.4s' }}>
-            <div className="logo-name-lux" style={{ fontWeight: 800, color: '#000' }}>Giangiacomo Cristanelli</div>
-            <div className="logo-address-lux" style={{ fontWeight: 600 }}>Via al Poggio 5, 6834 Morbio Inferiore, Svizzera</div>
-            <div className="logo-contact-lux" style={{ fontWeight: 600 }}>Tel: +41 763665607 · info@hlshopnow.com</div>
-          </div>
         </Link>
 
         <div className="nav-actions-lux">

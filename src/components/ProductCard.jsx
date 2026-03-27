@@ -66,8 +66,9 @@ const ProductCard = ({ product, addToCart, cartItems = [] }) => {
       }}
     >
       <div className="img-box-lux" style={{ 
-        height: '160px', 
-        padding: '0.8rem', 
+        width: '100%',
+        aspectRatio: '1/1',
+        padding: '1.5rem', 
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'center',
@@ -82,22 +83,22 @@ const ProductCard = ({ product, addToCart, cartItems = [] }) => {
         />
       </div>
       
-      <div className="card-info-lux" style={{ padding: '0.6rem 0.8rem 0.4rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+      <div className="card-info-lux" style={{ padding: '1rem 1.2rem 0.8rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <span className="p-type-lux" style={{ 
-          fontSize: '0.6rem', 
-          letterSpacing: '2px', 
+          fontSize: '0.75rem', 
+          letterSpacing: '3px', 
           textTransform: 'uppercase', 
           fontWeight: 700, 
           display: 'block', 
           color: 'var(--primary)',
-          marginBottom: '0.2rem'
+          marginBottom: '0.4rem'
         }}>{t(product.type) || product.type}</span>
         
-        <div style={{ minHeight: '2.8rem' }}>
+        <div style={{ minHeight: '3.5rem' }}>
           <h3 className="p-title-lux" style={{ 
-            fontSize: '0.95rem', 
+            fontSize: '1.2rem', 
             fontWeight: 800, 
-            lineHeight: 1.25, 
+            lineHeight: 1.2, 
             margin: '0.1rem 0 0',
             color: 'var(--text-main)',
             overflow: 'hidden',
@@ -154,19 +155,19 @@ const ProductCard = ({ product, addToCart, cartItems = [] }) => {
           marginTop: 'auto'
         }}>
           <div className="p-price-box" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '0.8rem', color: '#999', textDecoration: 'line-through', fontWeight: 600, opacity: 0.7 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ fontSize: '0.95rem', color: '#999', textDecoration: 'line-through', fontWeight: 600, opacity: 0.7 }}>
                 £{(price * 1.2).toFixed(2)}
               </span>
-              <span className="p-price-val" style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-main)', letterSpacing: '-0.03em' }}>
+              <span className="p-price-val" style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-main)', letterSpacing: '-0.03em' }}>
                 £{price.toFixed(2)}
               </span>
             </div>
             {isInCart && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#f0fff4', padding: '4px 10px', borderRadius: '50px', border: '1px solid var(--primary)' }}>
-                <div onClick={(e) => updateQuantity(e, -1)} style={{ cursor: 'pointer', fontSize: '1.1rem', fontWeight: 900, color: 'var(--primary)', width: '20px', textAlign: 'center' }}>−</div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 900, color: 'var(--primary)', minWidth: '15px', textAlign: 'center' }}>{cartItem.quantity}</span>
-                <div onClick={(e) => updateQuantity(e, 1)} style={{ cursor: 'pointer', fontSize: '1.1rem', fontWeight: 900, color: 'var(--primary)', width: '20px', textAlign: 'center' }}>+</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f0fff4', padding: '6px 14px', borderRadius: '50px', border: '1px solid var(--primary)' }}>
+                <div onClick={(e) => updateQuantity(e, -1)} style={{ cursor: 'pointer', fontSize: '1.3rem', fontWeight: 900, color: 'var(--primary)', width: '24px', textAlign: 'center' }}>−</div>
+                <span style={{ fontSize: '1rem', fontWeight: 900, color: 'var(--primary)', minWidth: '18px', textAlign: 'center' }}>{cartItem.quantity}</span>
+                <div onClick={(e) => updateQuantity(e, 1)} style={{ cursor: 'pointer', fontSize: '1.3rem', fontWeight: 900, color: 'var(--primary)', width: '24px', textAlign: 'center' }}>+</div>
               </div>
             )}
           </div>
@@ -190,12 +191,12 @@ const ProductCard = ({ product, addToCart, cartItems = [] }) => {
             }}
             style={{ 
               width: '100%',
-              padding: '12px 15px',
+              padding: '16px 20px',
               background: (isAdding || isInCart) ? 'var(--primary)' : '#fff',
               color: (isAdding || isInCart) ? '#fff' : 'var(--primary)',
               border: '2px solid var(--primary)',
               borderRadius: '50px',
-              fontSize: '0.9rem',
+              fontSize: '1rem',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'flex',
