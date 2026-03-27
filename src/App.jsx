@@ -640,6 +640,7 @@ const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [catOpen, setCatOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState('success');
   const navigate = useNavigate();
   const location = useLocation();
   const { scrollYProgress } = useScroll();
@@ -701,13 +702,17 @@ const App = () => {
       setCartOpen(false);
       navigate('/checkout');
     } else {
-      setToastMessage(t('add_to_cart') + ' ✓');
+      setToastType(qty > 0 ? 'success' : 'error');
+      setToastMessage(qty > 0 ? (t('add_to_cart') + ' ✓') : (t('removed_from_cart') || 'Tolto dal carrello'));
       setTimeout(() => setToastMessage(null), 3000);
     }
   };
 
   const removeFromCart = (id, flavor) => {
     setCartItems(prev => prev.filter(item => !(item.id === id && item.flavor === flavor)));
+    setToastType('error');
+    setToastMessage(t('removed_from_cart') || 'Tolto dal carrello');
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
   const updateCartQty = (id, flavor, delta) => {
@@ -715,9 +720,20 @@ const App = () => {
       const existing = prev.find(item => item.id === id && item.flavor === flavor);
       if (existing) {
         const newQty = existing.quantity + delta;
+        
         if (newQty <= 0) {
+          setToastType('error');
+          setToastMessage(t('removed_from_cart') || 'Tolto dal carrello');
+          setTimeout(() => setToastMessage(null), 3000);
           return prev.filter(item => !(item.id === id && item.flavor === flavor));
         }
+
+        if (delta > 0) {
+          setToastType('success');
+          setToastMessage(t('add_to_cart') + ' ✓');
+          setTimeout(() => setToastMessage(null), 3000);
+        }
+
         return prev.map(item => item === existing ? { ...item, quantity: newQty } : item);
       }
       return prev;
@@ -1280,9 +1296,11 @@ const App = () => {
             exit={{ opacity: 0, y: 50, x: '-50%' }}
             style={{
               position: 'fixed', bottom: '40px', left: '50%',
-              background: 'var(--primary)', color: '#fff', padding: '12px 24px',
+              background: toastType === 'error' ? '#ff4d4d' : 'var(--primary)', 
+              color: '#fff', padding: '12px 24px',
               borderRadius: '50px', fontSize: '1rem', fontWeight: 700,
-              zIndex: 99999, boxShadow: '0 10px 30px rgba(120, 190, 32, 0.4)',
+              zIndex: 99999, 
+              boxShadow: toastType === 'error' ? '0 10px 30px rgba(255, 77, 77, 0.4)' : '0 10px 30px rgba(120, 190, 32, 0.4)',
               pointerEvents: 'none'
             }}
           >
