@@ -73,16 +73,18 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
         <span style={{ fontSize: '0.75rem', letterSpacing: '4px', textTransform: 'uppercase', fontWeight: 800, color: 'var(--primary)', marginBottom: '0.4rem' }}>{t(product.type) || product.type}</span>
         
         <div style={{ minHeight: '3.2rem' }}>
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 800, lineHeight: 1.1, margin: '0 0 10px', color: '#000', letterSpacing: '-0.02em', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{product.name}</h3>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 800, lineHeight: 1.1, margin: '0 0 10px', color: '#000', letterSpacing: '-0.02em', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+            {product.name}{flavor ? ` - ${flavor}` : ''}
+          </h3>
         </div>
 
         {product.isGrouped && (
           <div className="variant-bubbles-lux" style={{ 
-            marginBottom: '1.5rem', 
+            marginBottom: '1rem', 
+            padding: '10px 5px',
             display: 'flex', 
-            gap: '10px', 
+            gap: '12px', 
             overflowX: 'auto', 
-            paddingBottom: '5px',
             msOverflowStyle: 'none',
             scrollbarWidth: 'none'
           }}>
