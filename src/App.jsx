@@ -368,8 +368,6 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
     addToCart && addToCart(product, quantity, currentFlavor, false); // Just add to cart silently first
     setTimeout(() => {
       setIsAdding(false);
-      // After adding, show upsell before checkout if it's the main purchase action
-      triggerUpsell(product);
     }, 900);
   };
 
@@ -469,12 +467,13 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
             <motion.button 
               onClick={(e) => {
                 e.stopPropagation();
-                // Ensure initial product is in cart
-                if (!isInCart) {
-                  addToCart(product, quantity, currentFlavor, false);
+                if (isInCart) {
+                  // "Compra ora" -> trigger upsell
+                  triggerUpsell(product);
+                } else {
+                  // "Aggiungi al carrello" -> silent add
+                  handleAddToCartDetail();
                 }
-                // Always show upsell offer before final checkout intent
-                triggerUpsell(product);
               }}
               className={`cart-btn-main-lux ${isAdding || isInCart ? 'active' : ''}`}
               animate={{ 

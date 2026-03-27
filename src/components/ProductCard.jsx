@@ -35,18 +35,12 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
     addToCart && addToCart(product, 1, flavor);
     setTimeout(() => {
       setIsAdding(false);
-      // ALWAYS trigger upsell modal after adding as per user requirement
-      triggerUpsell && triggerUpsell(product);
     }, 800);
   };
 
   const handleBuyClick = (e) => {
     e.stopPropagation();
-    // Ensure product is in cart
-    if (!isInCart) {
-        addToCart && addToCart(product, 1, flavor);
-    }
-    // ALWAYS trigger upsell modal before checkout
+    // Buy action triggers upsell
     triggerUpsell && triggerUpsell(product);
   };
 
@@ -72,11 +66,11 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
       className="card-lux"
       onClick={() => navigate(`/product/${encodeURIComponent(product.id)}`)}
       style={{ 
-        borderRadius: '24px', 
+        borderRadius: '32px', 
         overflow: 'hidden', 
         cursor: 'pointer',
         background: '#fff',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
+        boxShadow: '0 10px 40px rgba(0,0,0,0.04)',
         display: 'flex',
         flexDirection: 'column'
       }}
@@ -84,12 +78,11 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
       <div className="img-box-lux" style={{ 
         width: '100%',
         aspectRatio: '1/1',
-        padding: '1.5rem', 
+        padding: '2rem', 
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'center',
-        position: 'relative',
-        background: 'transparent'
+        position: 'relative'
       }}>
         {!product.available && <span className="sold-out-badge">{t('sold_out')}</span>}
         <img 
@@ -99,23 +92,23 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
         />
       </div>
       
-      <div className="card-info-lux" style={{ padding: '1rem 1.2rem 0.8rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-        <span className="p-type-lux" style={{ 
-          fontSize: '0.75rem', 
+      <div className="card-info-lux" style={{ padding: '0 1.5rem 2rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+        <span style={{ 
+          fontSize: '0.8rem', 
           letterSpacing: '3px', 
           textTransform: 'uppercase', 
-          fontWeight: 700, 
+          fontWeight: 800, 
           display: 'block', 
           color: 'var(--primary)',
-          marginBottom: '0.4rem'
+          marginBottom: '0.6rem'
         }}>{t(product.type) || product.type}</span>
         
-        <div style={{ minHeight: '3.5rem' }}>
-          <h3 className="p-title-lux" style={{ 
-            fontSize: '1.2rem', 
+        <div style={{ minHeight: '3.8rem' }}>
+          <h3 style={{ 
+            fontSize: '1.4rem', 
             fontWeight: 800, 
-            lineHeight: 1.1,
-            margin: '0 0 10px',
+            lineHeight: 1.2,
+            margin: '0 0 15px',
             color: '#000',
             letterSpacing: '-0.02em',
             display: '-webkit-box',
@@ -126,61 +119,93 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
         </div>
 
         {product.isGrouped && (
-          <div className="flavor-chip-lux" style={{ marginBottom: '1.5rem' }}>
-             <div style={{ background: '#f8faf9', padding: '10px 14px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 700, color: '#666', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid #eee' }} onClick={(e) => { e.stopPropagation(); }}>
-               {flavor}
-               <ChevronDown size={14} />
-             </div>
+          <div className="flavor-chip-lux" style={{ marginBottom: '2rem', position: 'relative' }}>
+             <select 
+               onClick={(e) => e.stopPropagation()}
+               onChange={(e) => {
+                 const v = product.variants.find(v => v.flavor === e.target.value);
+                 if (v) setSelectedVariant(v);
+               }}
+               value={flavor}
+               style={{ 
+                 width: '100%',
+                 background: '#f4f7f6', 
+                 padding: '12px 18px', 
+                 borderRadius: '16px', 
+                 fontSize: '0.9rem', 
+                 fontWeight: 700, 
+                 color: '#555', 
+                 border: '1px solid #eee',
+                 appearance: 'none',
+                 cursor: 'pointer'
+               }}
+             >
+               {product.variants.map(v => (
+                 <option key={v.id} value={v.flavor}>{v.flavor}</option>
+               ))}
+             </select>
+             <ChevronDown size={18} style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', opacity: 0.3 }} />
           </div>
         )}
 
-        <div className="p-price-box-lux" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid #f8f8f8' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid #f2f2f2' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: '0.85rem', color: '#bbb', textDecoration: 'line-through', fontWeight: 700, marginBottom: '2px' }}>£{(price * 1.2).toFixed(2)}</span>
+            <span style={{ fontSize: '0.8rem', color: '#ccc', textDecoration: 'line-through', fontWeight: 600 }}>£{(price * 1.2).toFixed(2)}</span>
             <span style={{ fontSize: '1.6rem', fontWeight: 900, color: '#000', letterSpacing: '-0.03em' }}>£{price.toFixed(2)}</span>
           </div>
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            {isInCart && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#f0fff4', padding: '6px 12px', borderRadius: '50px', border: '1.5px solid var(--primary)' }}>
-                <div onClick={(e) => updateQuantity(e, -1)} style={{ cursor: 'pointer', fontSize: '1.3rem', fontWeight: 900, color: 'var(--primary)', width: '24px', textAlign: 'center' }}>−</div>
-                <span style={{ fontSize: '1.1rem', fontWeight: 900, color: 'var(--primary)', minWidth: '16px', textAlign: 'center' }}>{cartItem.quantity}</span>
-                <div onClick={(e) => updateQuantity(e, 1)} style={{ cursor: 'pointer', fontSize: '1.3rem', fontWeight: 900, color: 'var(--primary)', width: '24px', textAlign: 'center' }}>+</div>
-              </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            {isInCart ? (
+              <>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f0fff4', padding: '8px 14px', borderRadius: '50px', border: '1.5px solid var(--primary)' }}>
+                  <div onClick={(e) => updateQuantity(e, -1)} style={{ cursor: 'pointer', fontSize: '1.3rem', fontWeight: 900, color: 'var(--primary)', width: '20px', textAlign: 'center' }}>−</div>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 900, color: 'var(--primary)', minWidth: '15px', textAlign: 'center' }}>{cartItem.quantity}</span>
+                  <div onClick={(e) => updateQuantity(e, 1)} style={{ cursor: 'pointer', fontSize: '1.3rem', fontWeight: 900, color: 'var(--primary)', width: '20px', textAlign: 'center' }}>+</div>
+                </div>
+
+                <motion.button 
+                  onClick={handleBuyClick}
+                  whileHover={{ scale: 1.05 }}
+                  style={{ 
+                    padding: '10px 18px',
+                    background: 'var(--primary)',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '50px',
+                    fontSize: '0.9rem',
+                    fontWeight: 900,
+                    lineHeight: 1.1,
+                    cursor: 'pointer',
+                    boxShadow: '0 8px 20px rgba(120, 190, 32, 0.3)'
+                  }}
+                >
+                  Compra<br/>ora
+                </motion.button>
+              </>
+            ) : (
+              <motion.button 
+                onClick={handleAddToCart}
+                whileHover={{ scale: 1.05 }}
+                style={{ 
+                  padding: '10px 22px',
+                  background: '#fff',
+                  color: 'var(--primary)',
+                  border: '2px solid var(--primary)',
+                  borderRadius: '50px',
+                  fontSize: '0.9rem',
+                  fontWeight: 900,
+                  lineHeight: 1.1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  cursor: 'pointer'
+                }}
+              >
+                <div style={{ textAlign: 'center' }}>Aggiungi al<br/>carrello</div>
+                <ShoppingCart size={18} strokeWidth={2.5} />
+              </motion.button>
             )}
           </div>
-          
-          <motion.button 
-            onClick={handleBuyClick}
-            className={`add-cart-btn-lux ${isAdding || isInCart ? 'active' : ''}`}
-            animate={{ 
-              scale: [1, 1.04, 1],
-              boxShadow: (isAdding || isInCart)
-                ? ['0 4px 20px rgba(120, 190, 32, 0.4)', '0 10px 30px rgba(120, 190, 32, 0.6)', '0 4px 20px rgba(120, 190, 32, 0.4)']
-                : ['0 4px 15px rgba(120, 190, 32, 0.1)', '0 8px 25px rgba(120, 190, 32, 0.3)', '0 4px 15px rgba(120, 190, 32, 0.1)']
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-            style={{ 
-              padding: '12px 20px',
-              background: (isAdding || isInCart) ? 'var(--primary)' : '#fff',
-              color: (isAdding || isInCart) ? '#fff' : 'var(--primary)',
-              border: '2px solid var(--primary)',
-              borderRadius: '50px',
-              fontSize: '0.9rem',
-              fontWeight: 800,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px'
-            }}
-          >
-            {isInCart ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi')}
-            {!isAdding && !isInCart && <ShoppingCart size={18} />}
-          </motion.button>
         </div>
       </div>
     </motion.div>
