@@ -613,6 +613,71 @@ const Checkout = ({ cartItems, totalItems, totalPrice, navigate, t, createChecko
   );
 };
 
+const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scrollToSection }) => {
+  return (
+    <motion.div 
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className={`sticky-cat-bar ${scrolled ? 'is-scrolled' : ''}`}
+      style={{
+        position: 'sticky',
+        top: scrolled ? '65px' : '85px', // Match navbar height
+        zIndex: 4000,
+        background: 'rgba(255, 255, 255, 0.75)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        borderBottom: '1px solid rgba(0,0,0,0.05)',
+        padding: '12px 0',
+        overflowX: 'auto',
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
+        display: 'flex',
+        justifyContent: 'center',
+        transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)'
+      }}
+    >
+      <div style={{ display: 'flex', gap: '30px', padding: '0 30px', alignItems: 'center' }}>
+        {categories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => {
+              const sectionId = slugify(cat);
+              if (location.pathname !== '/') {
+                navigate('/', { state: { scrollTo: sectionId } });
+              } else {
+                scrollToSection(sectionId);
+              }
+            }}
+            className="cat-sticky-item"
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '0.75rem',
+              fontWeight: 800,
+              textTransform: 'uppercase',
+              letterSpacing: '1.5px',
+              color: '#444',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.3s ease',
+              position: 'relative',
+              padding: '4px 0'
+            }}
+          >
+            {cat}
+            <motion.div 
+              className="cat-underline"
+              whileHover={{ width: '100%' }}
+              initial={{ width: '0%' }}
+              style={{ position: 'absolute', bottom: 0, left: 0, height: '2px', background: 'var(--primary)', transition: 'width 0.3s ease' }}
+            />
+          </button>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
+
 const App = () => {
   const { t, i18n } = useTranslation();
   const [products, setProducts] = useState([]);
@@ -1160,51 +1225,6 @@ const App = () => {
         </Link>
 
         <div className="nav-actions-lux">
-          {/* CATEGORIES DROPDOWN MOVATO QUI A SINISTRA DELLA BANDIERA */}
-          <div className="cat-picker-lux">
-            <button 
-              className="cat-trigger-lux" 
-              onClick={() => setCatOpen(!catOpen)}
-              style={{ padding: 0, background: 'none', border: 'none', gap: '0.6rem' }}
-            >
-              <LayoutGrid size={20} />
-              <span className="cat-label-lux" style={{ fontSize: '0.8rem', fontWeight: 800, letterSpacing: '1px' }}>{t('CATEGORIES') || 'CATEGORIE'}</span>
-              <ChevronDown size={14} style={{ transform: catOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }} />
-            </button>
-            
-            <AnimatePresence>
-              {catOpen && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10, scale: 0.98 }} 
-                  animate={{ opacity: 1, y: 0, scale: 1 }} 
-                  exit={{ opacity: 0, y: 10, scale: 0.98 }} 
-                  className="cat-dropdown-lux"
-                  data-lenis-prevent
-                >
-                  {dynamicCategories.map((cat) => (
-                    <div key={cat} className="cat-item-lux" onClick={() => { 
-                      const sectionId = slugify(cat);
-                      // Force unlock background before moving
-                      document.documentElement.classList.remove('no-scroll-lux');
-                      if (window.lenis) window.lenis.start();
-                      setCatOpen(false);
-                      
-                      setTimeout(() => {
-                        if (location.pathname !== '/') {
-                          navigate('/', { state: { scrollTo: sectionId } });
-                        } else {
-                          scrollToSection(sectionId);
-                        }
-                      }, 100);
-                    }}>
-                      {cat}
-                    </div>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
           <div className="lang-picker-box">
             <div className="lang-current-lux" onClick={() => setLangOpen(!langOpen)}>
               <img src={currentLang.flag} alt={currentLang.name} className="flag-main-lux" />
@@ -1287,6 +1307,15 @@ const App = () => {
           </motion.button>
         </div>
       </nav>
+
+      <CategoryStickyBar 
+        categories={dynamicCategories} 
+        scrolled={scrolled} 
+        t={t} 
+        location={location} 
+        navigate={navigate} 
+        scrollToSection={scrollToSection} 
+      />
 
       <AnimatePresence>
         {toastMessage && (
