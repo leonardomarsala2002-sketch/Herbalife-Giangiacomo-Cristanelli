@@ -613,55 +613,48 @@ const Checkout = ({ cartItems, totalItems, totalPrice, navigate, t, createChecko
   );
 };
 
-const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scrollToSection }) => {
-  // ICON MAPPING FOR CATEGORY BUBBLES
-  const iconMap = {
-    [t('cat_kits')]: "https://cdn.shopify.com/s/files/1/0611/5891/6263/products/colaz_mix_2000_1000px_488bd7b0-8c29-4702-86ee-9279090b848c.png", // Balanced Breakfast Kit
-    [t('cat_shakes')]: "https://cdn.shopify.com/s/files/1/0611/5891/6263/products/f1_vaniglia_2000x2000_f9f65839-8472-4648-9363-2252c8846353.png", // F1 Shake
-    [t('cat_protein')]: "https://cdn.shopify.com/s/files/1/0611/5891/6263/products/PDM_2000x2000_27f10da9-f642-4f38-89c5-3a7cb4587630.png", // PDM
-    [t('cat_tea_aloe')]: "https://cdn.shopify.com/s/files/1/0611/5891/6263/products/inf_lim_2000_2000px_f30abbdc-881c-425d-bb86-d250f2fb9f60.png", // Tea
-    [t('cat_sport')]: "https://cdn.shopify.com/s/files/1/0611/5891/6263/products/h24_cr7_2000x2000_91b1eb8e-4286-44ca-873b-e3c3b5fa7757.png", // Sport H24
-    [t('cat_skin')]: "https://cdn.shopify.com/s/files/1/0611/5891/6263/products/Herbal_Aloe_bath_and_body_ritual_set_main_e-com.png", // Skin
-    [t('cat_snacks')]: "https://cdn.shopify.com/s/files/1/0611/5891/6263/products/chips_cipolla_2000_2000px_60cb469c-5056-4dc4-b14e-98aecc51c911.png", // Snacks
-    [t('cat_accessories')]: "https://cdn.shopify.com/s/files/1/0611/5891/6263/products/super_shaker_mix_2000_2000px_9876f2d2-8182-4aa8-93ea-872e482382fe.png" // Accessories
+const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scrollToSection, products }) => {
+  // Helper to find a representative image for each category from the actual products list
+  const getCategoryImage = (catName) => {
+    const p = products.find(prod => (t(prod.type) || prod.type) === catName || prod.category === catName);
+    return p ? p.image : 'https://via.placeholder.com/100';
   };
 
   return (
     <motion.div 
-      initial={{ y: -30, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className={`sticky-bubble-bar ${scrolled ? 'is-scrolled' : ''}`}
+      initial={{ x: '-50%', y: -40, opacity: 0 }}
+      animate={{ x: '-50%', y: 0, opacity: 1 }}
+      className={`sticky-bubble-bar-lux ${scrolled ? 'scrolled-bubbles' : ''}`}
       style={{
         position: 'fixed',
-        top: scrolled ? 'calc(1rem + 72px + 12px)' : 'calc(100px + 72px + 15px)', 
         left: '50%',
-        transform: 'translateX(-50%)',
+        top: scrolled ? 'calc(1rem + 72px + 10px)' : 'calc(100px + 72px + 15px)', 
         width: scrolled ? '95%' : '90%',
         maxWidth: '1200px',
         zIndex: 4900,
         background: 'rgba(255, 255, 255, 0.7)',
         backdropFilter: 'blur(35px) saturate(180%)',
-        borderRadius: '80px', // Extra round
-        border: '1.5px solid rgba(120, 190, 32, 0.1)',
-        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.05)',
-        padding: '10px 2.5rem',
-        height: '105px', // Tall enough for bubbles + labels
+        WebkitBackdropFilter: 'blur(35px) saturate(180%)',
+        borderRadius: '100px',
+        border: '1px solid rgba(120, 190, 32, 0.1)',
+        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.08)',
+        height: '100px',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        padding: '0 1.5rem',
+        overflow: 'hidden',
         transition: 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)'
       }}
     >
       <div style={{ 
         display: 'flex', 
-        gap: '2.5rem', 
+        gap: '1.2rem', 
         alignItems: 'center', 
         justifyContent: 'center',
         overflowX: 'auto', 
         scrollbarWidth: 'none', 
         msOverflowStyle: 'none',
         width: '100%',
-        height: '100%',
         padding: '0 10px'
       }}>
         {categories.map(cat => (
@@ -684,37 +677,32 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
               gap: '6px',
               cursor: 'pointer',
               flexShrink: 0,
-              minWidth: '70px'
+              minWidth: '65px'
             }}
           >
             <div style={{ 
-              width: '55px', 
-              height: '55px', 
+              width: '52px', 
+              height: '52px', 
               borderRadius: '50%', 
               background: '#fff', 
-              border: '2.5px solid #fff',
-              boxShadow: '0 8px 25px rgba(0,0,0,0.06)',
-              padding: '6px',
-              overflow: 'hidden',
+              border: '2px solid #fff',
+              boxShadow: '0 6px 20px rgba(0,0,0,0.06)',
+              padding: '4px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'all 0.3s ease'
             }} onMouseEnter={(e)=>e.currentTarget.style.borderColor='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.borderColor='#fff'}>
-              <img src={iconMap[cat] || 'https://via.placeholder.com/60'} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              <img src={getCategoryImage(cat)} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <span style={{ 
               fontSize: '0.6rem', 
               fontWeight: 900, 
               textTransform: 'uppercase', 
-              letterSpacing: '0.8px', 
               color: '#333',
               textAlign: 'center',
-              width: '100%',
-              display: 'block',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              letterSpacing: '0.5px'
             }}>{cat}</span>
           </motion.div>
         ))}
