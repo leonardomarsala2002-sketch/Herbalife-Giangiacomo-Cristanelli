@@ -95,7 +95,8 @@ const resources = {
       "prod_chips": "Protein Chips",
       "prod_bars_snack": "Barrette Proteiche",
       "prod_tri_blend": "Tri Blend Select",
-      "suggested_products": "Ti potrebbe piacere anche"
+      "suggested_products": "Ti potrebbe piacere anche",
+      "removed_from_cart": "Tolto dal carrello"
     }
   },
   en: {
@@ -185,7 +186,8 @@ const resources = {
       "prod_chips": "Protein Chips",
       "prod_bars_snack": "Protein Bar",
       "prod_tri_blend": "Tri Blend Select",
-      "suggested_products": "You might also like"
+      "suggested_products": "You might also like",
+      "removed_from_cart": "Removed from cart"
     }
   },
   fr: {
@@ -281,7 +283,8 @@ const resources = {
       "prod_chips": "Chips Protéinées",
       "prod_bars_snack": "Barres Protéinées",
       "prod_tri_blend": "Tri Blend Select",
-      "suggested_products": "Vous pourriez aussi aimer"
+      "suggested_products": "Vous pourriez aussi aimer",
+      "removed_from_cart": "Retiré du panier"
     }
   },
   es: {
@@ -377,7 +380,8 @@ const resources = {
       "prod_chips": "Chips Proteicos",
       "prod_bars_snack": "Barritas Proteicas",
       "prod_tri_blend": "Tri Blend Select",
-      "suggested_products": "También te potrebbe gustar"
+      "suggested_products": "También te potrebbe gustar",
+      "removed_from_cart": "Eliminado del carrito"
     }
   }
 };
