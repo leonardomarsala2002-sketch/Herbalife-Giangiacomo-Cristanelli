@@ -627,27 +627,30 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
         position: 'fixed',
         left: '50%',
         transform: 'translateX(-50%)',
-        top: scrolled ? 'calc(1rem + 80px)' : 'calc(100px + 82px)', 
+        top: scrolled ? 'calc(1rem + 88px)' : 'calc(100px + 92px)', 
         width: '100vw',
         zIndex: 4900,
         pointerEvents: 'none',
         display: 'flex',
         justifyContent: 'center',
         padding: '0 20px',
+        background: 'transparent',
+        border: 'none',
+        boxShadow: 'none',
         transition: 'all 0.4s'
       }}
     >
-      <div style={{ 
+      <div className="bubbles-inner-lux" style={{ 
         display: 'flex', 
-        gap: '10px', 
+        gap: '12px', 
         alignItems: 'center', 
         justifyContent: 'center',
         overflowX: 'auto', 
-        scrollbarWidth: 'none', 
-        msOverflowStyle: 'none',
-        padding: '10px 40px',
+        padding: '15px 40px',
         pointerEvents: 'auto',
-        maxWidth: '100vw'
+        maxWidth: '100vw',
+        background: 'transparent',
+        border: 'none'
       }}>
         {categories.map(cat => (
           <motion.div
@@ -1534,6 +1537,9 @@ const App = () => {
         .footer-lux a:hover { color: #fff !important; }
         .footer-email-input::placeholder { color: #888; }
         .footer-email-btn:hover { background: #eee !important; }
+        .bubbles-inner-lux { scrollbar-width: none !important; -ms-overflow-style: none !important; }
+        .bubbles-inner-lux::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
+        
         .global-announcement-lux {
           position: fixed;
           top: 0;
