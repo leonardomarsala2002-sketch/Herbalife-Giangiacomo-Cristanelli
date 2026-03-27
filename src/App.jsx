@@ -625,15 +625,15 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
       className="floating-bubbles-lux"
       style={{
         position: 'fixed',
-        left: '50%',
-        transform: 'translateX(-50%)',
+        left: 0,
+        right: 0,
         top: scrolled ? 'calc(1rem + 92px)' : 'calc(100px + 98px)', 
         width: '100vw',
         zIndex: 4900,
         pointerEvents: 'none',
         display: 'flex',
         justifyContent: 'center',
-        padding: '0 20px',
+        padding: '0',
         background: 'transparent',
         border: 'none',
         boxShadow: 'none',
@@ -642,11 +642,11 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
     >
       <div className="bubbles-inner-lux" style={{ 
         display: 'flex', 
-        gap: '24px', 
+        gap: '14px', 
         alignItems: 'flex-start', 
-        justifyContent: 'center',
+        justifyContent: 'flex-start', // Prevent cutting off on left
         overflowX: 'auto', 
-        padding: '10px 40px',
+        padding: '10px 30px',
         pointerEvents: 'auto',
         maxWidth: '100vw',
         background: 'transparent'
@@ -668,20 +668,20 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '10px',
+              gap: '8px',
               cursor: 'pointer',
               flexShrink: 0,
-              minWidth: '85px'
+              minWidth: '70px'
             }}
           >
             <div style={{ 
-              width: '64px', 
-              height: '64px', 
+              width: '56px', 
+              height: '56px', 
               borderRadius: '50%', 
               background: '#fff', 
-              border: '2px solid rgba(120, 190, 32, 0.15)',
-              boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
-              padding: '8px',
+              border: '1.5px solid rgba(120, 190, 32, 0.15)',
+              boxShadow: '0 6px 20px rgba(0,0,0,0.05)',
+              padding: '6px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -690,14 +690,15 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
               <img src={getCategoryImage(cat)} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <span style={{ 
-              fontSize: '0.6rem', 
+              fontSize: '0.58rem', 
               fontWeight: 900, 
               textTransform: 'uppercase', 
               color: '#333',
-              letterSpacing: '0.8px',
+              letterSpacing: '0.4px',
               textAlign: 'center',
-              lineHeight: 1.2,
-              maxWidth: '85px',
+              lineHeight: 1.1,
+              maxWidth: '70px',
+              whiteSpace: 'normal',
               textShadow: '0 2px 4px rgba(255,255,255,0.8)'
             }}>{cat}</span>
           </motion.div>
