@@ -1546,7 +1546,8 @@ const App = () => {
         .footer-email-btn:hover { background: #eee !important; }
         .bubbles-inner-lux { scrollbar-width: none !important; -ms-overflow-style: none !important; }
         .bubbles-inner-lux::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
-        .cat-bubble-item:hover .cat-bubble-label { color: var(--primary) !important; scale: 1.05; }
+        .cat-bubble-label { opacity: 0; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .cat-bubble-item:hover .cat-bubble-label { opacity: 1 !important; color: var(--primary) !important; transform: translateY(0); }
         .cat-bubble-item:hover .glass-icon-circle { border-color: var(--primary) !important; background: rgba(255, 255, 255, 0.7); }
         
         .global-announcement-lux {
