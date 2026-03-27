@@ -1347,6 +1347,7 @@ const App = () => {
         location={location} 
         navigate={navigate} 
         scrollToSection={scrollToSection} 
+        products={products}
       />
 
       <AnimatePresence>
