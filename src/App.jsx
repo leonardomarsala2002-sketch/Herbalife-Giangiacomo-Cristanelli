@@ -627,7 +627,7 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
         position: 'fixed',
         left: 0,
         right: 0,
-        top: scrolled ? 'calc(1rem + 88px)' : 'calc(100px + 94px)', 
+        top: scrolled ? 'calc(1rem + 85px)' : 'calc(100px + 90px)', 
         width: '100vw',
         zIndex: 4900,
         pointerEvents: 'none',
@@ -642,7 +642,7 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
     >
       <div className="bubbles-inner-lux" style={{ 
         display: 'flex', 
-        gap: '12px', 
+        gap: '14px', 
         alignItems: 'flex-start', 
         justifyContent: 'flex-start',
         overflowX: 'auto', 
@@ -654,7 +654,8 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
         {categories.map(cat => (
           <motion.div
             key={cat}
-            whileHover={{ scale: 1.05, y: -2 }}
+            className="cat-bubble-item"
+            whileHover={{ y: -4 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
               const sectionId = slugify(cat);
@@ -671,35 +672,39 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
               gap: '6px',
               cursor: 'pointer',
               flexShrink: 0,
-              minWidth: '68px'
+              minWidth: '72px'
             }}
           >
             <div style={{ 
-              width: '54px', 
-              height: '54px', 
+              width: '56px', 
+              height: '56px', 
               borderRadius: '50%', 
-              background: '#fff', 
-              border: '2px solid rgba(120, 190, 32, 0.2)',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.04)',
-              padding: '6px',
+              background: 'rgba(255, 255, 255, 0.4)', 
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              border: '1.5px solid rgba(255, 255, 255, 0.5)',
+              boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.05)',
+              padding: '8px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              overflow: 'hidden', // CRITICAL: Clip the square image
+              overflow: 'hidden',
               transition: 'all 0.3s ease'
-            }} onMouseEnter={(e)=>e.currentTarget.style.borderColor='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.borderColor='rgba(120, 190, 32, 0.2)'}>
+            }} className="glass-icon-circle">
               <img src={getCategoryImage(cat)} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
             </div>
-            <span style={{ 
-              fontSize: '0.55rem', 
+            <span className="cat-bubble-label" style={{ 
+              fontSize: '0.6rem', 
               fontWeight: 900, 
               textTransform: 'uppercase', 
-              color: '#444',
-              letterSpacing: '0.4px',
+              color: '#333',
+              letterSpacing: '0.5px',
               textAlign: 'center',
               lineHeight: 1.1,
-              maxWidth: '68px',
-              whiteSpace: 'normal'
+              maxWidth: '72px',
+              whiteSpace: 'normal',
+              transition: 'color 0.3s ease',
+              textShadow: '0 2px 4px rgba(255,255,255,0.9)'
             }}>{cat}</span>
           </motion.div>
         ))}
@@ -1541,6 +1546,8 @@ const App = () => {
         .footer-email-btn:hover { background: #eee !important; }
         .bubbles-inner-lux { scrollbar-width: none !important; -ms-overflow-style: none !important; }
         .bubbles-inner-lux::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
+        .cat-bubble-item:hover .cat-bubble-label { color: var(--primary) !important; scale: 1.05; }
+        .cat-bubble-item:hover .glass-icon-circle { border-color: var(--primary) !important; background: rgba(255, 255, 255, 0.7); }
         
         .global-announcement-lux {
           position: fixed;
