@@ -461,7 +461,12 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
             <motion.button 
               onClick={(e) => {
                 e.stopPropagation();
-                if (isInCart) { navigate('/checkout'); } else { handleAddToCartDetail(); }
+                // Ensure initial product is in cart
+                if (!isInCart) {
+                  addToCart(product, quantity, currentFlavor, false);
+                }
+                // Always show upsell offer before final checkout intent
+                triggerUpsell(product);
               }}
               className={`cart-btn-main-lux ${isAdding || isInCart ? 'active' : ''}`}
               animate={{ 
@@ -520,7 +525,7 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
                   animate={isAdding ? { opacity: [1, 0, 1] } : { opacity: 1 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {(isAdding || isInCart) ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello')}
+                  {isInCart ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello')}
                 </motion.span>
               </span>
             </motion.button>
@@ -532,33 +537,6 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
           </div>
         </div>
       </div>
-
-      {/* Suggested Products (Upselling) */}
-      {products.filter(p => p.type === product.type && p.id !== product.id).length > 0 && (
-        <div style={{ marginTop: '8rem', borderTop: '1px solid #f0f0f0', paddingTop: '6rem' }}>
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <span style={{ color: 'var(--primary)', letterSpacing: '4px', fontWeight: 800, fontSize: '0.85rem', textTransform: 'uppercase', display: 'block', marginBottom: '1rem' }}>
-              {t('premium_formula')}
-            </span>
-            <h3 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-0.03em' }}>
-              {t('suggested_products') || 'Ti potrebbe piacere anche'}
-            </h3>
-          </div>
-          <div className="grid-lux">
-            {products
-              .filter(p => p.type === product.type && p.id !== product.id)
-              .slice(0, 3)
-              .map(p => (
-                <ProductCard 
-                  key={p.id} 
-                  product={p} 
-                  addToCart={addToCart} 
-                  cartItems={cartItems} 
-                />
-              ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
