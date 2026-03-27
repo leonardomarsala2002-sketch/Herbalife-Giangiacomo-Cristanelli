@@ -8,7 +8,6 @@ import { RefundPolicy, PrivacyPolicy, TermsOfService, DoNotSell, Contact } from 
 import { PaymentIcons } from './components/PaymentIcons';
 import './App.css';
 
-
 // Helper for smooth scrolling
 const slugify = (text) => {
   if (!text) return "";
@@ -28,7 +27,7 @@ const MemberDisclosure = ({ onClose }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       style={{
-        position: 'fixed', inset: 0, zIndex: 10000,
+        position: 'fixed', inset: 0, zIndex: 100000,
         background: 'rgba(0,0,0,0.6)',
         backdropFilter: 'blur(8px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
@@ -48,7 +47,6 @@ const MemberDisclosure = ({ onClose }) => {
         }}
       >
         <div style={{ border: '3px solid #78BE20', padding: '40px 30px', position: 'relative' }}>
-          {/* Close Button */}
           <button 
             onClick={onClose}
             style={{
@@ -61,53 +59,98 @@ const MemberDisclosure = ({ onClose }) => {
           >
             x
           </button>
-
           <div style={{ textAlign: 'center', marginBottom: '35px' }}>
-            <p style={{ color: '#666', fontSize: '0.95rem', margin: '0 0 10px' }}>
-              This website is operated by the following Herbalife Independent Member:
-            </p>
-            <h2 style={{ fontSize: '1.6rem', fontWeight: '800', color: '#000', margin: 0 }}>
-              Giangiacomo Cristanelli
-            </h2>
+            <p style={{ color: '#666', fontSize: '0.95rem', margin: '0 0 10px' }}>This website is operated by the following Herbalife Independent Member:</p>
+            <h2 style={{ fontSize: '1.6rem', fontWeight: '800', color: '#000' }}>Giangiacomo Cristanelli</h2>
           </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '40px', alignItems: 'start' }}>
-            {/* Left Column */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '40px' }}>
             <div style={{ textAlign: 'center' }}>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: '800', marginBottom: '20px', letterSpacing: '0.05em' }}>
-                EXISTING CUSTOMER?
-              </h3>
-              <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: '#444', margin: 0 }}>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, marginBottom: '20px' }}>EXISTING CUSTOMER?</h3>
+              <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: '#444' }}>
                 Your one-to-one relationship with your personal Member is key to meeting your nutrition goals. 
-                If <strong>Giangiacomo Cristanelli</strong> is not your personal Member, we encourage you to purchase 
-                your products from your existing Member. Alternatively, 
-                <span onClick={onClose} style={{ color: '#000', fontWeight: '800', textDecoration: 'underline', cursor: 'pointer', marginLeft: '5px' }}>
-                  click here
-                </span> to continue to this website.
+                If Giangiacomo Cristanelli is not your personal Member, we encourage you to purchase 
+                your products from your existing Member. Alternatively, <span onClick={onClose} style={{ fontWeight: 800, textDecoration: 'underline', cursor: 'pointer' }}>click here</span> to continue.
               </p>
             </div>
-
-            {/* Separator */}
             <div style={{ height: '100%', background: '#eee' }} />
-
-            {/* Right Column */}
             <div style={{ textAlign: 'center' }}>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: '800', marginBottom: '20px', letterSpacing: '0.05em' }}>
-                ALREADY A HERBALIFE MEMBER?
-              </h3>
-              <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: '#444', margin: '0 0 15px' }}>
-                To purchase via your own Membership account and receive full credit please visit
-              </p>
-              <a 
-                href="https://myherbalife.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ fontSize: '1rem', fontWeight: '800', color: '#000', textDecoration: 'underline' }}
-              >
-                myherbalife.com
-              </a>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, marginBottom: '20px' }}>ALREADY A MEMBER?</h3>
+              <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: '#444' }}>To purchase via your own account please visit MyHerbalife.com</p>
             </div>
           </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, t }) => {
+  if (!isOpen || !product) return null;
+
+  const handleCheckoutOriginal = () => {
+    onClose();
+    navigate('/checkout');
+  };
+
+  const handleAddAndCheckout = (upsellProd) => {
+    addToCart(upsellProd, 1, null, false, true); // isUpsell=true
+    onClose();
+    navigate('/checkout');
+  };
+
+  const suggested = products
+    .filter(p => (p.type === product.type || p.type === 'Accessories') && p.id !== product.id)
+    .slice(0, 2);
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 100001,
+        background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(15px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem'
+      }}
+    >
+      <motion.div 
+        initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+        style={{ width: '100%', maxWidth: '850px', position: 'relative' }}
+      >
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <span className="premium-tag-lux" style={{ color: 'var(--primary)', letterSpacing: '8px', fontWeight: 900, fontSize: '0.9rem', display: 'block', marginBottom: '1.5rem', textTransform: 'uppercase' }}>OFFERTA EXCLUSIVA</span>
+          <h2 style={{ fontSize: '3.5rem', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.1, color: '#000' }}>
+            Completa il tuo kit e <span style={{ color: 'var(--primary)' }}>risparmia il 20%</span>
+          </h2>
+          <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '1.5rem', fontWeight: 600 }}>Aggiungi uno di questi prodotti consigliati e ricevi uno sconto immediato del 20% sul totale aggiunto.</p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem', marginBottom: '5rem' }}>
+          {suggested.map(p => (
+            <div key={p.id} className="upsell-card-lux" style={{ background: '#fff', padding: '2.5rem', borderRadius: '32px', boxShadow: '0 20px 60px rgba(0,0,0,0.06)', display: 'flex', gap: '25px', alignItems: 'center', position: 'relative' }}>
+              <div style={{ width: '100px', height: '100px', flexShrink: 0 }}>
+                <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <h4 style={{ fontSize: '1.1rem', fontWeight: 800, margin: '0 0 10px' }}>{p.name}</h4>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '1rem', color: '#999', textDecoration: 'line-through' }}>£{p.price.toFixed(2)}</span>
+                  <span style={{ fontSize: '1.4rem', color: 'var(--primary)', fontWeight: 900 }}>£{(p.price * 0.8).toFixed(2)}</span>
+                </div>
+                <button 
+                  onClick={() => handleAddAndCheckout(p)}
+                  style={{ marginTop: '15px', background: 'var(--primary)', color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '50px', fontWeight: 800, fontSize: '0.85rem', cursor: 'pointer', boxShadow: '0 8px 20px rgba(120, 190, 32, 0.2)' }}
+                >
+                  Aggiungi e vai al pagamento
+                </button>
+              </div>
+              <div style={{ position: 'absolute', top: '15px', right: '15px', background: '#ff4d4d', color: '#fff', padding: '5px 12px', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 900 }}>-20%</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ textAlign: 'center' }}>
+          <button onClick={handleCheckoutOriginal} style={{ fontSize: '1rem', fontWeight: 800, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+            No grazie, procedi senza sconto
+          </button>
         </div>
       </motion.div>
     </motion.div>
@@ -294,7 +337,7 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress }) => {
   );
 };
 
-const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, cartItems }) => {
+const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, cartItems, triggerUpsell }) => {
   const params = useParams();
   const idValue = params['*'] || params.id || '';
   const navigate = useNavigate();
@@ -314,8 +357,12 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
   const handleAddToCartDetail = () => {
     if (isAdding) return;
     setIsAdding(true);
-    addToCart && addToCart(product, quantity, currentFlavor, false);
-    setTimeout(() => setIsAdding(false), 900);
+    addToCart && addToCart(product, quantity, currentFlavor, false); // Just add to cart silently first
+    setTimeout(() => {
+      setIsAdding(false);
+      // After adding, show upsell before checkout if it's the main purchase action
+      triggerUpsell(product);
+    }, 900);
   };
 
   useEffect(() => {
@@ -485,6 +532,33 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
           </div>
         </div>
       </div>
+
+      {/* Suggested Products (Upselling) */}
+      {products.filter(p => p.type === product.type && p.id !== product.id).length > 0 && (
+        <div style={{ marginTop: '8rem', borderTop: '1px solid #f0f0f0', paddingTop: '6rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <span style={{ color: 'var(--primary)', letterSpacing: '4px', fontWeight: 800, fontSize: '0.85rem', textTransform: 'uppercase', display: 'block', marginBottom: '1rem' }}>
+              {t('premium_formula')}
+            </span>
+            <h3 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-0.03em' }}>
+              {t('suggested_products') || 'Ti potrebbe piacere anche'}
+            </h3>
+          </div>
+          <div className="grid-lux">
+            {products
+              .filter(p => p.type === product.type && p.id !== product.id)
+              .slice(0, 3)
+              .map(p => (
+                <ProductCard 
+                  key={p.id} 
+                  product={p} 
+                  addToCart={addToCart} 
+                  cartItems={cartItems} 
+                />
+              ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -583,8 +657,15 @@ const App = () => {
   const [toastMessage, setToastMessage] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
-
   const { scrollYProgress } = useScroll();
+
+  const [showUpsell, setShowUpsell] = useState(false);
+  const [upsellTarget, setUpsellTarget] = useState(null);
+
+  const triggerUpsell = (targetProduct) => {
+    setUpsellTarget(targetProduct);
+    setShowUpsell(true);
+  };
 
 
 
@@ -599,17 +680,18 @@ const App = () => {
       return idxA - idxB;
     });
 
-  const addToCart = (product, qty = 1, flavor = null, buyNow = false) => {
+  const addToCart = (product, qty = 1, flavor = null, buyNow = false, isUpsell = false) => {
     let finalVariantId = product.variantId;
     let finalImage = product.image;
-    let finalPrice = product.price;
+    let finalPrice = isUpsell ? product.price * 0.8 : product.price;
 
     if (product.isGrouped && flavor) {
       const match = product.variants.find(v => v.flavor === flavor);
       if (match) {
         finalVariantId = match.variantId;
         finalImage = match.image;
-        finalPrice = match.price;
+        if (!isUpsell) finalPrice = match.price;
+        else finalPrice = match.price * 0.8;
       }
     }
 
@@ -623,8 +705,9 @@ const App = () => {
         return prev.map(item => item === existing ? { ...item, quantity: newQty } : item);
       }
       if (qty <= 0) return prev;
-      return [...prev, { ...product, variantId: finalVariantId, price: finalPrice, image: finalImage, quantity: qty, flavor }];
+      return [...prev, { ...product, variantId: finalVariantId, price: finalPrice, image: finalImage, quantity: qty, flavor, isUpsell }];
     });
+
     if (buyNow) {
       setCartOpen(false);
       navigate('/checkout');
@@ -1012,6 +1095,18 @@ const App = () => {
     <div className="app">
       <AnimatePresence>
         {showDisclosure && <MemberDisclosure onClose={handleCloseDisclosure} />}
+        {showUpsell && (
+          <UpsellModal 
+            key="upsell"
+            isOpen={showUpsell} 
+            onClose={() => setShowUpsell(false)} 
+            product={upsellTarget} 
+            products={products}
+            addToCart={addToCart}
+            navigate={navigate}
+            t={t}
+          />
+        )}
       </AnimatePresence>
 
       {/* GLOBAL FULL-WIDTH ANNOUNCEMENT BANNER - VISIBILE QUANDO NON SCROLLATO IN TUTTE LE PAGINE */}
@@ -1270,10 +1365,10 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home products={products} t={t} addToCart={addToCart} cartItems={cartItems} scrollYProgress={scrollYProgress} />} />
-        <Route path="/product/*" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} />} />
-        <Route path="/products/*" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} />} />
-        <Route path="/product/:id" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} />} />
-        <Route path="/products/:id" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} />} />
+        <Route path="/product/*" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />} />
+        <Route path="/products/*" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />} />
+        <Route path="/product/:id" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />} />
+        <Route path="/products/:id" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />} />
         <Route path="/checkout" element={<Checkout cartItems={cartItems} totalItems={totalCartItems} totalPrice={totalCartPrice} navigate={navigate} t={t} createCheckout={createCheckout} />} />
         <Route path="/policies/refund-policy" element={<RefundPolicy />} />
         <Route path="/policies/privacy-policy" element={<PrivacyPolicy />} />

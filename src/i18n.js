@@ -94,7 +94,8 @@ const resources = {
       "prod_kit_colazione": "Kit Colazione Equilibrata",
       "prod_chips": "Protein Chips",
       "prod_bars_snack": "Barrette Proteiche",
-      "prod_tri_blend": "Tri Blend Select"
+      "prod_tri_blend": "Tri Blend Select",
+      "suggested_products": "Ti potrebbe piacere anche"
     }
   },
   en: {
@@ -183,7 +184,8 @@ const resources = {
       "prod_kit_colazione": "Balanced Breakfast Kit",
       "prod_chips": "Protein Chips",
       "prod_bars_snack": "Protein Bar",
-      "prod_tri_blend": "Tri Blend Select"
+      "prod_tri_blend": "Tri Blend Select",
+      "suggested_products": "You might also like"
     }
   },
   fr: {
@@ -278,7 +280,8 @@ const resources = {
       "prod_kit_colazione": "Kit Petit-Déjeuner Équilibré",
       "prod_chips": "Chips Protéinées",
       "prod_bars_snack": "Barres Protéinées",
-      "prod_tri_blend": "Tri Blend Select"
+      "prod_tri_blend": "Tri Blend Select",
+      "suggested_products": "Vous pourriez aussi aimer"
     }
   },
   es: {
@@ -373,7 +376,8 @@ const resources = {
       "prod_kit_colazione": "Kit Desayuno Saludable",
       "prod_chips": "Chips Proteicos",
       "prod_bars_snack": "Barritas Proteicas",
-      "prod_tri_blend": "Tri Blend Select"
+      "prod_tri_blend": "Tri Blend Select",
+      "suggested_products": "También te potrebbe gustar"
     }
   }
 };
