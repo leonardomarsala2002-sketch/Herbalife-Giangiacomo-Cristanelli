@@ -621,27 +621,36 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
       className={`sticky-cat-bar ${scrolled ? 'is-scrolled' : ''}`}
       style={{
         position: 'fixed',
-        top: scrolled ? 'calc(1rem + 70px)' : 'calc(100px + 90px)', 
+        top: scrolled ? 'calc(1rem + 72px + 12px)' : 'calc(100px + 72px + 15px)', 
         left: '50%',
         transform: 'translateX(-50%)',
         width: scrolled ? '95%' : '90%',
         maxWidth: '1200px',
         zIndex: 4900,
         background: 'rgba(255, 255, 255, 0.7)',
-        backdropFilter: 'blur(20px) saturate(180%)',
-        borderRadius: scrolled ? '20px' : '30px',
-        border: '1px solid rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(30px) saturate(180%)',
+        borderRadius: '50px',
+        border: '1.5px solid rgba(120, 190, 32, 0.15)',
         boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.05)',
-        padding: '10px 0',
-        overflowX: 'auto',
-        scrollbarWidth: 'none',
-        msOverflowStyle: 'none',
+        padding: '0 2rem',
+        height: '48px',
         display: 'flex',
+        alignItems: 'center',
         justifyContent: 'center',
         transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
       }}
     >
-      <div style={{ display: 'flex', gap: '30px', padding: '0 30px', alignItems: 'center' }}>
+      <div style={{ 
+        display: 'flex', 
+        gap: '24px', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        overflowX: 'auto', 
+        scrollbarWidth: 'none', 
+        msOverflowStyle: 'none',
+        width: '100%',
+        height: '100%'
+      }}>
         {categories.map(cat => (
           <button
             key={cat}
@@ -656,24 +665,20 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
             style={{
               background: 'none',
               border: 'none',
-              fontSize: '0.75rem',
-              fontWeight: 800,
+              fontSize: '0.7rem',
+              fontWeight: 900,
               textTransform: 'uppercase',
-              letterSpacing: '1.5px',
-              color: '#444',
+              letterSpacing: '1.2px',
+              color: '#555',
               cursor: 'pointer',
               whiteSpace: 'nowrap',
               transition: 'all 0.3s ease',
               position: 'relative'
             }}
+            onMouseEnter={(e) => e.target.style.color = 'var(--primary)'}
+            onMouseLeave={(e) => e.target.style.color = '#555'}
           >
             {cat}
-            <motion.div 
-              className="cat-underline"
-              whileHover={{ width: '100%' }}
-              initial={{ width: '0%' }}
-              style={{ position: 'absolute', bottom: -4, left: 0, height: '2px', background: 'var(--primary)' }}
-            />
           </button>
         ))}
       </div>
