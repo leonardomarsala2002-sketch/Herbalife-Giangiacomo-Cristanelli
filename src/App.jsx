@@ -620,19 +620,25 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
       animate={{ y: 0, opacity: 1 }}
       className={`sticky-cat-bar ${scrolled ? 'is-scrolled' : ''}`}
       style={{
-        position: 'sticky',
-        top: scrolled ? '65px' : '85px', // Match navbar height
-        zIndex: 4000,
-        background: 'rgba(255, 255, 255, 0.75)',
+        position: 'fixed',
+        top: scrolled ? 'calc(1rem + 70px)' : 'calc(100px + 90px)', 
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: scrolled ? '95%' : '90%',
+        maxWidth: '1200px',
+        zIndex: 4900,
+        background: 'rgba(255, 255, 255, 0.7)',
         backdropFilter: 'blur(20px) saturate(180%)',
-        borderBottom: '1px solid rgba(0,0,0,0.05)',
-        padding: '12px 0',
+        borderRadius: scrolled ? '20px' : '30px',
+        border: '1px solid rgba(255, 255, 255, 0.4)',
+        boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.05)',
+        padding: '10px 0',
         overflowX: 'auto',
         scrollbarWidth: 'none',
         msOverflowStyle: 'none',
         display: 'flex',
         justifyContent: 'center',
-        transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)'
+        transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
       }}
     >
       <div style={{ display: 'flex', gap: '30px', padding: '0 30px', alignItems: 'center' }}>
@@ -647,7 +653,6 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
                 scrollToSection(sectionId);
               }
             }}
-            className="cat-sticky-item"
             style={{
               background: 'none',
               border: 'none',
@@ -659,8 +664,7 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
               cursor: 'pointer',
               whiteSpace: 'nowrap',
               transition: 'all 0.3s ease',
-              position: 'relative',
-              padding: '4px 0'
+              position: 'relative'
             }}
           >
             {cat}
@@ -668,7 +672,7 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
               className="cat-underline"
               whileHover={{ width: '100%' }}
               initial={{ width: '0%' }}
-              style={{ position: 'absolute', bottom: 0, left: 0, height: '2px', background: 'var(--primary)', transition: 'width 0.3s ease' }}
+              style={{ position: 'absolute', bottom: -4, left: 0, height: '2px', background: 'var(--primary)' }}
             />
           </button>
         ))}
@@ -676,8 +680,6 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
     </motion.div>
   );
 };
-
-
 const App = () => {
   const { t, i18n } = useTranslation();
   const [products, setProducts] = useState([]);
