@@ -621,46 +621,39 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
   };
 
   return (
-    <motion.div 
-      initial={{ x: '-50%', y: -40, opacity: 0 }}
-      animate={{ x: '-50%', y: 0, opacity: 1 }}
-      className={`sticky-bubble-bar-lux ${scrolled ? 'scrolled-bubbles' : ''}`}
+    <div 
+      className={`floating-bubbles-container ${scrolled ? 'is-scrolled' : ''}`}
       style={{
         position: 'fixed',
         left: '50%',
-        top: scrolled ? 'calc(1rem + 72px + 10px)' : 'calc(100px + 72px + 15px)', 
-        width: scrolled ? '95%' : '90%',
-        maxWidth: '1200px',
+        transform: 'translateX(-50%)',
+        top: scrolled ? 'calc(1rem + 75px)' : 'calc(100px + 78px)', 
+        width: '100vw', // Allow full-width overflow
         zIndex: 4900,
-        background: 'rgba(255, 255, 255, 0.7)',
-        backdropFilter: 'blur(35px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(35px) saturate(180%)',
-        borderRadius: '100px',
-        border: '1px solid rgba(120, 190, 32, 0.1)',
-        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.08)',
-        height: '100px',
+        pointerEvents: 'none', // Allow clicking through to underlying content if needed
         display: 'flex',
-        alignItems: 'center',
-        padding: '0 1.5rem',
-        overflow: 'hidden',
+        justifyContent: 'center',
+        padding: '0 20px',
         transition: 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)'
       }}
     >
       <div style={{ 
         display: 'flex', 
-        gap: '1.2rem', 
+        gap: '12px', 
         alignItems: 'center', 
         justifyContent: 'center',
         overflowX: 'auto', 
         scrollbarWidth: 'none', 
         msOverflowStyle: 'none',
-        width: '100%',
-        padding: '0 10px'
+        padding: '10px 40px',
+        pointerEvents: 'auto' // Re-enable clicks for the bubbles
       }}>
         {categories.map(cat => (
           <motion.div
             key={cat}
-            whileHover={{ scale: 1.05 }}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            whileHover={{ scale: 1.08, y: -4, boxShadow: '0 15px 35px rgba(120, 190, 32, 0.2)' }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
               const sectionId = slugify(cat);
@@ -672,42 +665,45 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
             }}
             style={{
               display: 'flex',
-              flexDirection: 'column',
               alignItems: 'center',
-              gap: '6px',
+              gap: '10px',
               cursor: 'pointer',
               flexShrink: 0,
-              minWidth: '65px'
+              padding: '6px 18px 6px 8px',
+              background: 'rgba(255, 255, 255, 0.75)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              borderRadius: '50px',
+              border: '1px solid rgba(120, 190, 32, 0.12)',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
+              transition: 'background 0.3s, border-color 0.3s'
             }}
           >
             <div style={{ 
-              width: '52px', 
-              height: '52px', 
+              width: '42px', 
+              height: '42px', 
               borderRadius: '50%', 
               background: '#fff', 
-              border: '2px solid #fff',
-              boxShadow: '0 6px 20px rgba(0,0,0,0.06)',
               padding: '4px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'all 0.3s ease'
-            }} onMouseEnter={(e)=>e.currentTarget.style.borderColor='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.borderColor='#fff'}>
+              boxShadow: '0 4px 10px rgba(0,0,0,0.04)'
+            }}>
               <img src={getCategoryImage(cat)} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <span style={{ 
-              fontSize: '0.6rem', 
+              fontSize: '0.65rem', 
               fontWeight: 900, 
               textTransform: 'uppercase', 
               color: '#333',
-              textAlign: 'center',
-              whiteSpace: 'nowrap',
-              letterSpacing: '0.5px'
+              letterSpacing: '1px',
+              whiteSpace: 'nowrap'
             }}>{cat}</span>
           </motion.div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 };
 const App = () => {
