@@ -162,7 +162,7 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
 
             <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '8px' }}>
               {!isAdding && !isInCart && <ShoppingCart size={16} />}
-              <span>{isInCart ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello')}</span>
+              <span>{(isInCart && !isAdding) ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello')}</span>
             </span>
           </motion.button>
         </div>
