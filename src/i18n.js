@@ -6,7 +6,7 @@ const resources = {
     translation: {
       "CATEGORIES": "CATEGORIE",
       "hero_title": "Vivi la tua vita al meglio",
-      "hero_sub": "GIANGIACOMO CRISTANELLI",
+      "hero_sub": "LORENZO GIUSTARINI",
       "hero_p": "Sblocca il potenziale del tuo corpo attraverso una nutrizione premium e una scienza più intelligente. Scopri il nuovo standard di vita.",
       "hero_cta": "Sfoglia la Collezione",
       "hero_email_placeholder": "Inserisci la tua email...",
@@ -96,14 +96,25 @@ const resources = {
       "prod_bars_snack": "Barrette Proteiche",
       "prod_tri_blend": "Tri Blend Select",
       "suggested_products": "Ti potrebbe piacere anche",
-      "removed_from_cart": "Tolto dal carrello"
+      "removed_from_cart": "Tolto dal carrello",
+      "SCONTI": "SCONTI",
+      "upsell_exclusive": "OFFERTA ESCLUSIVA",
+      "upsell_title": "Completa il tuo kit e risparmia il 20%",
+      "upsell_p": "Aggiungi uno di questi prodotti consigliati e ricevi uno sconto immediato del 20% sul totale aggiunto.",
+      "add_and_continue": "Aggiungi e continua",
+      "no_thanks": "No grazie, procedi con l'ordine originale",
+      "rating_title": "Lascia una valutazione",
+      "rating_sub": "Qual è la tua esperienza con il nostro servizio?",
+      "rating_thanks": "Grazie per il tuo feedback!",
+      "rating_count": "(128 valutazioni)",
+      "rating_cta": "Clicca su una stella per inviare il tuo voto"
     }
   },
   en: {
     translation: {
       "CATEGORIES": "CATEGORIES",
       "hero_title": "Live Your Best Life",
-      "hero_sub": "GIANGIACOMO CRISTANELLI",
+      "hero_sub": "LORENZO GIUSTARINI",
       "hero_p": "Unlocking your body potential through premium nutrition and smarter science. Discover the new standard of life.",
       "hero_cta": "Shop Collection",
       "hero_email_placeholder": "Enter your email...",
@@ -187,14 +198,25 @@ const resources = {
       "prod_bars_snack": "Protein Bar",
       "prod_tri_blend": "Tri Blend Select",
       "suggested_products": "You might also like",
-      "removed_from_cart": "Removed from cart"
+      "removed_from_cart": "Removed from cart",
+      "SCONTI": "SALE",
+      "upsell_exclusive": "EXCLUSIVE OFFER",
+      "upsell_title": "Complete your kit and save 20%",
+      "upsell_p": "Add one of these recommended products and receive an immediate 20% discount on the total amount added.",
+      "add_and_continue": "Add and continue",
+      "no_thanks": "No thanks, proceed with original order",
+      "rating_title": "Leave a rating",
+      "rating_sub": "How is your experience with our service?",
+      "rating_thanks": "Thanks for your feedback!",
+      "rating_count": "(128 reviews)",
+      "rating_cta": "Click a star to submit your rating"
     }
   },
   fr: {
     translation: {
       "CATEGORIES": "CATÉGORIES",
       "hero_title": "Vivez votre vie au mieux",
-      "hero_sub": "GIANGIACOMO CRISTANELLI",
+      "hero_sub": "LORENZO GIUSTARINI",
       "hero_p": "Liberez le potentiel de votre corps grâce à une nutrition haut de gamme et une science plus intelligente. Découvrez le nuovo standard de vie.",
       "hero_cta": "Acheter la collection",
       "hero_email_placeholder": "Entrez votre email...",
@@ -284,14 +306,25 @@ const resources = {
       "prod_bars_snack": "Barres Protéinées",
       "prod_tri_blend": "Tri Blend Select",
       "suggested_products": "Vous pourriez aussi aimer",
-      "removed_from_cart": "Retiré du panier"
+      "removed_from_cart": "Retiré du panier",
+      "SCONTI": "SOLDES",
+      "upsell_exclusive": "OFFRE EXCLUSIVE",
+      "upsell_title": "Complétez votre kit et économisez 20%",
+      "upsell_p": "Ajoutez l'un de ces produits recommandés et bénéficiez d'une remise immédiate de 20% sur le montant total ajouté.",
+      "add_and_continue": "Ajouter et continuer",
+      "no_thanks": "No grazie, procedi con l'ordine originale",
+      "rating_title": "Laissez une évaluation",
+      "rating_sub": "Quelle est votre expérience avec notre service ?",
+      "rating_thanks": "Merci pour votre feedback !",
+      "rating_count": "(128 évaluations)",
+      "rating_cta": "Cliquez sur une étoile per inviare il tuo voto"
     }
   },
   es: {
     translation: {
       "CATEGORIES": "CATEGORÍAS",
       "hero_title": "Vive tu vida al máximo",
-      "hero_sub": "GIANGIACOMO CRISTANELLI",
+      "hero_sub": "LORENZO GIUSTARINI",
       "hero_p": "Libera el potencial de tu cuerpo a través de una nutrición de primera calidad y una ciencia más intelligente. Descubre el nuevo estándar de vida.",
       "hero_cta": "Comprar colección",
       "hero_email_placeholder": "Tu email aquí...",
@@ -381,7 +414,18 @@ const resources = {
       "prod_bars_snack": "Barritas Proteicas",
       "prod_tri_blend": "Tri Blend Select",
       "suggested_products": "También te potrebbe gustar",
-      "removed_from_cart": "Eliminado del carrito"
+      "removed_from_cart": "Eliminado del carrito",
+      "SCONTI": "OFERTAS",
+      "upsell_exclusive": "OFERTA EXCLUSIVA",
+      "upsell_title": "Completa tu kit y ahorra un 20%",
+      "upsell_p": "Añade uno de estos productos recomendados y recibe un descuento inmediato del 20% sobre el total añadido.",
+      "add_and_continue": "Añadir y continuar",
+      "no_thanks": "No gracias, proceder con el pedido original",
+      "rating_title": "Deja una valoración",
+      "rating_sub": "¿Cómo es tu experiencia con nuestro servicio?",
+      "rating_thanks": "¡Gracias por tus comentarios!",
+      "rating_count": "(128 valoraciones)",
+      "rating_cta": "Haz clic en una estrella para enviar tu voto"
     }
   }
 };

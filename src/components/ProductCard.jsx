@@ -40,8 +40,8 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
 
   const handleBuyClick = (e) => {
     e.stopPropagation();
-    // Buy action triggers upsell
-    triggerUpsell && triggerUpsell(product);
+    // Direct navigation to checkout, no double-adding
+    navigate('/checkout');
   };
 
   const updateQuantity = (e, delta) => {
@@ -81,12 +81,16 @@ const ProductCard = ({ product, addToCart, cartItems = [], triggerUpsell }) => {
         {product.isGrouped && (
           <div className="variant-bubbles-lux" style={{ 
             marginBottom: '1rem', 
-            padding: '10px 5px',
+            margin: '0 -1.5rem', // Break out of parent padding
+            padding: '10px 1.5rem 15px', // Rebuild padding inside scroll view
             display: 'flex', 
             gap: '12px', 
             overflowX: 'auto', 
             msOverflowStyle: 'none',
-            scrollbarWidth: 'none'
+            scrollbarWidth: 'none',
+            WebkitOverflowScrolling: 'touch',
+            position: 'relative',
+            zIndex: 1
           }}>
              {product.variants.map((v) => (
                 <motion.div

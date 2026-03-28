@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Routes, Route, useNavigate, useParams, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring, useTransform, useMotionValue, animate } from 'framer-motion';
-import { ShoppingCart, Search, ArrowUpRight, ChevronDown, Mail, X, ArrowLeft, Phone, LayoutGrid } from 'lucide-react';
+import { ShoppingCart, Search, ArrowUpRight, ChevronDown, Mail, X, ArrowLeft, Phone, LayoutGrid, Menu } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ProductCard from './components/ProductCard';
 import { RefundPolicy, PrivacyPolicy, TermsOfService, DoNotSell, Contact } from './components/Policies';
@@ -19,6 +19,58 @@ const slugify = (text) => {
     .replace(/-+$/, '');            // Trim - from end of text
 };
 
+const PRODUCT_ENHANCEMENTS = {
+  "Formula 1": {
+    "description": "Una miscela equilibrata di proteine di alta qualità, fibre, vitamine e minerali essenziali. Il sostituto del pasto numero 1 al mondo per il controllo del peso, supportato dalla scienza e perfetto per uno stile di vita attivo.",
+    "usage": "Miscelare due cucchiai di polvere (26g) con 250ml di latte parzialmente scremato o bevanda vegetale. Per il controllo del peso: sostituisci due pasti al giorno. Per una nutrizione sana: sostituisci un pasto al giorno.",
+    "benefits": [
+      "222 kcal per porzione per gestire l'apporto calorico",
+      "18g di proteine per supportare la massa muscolare",
+      "5g di fibre per favorire la digestione",
+      "25 vitamine e minerali essenziali tra cui il Cromo"
+    ]
+  },
+  "Aloe": {
+    "description": "Una bevanda rinfrescante a base di puro succo di Aloe Vera (40%). Aiuta a raggiungere i livelli raccomandati di idratazione quotidiana con un gusto delizioso e senza calorie aggiunte.",
+    "usage": "Aggiungere 3 tappini (15ml) a 120ml d'acqua. Per preparare un litro di bevanda, versare 8 cucchiai rasi (120ml) in un contenitore da un litro e riempire con acqua.",
+    "benefits": [
+      "Supporta l'idratazione naturale del corpo",
+      "Basso contenuto calorico e senza zuccheri aggiunti",
+      "Gusto rinfrescante perfetto per ogni momento della giornata",
+      "Aiuta il benessere del sistema digerente"
+    ]
+  },
+  "Infuso": {
+    "description": "Bevanda energetica a base di erbe con caffeina, tè verde e tè nero. Progettata per darti una sferzata di energia, migliorare la concentrazione e aiutarti a bruciare calorie in modo naturale.",
+    "usage": "Sciogliere mezzo cucchiaino (1.7g) in 250ml di acqua calda o fredda. Ideale al mattino per risvegliare il metabolismo o dopo pasto.",
+    "benefits": [
+      "Aumenta lo stato di vigilanza e la concentrazione",
+      "Ipocalorica (circa 6 kcal per tazza)",
+      "Ricca di antiossidanti naturali dal tè",
+      "Disponibile in vari gusti deliziosi"
+    ]
+  },
+  "Rebuild Strength": {
+    "description": "Bevanda proteica per il recupero post-allenamento di alta qualità. Ricca di proteine del latte, aminoacidi ramificati (BCAA) e micronutrienti per atleti esigenti.",
+    "usage": "Sciogliere 5 misurini rasi (50g) in 250ml di acqua. Agitare bene e consumare preferibilmente entro 30 minuti dopo l'attività fisica intensa.",
+    "benefits": [
+      "25g di proteine di siero del latte e caseina",
+      "Alto contenuto di Ferro per il metabolismo energetico",
+      "Contiene L-Glutammina e BCAA per il recupero",
+      "Senza coloranti o dolcificanti artificiali"
+    ]
+  },
+  "Barretta": {
+    "description": "Snack proteico nutriente ideale per chi è sempre in movimento. Fornisce un apporto equilibrato di proteine e carboidrati per placare la fame tra i pasti senza sensi di colpa.",
+    "usage": "Consumare una o due barrette al giorno come spuntino equilibrato, abbinate a una dieta varia e uno stile di vita sano.",
+    "benefits": [
+      "Circa 140 kcal per barretta per uno spuntino leggero",
+      "10g di proteine di alta qualità per la massa muscolare",
+      "Ricca di vitamine B per ridurre stanchezza e affaticamento",
+      "Consistenza morbida e gusto irresistibile"
+    ]
+  }
+};
 
 const MemberDisclosure = ({ onClose }) => {
   return (
@@ -61,14 +113,14 @@ const MemberDisclosure = ({ onClose }) => {
           </button>
           <div style={{ textAlign: 'center', marginBottom: '35px' }}>
             <p style={{ color: '#666', fontSize: '0.95rem', margin: '0 0 10px' }}>This website is operated by the following Herbalife Independent Member:</p>
-            <h2 style={{ fontSize: '1.6rem', fontWeight: '800', color: '#000' }}>Giangiacomo Cristanelli</h2>
+            <h2 style={{ fontSize: '1.6rem', fontWeight: '800', color: '#000' }}>Lorenzo Giustarini</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '40px' }}>
             <div style={{ textAlign: 'center' }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 800, marginBottom: '20px' }}>EXISTING CUSTOMER?</h3>
               <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: '#444' }}>
                 Your one-to-one relationship with your personal Member is key to meeting your nutrition goals. 
-                If Giangiacomo Cristanelli is not your personal Member, we encourage you to purchase 
+                If Lorenzo Giustarini is not your personal Member, we encourage you to purchase 
                 your products from your existing Member. Alternatively, <span onClick={onClose} style={{ fontWeight: 800, textDecoration: 'underline', cursor: 'pointer' }}>click here</span> to continue.
               </p>
             </div>
@@ -106,58 +158,75 @@ const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, 
     }
   };
 
-  const suggested = products
-    .filter(p => (p.type === product.type || p.type === 'Accessories') && p.id !== product.id)
-    .slice(0, 2);
+  const suggested = React.useMemo(() => {
+    return products
+      .filter(p => p.type !== product.type && p.id !== product.id)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 4);
+  }, [product.id, products]);
 
   return (
     <motion.div 
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       style={{
         position: 'fixed', inset: 0, zIndex: 100001,
-        background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(15px)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem'
+        background: 'rgba(255,255,255,0.98)', backdropFilter: 'blur(20px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem'
       }}
     >
       <motion.div 
         initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
-        style={{ width: '100%', maxWidth: '850px', position: 'relative' }}
+        style={{ width: '96%', maxWidth: '1450px', maxHeight: '96vh', position: 'relative', background: '#fff', padding: '1.5rem', borderRadius: '40px', boxShadow: '0 30px 120px rgba(0,0,0,0.2)', display: 'flex', flexDirection: 'column' }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <span className="premium-tag-lux" style={{ color: 'var(--primary)', letterSpacing: '8px', fontWeight: 900, fontSize: '0.9rem', display: 'block', marginBottom: '1.5rem', textTransform: 'uppercase' }}>OFFERTA EXCLUSIVA</span>
-          <h2 style={{ fontSize: '3.5rem', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.1, color: '#000' }}>
-            Completa il tuo kit e <span style={{ color: 'var(--primary)' }}>risparmia il 20%</span>
+        <button onClick={onClose} style={{ position: 'absolute', top: '25px', right: '25px', background: '#f5f5f5', border: 'none', width: '45px', height: '45px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100 }}><X size={24} /></button>
+        
+        <div style={{ textAlign: 'center', padding: '2rem 1rem 1rem', flexShrink: 0 }}>
+          <span className="premium-tag-lux" style={{ color: 'var(--primary)', letterSpacing: '8px', fontWeight: 900, fontSize: '0.85rem', display: 'block', marginBottom: '1rem', textTransform: 'uppercase' }}>{t('upsell_exclusive')}</span>
+          <h2 style={{ fontSize: '3rem', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.1, color: '#000' }}>
+            {t('upsell_title')}
           </h2>
-          <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '1.5rem', fontWeight: 600 }}>Aggiungi uno di questi prodotti consigliati e ricevi uno sconto immediato del 20% sul totale aggiunto.</p>
+          <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '1rem', fontWeight: 600 }}>{t('upsell_p')}</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem', marginBottom: '5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px', padding: '20px 20px 180px', flex: 1 }}>
           {suggested.map(p => (
-            <div key={p.id} className="upsell-card-lux" style={{ background: '#fff', padding: '2.5rem', borderRadius: '32px', boxShadow: '0 20px 60px rgba(0,0,0,0.06)', display: 'flex', gap: '25px', alignItems: 'center', position: 'relative' }}>
-              <div style={{ width: '100px', height: '100px', flexShrink: 0 }}>
+            <motion.div 
+              key={p.id} 
+              whileHover={{ y: -10, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="upsell-card-lux" 
+              onClick={(e) => {
+                if (e.target.tagName !== 'BUTTON') {
+                   navigate(`/product/${encodeURIComponent(p.id)}`, { state: { fromUpsell: true } });
+                   onClose();
+                }
+              }}
+              style={{ background: '#fff', padding: '1.5rem', borderRadius: '32px', boxShadow: '0 15px 45px rgba(0,0,0,0.06)', border: '1.5px solid #f8f8f8', display: 'flex', flexDirection: 'column', gap: '15px', alignItems: 'center', position: 'relative', cursor: 'pointer' }}
+            >
+              <div style={{ width: '110px', height: '110px', flexShrink: 0 }}>
                 <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
-              <div style={{ flex: 1 }}>
-                <h4 style={{ fontSize: '1.1rem', fontWeight: 800, margin: '0 0 10px' }}>{p.name}</h4>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ fontSize: '1rem', color: '#999', textDecoration: 'line-through' }}>£{p.price.toFixed(2)}</span>
-                  <span style={{ fontSize: '1.4rem', color: 'var(--primary)', fontWeight: 900 }}>£{(p.price * 0.8).toFixed(2)}</span>
+              <div style={{ textAlign: 'center', flex: 1, display: 'flex', flexDirection: 'column', width: '100%' }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, margin: '0 0 8px', minHeight: '2.4rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', color: '#000' }}>{p.name}</h4>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '12px' }}>
+                  <span style={{ fontSize: '0.9rem', color: '#999', textDecoration: 'line-through' }}>£{p.price.toFixed(2)}</span>
+                  <span style={{ fontSize: '1.2rem', color: 'var(--primary)', fontWeight: 900 }}>£{(p.price * 0.8).toFixed(2)}</span>
                 </div>
                 <button 
-                  onClick={() => handleAddAndCheckout(p)}
-                  style={{ marginTop: '15px', background: 'var(--primary)', color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '50px', fontWeight: 800, fontSize: '0.85rem', cursor: 'pointer', boxShadow: '0 8px 20px rgba(120, 190, 32, 0.2)' }}
+                  onClick={(e) => { e.stopPropagation(); handleAddAndCheckout(p); }}
+                  style={{ width: '100%', padding: '12px', background: 'var(--primary)', color: '#fff', border: 'none', borderRadius: '50px', fontWeight: 900, fontSize: '0.85rem', cursor: 'pointer', boxShadow: '0 8px 20px rgba(120, 190, 32, 0.2)', transition: 'transform 0.2s' }}
                 >
-                  Aggiungi e vai al pagamento
+                  {t('add_and_continue')}
                 </button>
               </div>
-              <div style={{ position: 'absolute', top: '15px', right: '15px', background: '#ff4d4d', color: '#fff', padding: '5px 12px', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 900 }}>-20%</div>
-            </div>
+              <div style={{ position: 'absolute', top: '15px', right: '15px', background: '#ff4d4d', color: '#fff', padding: '4px 10px', borderRadius: '50px', fontSize: '0.7rem', fontWeight: 900 }}>-20%</div>
+            </motion.div>
           ))}
         </div>
 
-        <div style={{ textAlign: 'center' }}>
-          <button onClick={handleCheckoutOriginal} style={{ fontSize: '1rem', fontWeight: 800, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
-            No grazie, procedi senza sconto
+        <div style={{ textAlign: 'center', padding: '1.5rem 1rem 2.5rem', position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, #fff 80%, transparent)', zIndex: 10 }}>
+          <button onClick={handleCheckoutOriginal} style={{ fontSize: '1rem', fontWeight: 800, color: '#aaa', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+            {t('no_thanks')}
           </button>
         </div>
       </motion.div>
@@ -182,16 +251,14 @@ const scrollToSection = (id) => {
 
 const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsell }) => {
   const navigate = useNavigate();
-  
-  // LOGO SCROLL ANIMATIONS: -20% in Hero (0.8) -> +60% in Sections (1.6)
-  // Animation finishes much faster (10% of total scroll) to be ready for the first section
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.1], [0, -80]);
   const logoScale = useTransform(scrollYProgress, [0, 0.1], [0.8, 1.6]);
   const logoBlur = useTransform(scrollYProgress, [0, 0.1], [0, 10]);
-  
-  // HERO CONTENT GRADUAL VANISH ON SCROLL: Drifts up and fades out
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.9]);
-  const heroY = useTransform(scrollYProgress, [0, 0.15], [0, -200]);
+
+  // PRE-CALCULATED SCROLL TRANSFORMS (Safe range for 500% width)
+  const bannerX1 = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  const bannerX2 = useTransform(scrollYProgress, [0, 1], ["20%", "-20%"]);
   
   const catPriority = [t('cat_kits'), t('cat_shakes'), t('cat_protein'), t('cat_tea_aloe'), t('cat_sport'), t('cat_skin'), t('cat_snacks'), t('cat_accessories')];
   const dynamicCategories = [...new Set(products.map(p => p.type).filter(type => typeof type === 'string' && type.trim() !== ''))]
@@ -204,143 +271,349 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsel
       return idxA - idxB;
     });
 
-  const popularProducts = products.filter(p => [
-    'Formula 1 Nutritional Shake Mix',
-    'Herbal Tea Concentrate',
-    'Aloe Concentrate',
-    'Formula 1 Free From',
-    'High Protein Iced Coffee'
-  ].some(name => (p.name || '').includes(name) || (p.originalTitle || '').includes(name))).slice(0, 6);
+  const logoFilter = useTransform(logoBlur, b => `blur(${b}px)`);
 
   return (
-    <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 5%' }}>
-      <section className="hero-lux" style={{ textAlign: 'center', position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'visible' }}>
-        
-        {/* Background Logo Dynamic */}
-        <motion.div 
-           className="hero-bg-icon-lux" 
-           style={{ 
-             position: 'fixed', 
-             top: '60%', 
-             left: '50%', 
-             transformOrigin: 'center center',
-             x: '-50%',
-             y: '-50%',
-             width: '85vh', 
-             height: '85vh', 
-             opacity: 0.15, 
-             pointerEvents: 'none', 
-             zIndex: 0,
-             scale: logoScale,
-             mixBlendMode: 'multiply',
-             filter: useTransform(logoBlur, b => `blur(${b}px)`)
-           }}
-        >
-          <motion.img 
-            src="/herbalife-official-precise.png" 
-            alt="Official Herbalife Logo"
-            animate={{ 
-              rotate: [0, 2, 0, -2, 0]
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-          />
-        </motion.div>
+    <>
+      {/* Background Logo Restored */}
+      <motion.div 
+         className="hero-bg-icon-lux" 
+         style={{ 
+           position: 'fixed', 
+           top: '60%', 
+           left: '50%', 
+           transformOrigin: 'center center',
+           x: '-50%',
+           y: '-50%',
+           width: '85vh', 
+           height: '85vh', 
+           opacity: 0.15, 
+           pointerEvents: 'none', 
+           zIndex: 0,
+           scale: logoScale,
+           mixBlendMode: 'multiply',
+           filter: logoFilter
+         }}
+      >
+        <motion.img 
+          src="/herbalife-official-precise.png" 
+          alt="Official Herbalife Logo"
+          animate={{ 
+            rotate: [0, 2, 0, -2, 0]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+        />
+      </motion.div>
 
-
-        <motion.div 
-           className="hero-content-lux" 
-           style={{ 
-             position: 'relative', 
-             zIndex: 2,
-             opacity: heroOpacity,
-             y: heroY,
-             scale: heroScale
-           }}
-        >
-          <motion.h1 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="hero-title-lux"
-            style={{ 
-              fontFamily: "'Mrs Saint Delafield', cursive", 
-              fontSize: '8.5rem', 
-              fontWeight: 400, 
-              lineHeight: 0.9,
-              marginBottom: '0px',
-              color: '#1a1a1a',
-              textTransform: 'none'
-            }}
-          >
-            {t('hero_title')}
-          </motion.h1>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <p style={{ 
-              fontFamily: "'Outfit', sans-serif", 
-              fontSize: '1.25rem', 
-              fontWeight: 700, 
-              letterSpacing: '5px', 
-              textTransform: 'uppercase', 
-              color: '#888',
-              marginBottom: '3rem',
-              marginTop: '-65px'
-            }}>
-              Giangiacomo Cristanelli
-            </p>
+      {/* Spacing for a clean start with logo in background (Centered) */}
+      <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 5%' }}>
+        <div style={{ height: '18rem' }} />
+      </div>
  
-            <motion.div 
-               whileHover={{ scale: 1.05 }}
-               whileTap={{ scale: 0.98 }}
-               style={{ display: 'inline-flex', alignItems: 'center', gap: '15px', background: 'var(--primary)', color: '#fff', padding: '1.2rem 2.8rem', borderRadius: '50px', cursor: 'pointer', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '2px', fontSize: '1rem', boxShadow: '0 15px 35px rgba(120, 190, 32, 0.25)', border: 'none' }}
-               onClick={() => {
-                 const firstSection = dynamicCategories[0];
-                 if (firstSection) {
-                    const el = document.getElementById(slugify(firstSection));
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                 }
-               }}
-            >
-              <span>{t('hero_view_products') || 'Visualizza i prodotti'}</span>
-              <ChevronDown size={22} strokeWidth={2.5} />
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      </section>
- 
-      <div style={{ height: '8rem' }} /> {/* Extra spacing before catalog */}
- 
-      {dynamicCategories.map((catName) => {
+      {dynamicCategories.map((catName, idx) => {
         const catProducts = products.filter(p => p.type === catName);
         if (catProducts.length === 0) return null;
         const sectionId = slugify(catName);
 
         return (
-          <motion.div 
-            key={sectionId} id={sectionId} className="section-wrapper-lux" 
-            style={{ marginBottom: '6rem', position: 'relative', zIndex: 1 }}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <div className="dynamic-section-title-lux" style={{ marginBottom: '4rem', paddingLeft: '1rem', borderLeft: '4px solid var(--primary)' }}>
-              <span className="premium-tag-lux" style={{ color: 'var(--primary)', letterSpacing: '4px', fontWeight: 800, fontSize: '0.85rem', textTransform: 'uppercase' }}>{t('premium_formula')}</span>
-              <h2 style={{ fontSize: '3.5rem', fontWeight: 900, letterSpacing: '-0.03em', marginTop: '10px' }}>{catName}</h2>
+          <React.Fragment key={sectionId}>
+            <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 5%' }}>
+              <motion.div 
+                id={sectionId} className="section-wrapper-lux" 
+                style={{ marginBottom: '6rem', position: 'relative', zIndex: 1 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1, ease: "easeOut" }}
+              >
+                <div className="dynamic-section-title-lux" style={{ marginBottom: '4rem', paddingLeft: '1rem', borderLeft: '4px solid var(--primary)' }}>
+                  <span className="premium-tag-lux" style={{ color: 'var(--primary)', letterSpacing: '4px', fontWeight: 800, fontSize: '0.85rem', textTransform: 'uppercase' }}>{t('premium_formula')}</span>
+                  <h2 style={{ fontSize: '3.5rem', fontWeight: 900, letterSpacing: '-0.03em', marginTop: '10px' }}>{catName}</h2>
+                </div>
+                <div className="grid-lux">
+                  {catProducts.map(p => (
+                    <ProductCard key={p.id} product={p} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />
+                  ))}
+                </div>
+              </motion.div>
             </div>
-            <div className="grid-lux">
-              {catProducts.map(p => (
-                <ProductCard key={p.id} product={p} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />
-              ))}
-            </div>
-          </motion.div>
+
+            {idx === 2 && (
+              <div 
+                className="scrolling-banners-container" 
+                style={{ 
+                  margin: '8rem 0', 
+                  overflow: 'visible', 
+                  position: 'relative', 
+                  minHeight: '350px', 
+                  width: '100vw', 
+                  left: '50%', 
+                  right: '50%', 
+                  marginLeft: '-50vw', 
+                  marginRight: '-50vw',
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center' 
+                }}
+              >
+                <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  
+                  {/* Banner 1: INTENSE PARALLAX - PULSING TEXT - Tilted DOWN ( \ ) */}
+                  <div style={{ position: 'absolute', top: '50%', left: '-200%', width: '500%', transform: 'translateY(-50%) rotate(-10.83deg)', zIndex: 1, pointerEvents: 'none', display: 'flex', justifyContent: 'center' }}>
+                    <motion.div 
+                      style={{ 
+                        x: bannerX1,
+                        background: '#fff', color: 'var(--primary)', 
+                        display: 'inline-flex', whiteSpace: 'nowrap', padding: '22px 0', 
+                        alignItems: 'center',
+                        borderTop: '2.5px solid var(--primary)',
+                        borderBottom: '2.5px solid var(--primary)',
+                        willChange: 'transform'
+                      }}
+                    >
+                      {[...Array(40)].map((_, i) => (
+                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '25px', padding: '0 35px' }}>
+                          <motion.span 
+                            animate={{ scale: [1, 1.05, 1], opacity: [1, 0.8, 1] }}
+                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.05 }}
+                            style={{ fontSize: '4.3rem', fontWeight: 1000, textTransform: 'uppercase', letterSpacing: '-2px', fontFamily: "'Outfit', sans-serif" }}
+                          >
+                            {t('SCONTI') || 'SCONTI'}
+                          </motion.span>
+                          <img src="/herbalife-official-precise.png" alt="Herbalife" style={{ height: '5rem', width: 'auto', objectFit: 'contain' }} />
+                        </div>
+                      ))}
+                    </motion.div>
+                  </div>
+                  
+                  {/* Banner 2: INTENSE PARALLAX - PULSING TEXT - Tilted UP ( / ) */}
+                  <div style={{ position: 'absolute', top: '50%', left: '-200%', width: '500%', transform: 'translateY(-50%) rotate(10.83deg)', zIndex: 2, pointerEvents: 'none', display: 'flex', justifyContent: 'center' }}>
+                    <motion.div 
+                      style={{ 
+                        x: bannerX2,
+                        background: '#fff', color: 'var(--primary)', 
+                        display: 'inline-flex', whiteSpace: 'nowrap', padding: '22px 0', 
+                        alignItems: 'center',
+                        borderTop: '2.5px solid var(--primary)',
+                        borderBottom: '2.5px solid var(--primary)',
+                        willChange: 'transform'
+                      }}
+                    >
+                      {[...Array(40)].map((_, i) => (
+                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '25px', padding: '0 35px' }}>
+                          <img src="/herbalife-official-precise.png" alt="Herbalife" style={{ height: '5rem', width: 'auto', objectFit: 'contain' }} />
+                          <motion.span 
+                            animate={{ scale: [1, 1.05, 1], opacity: [1, 0.8, 1] }}
+                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.05 }}
+                            style={{ fontSize: '4.3rem', fontWeight: 1000, textTransform: 'uppercase', letterSpacing: '-2px', fontFamily: "'Outfit', sans-serif" }}
+                          >
+                            {t('SCONTI') || 'SCONTI'}
+                          </motion.span>
+                        </div>
+                      ))}
+                    </motion.div>
+                  </div>
+
+                </div>
+              </div>
+            )}
+
+            {/* Community & WhatsApp Section after 8th Category (idx === 7) - STABLE BREAKOUT */}
+            {idx === 7 && (
+              <div 
+                className="community-section-lux" 
+                style={{ 
+                  margin: '8rem calc(50% - 50vw)', 
+                  width: '100vw', 
+                  background: '#f8fbf4',
+                  padding: '6rem 5%',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  boxSizing: 'border-box'
+                }}
+              >
+                <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1 }}
+                  >
+                    <span className="premium-tag-lux" style={{ color: 'var(--primary)', letterSpacing: '8px', fontWeight: 800, fontSize: '0.9rem', textTransform: 'uppercase', display: 'block', marginBottom: '2rem' }}>WELLNESS COMMUNITY</span>
+                    <h2 style={{ fontSize: '4rem', fontWeight: 900, letterSpacing: '-0.04em', color: '#000', lineHeight: 1.1, marginBottom: '2rem' }}>
+                       Resta in contatto. <br />
+                       <span style={{ color: 'var(--primary)' }}>Tieniti aggiornato.</span>
+                    </h2>
+                    <p style={{ fontSize: '1.25rem', color: '#666', maxWidth: '600px', margin: '0 auto 4rem', fontWeight: 500 }}>
+                      Iscriviti alla nostra newsletter per novità esclusive o contattaci direttamente su WhatsApp per una consulenza personalizzata.
+                    </p>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3rem' }}>
+                      {/* Email Signup */}
+                      <div style={{ width: '100%', maxWidth: '500px', display: 'flex', gap: '15px', background: '#fff', padding: '10px', borderRadius: '100px', boxShadow: '0 20px 50px rgba(0,0,0,0.05)', border: '1px solid #eee' }}>
+                        <input 
+                          type="email" 
+                          placeholder="La tua email..." 
+                          style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', padding: '0 25px', fontSize: '1rem', fontWeight: 600, fontFamily: 'Outfit, sans-serif' }}
+                        />
+                        <button style={{ background: 'var(--primary)', color: '#fff', border: 'none', padding: '15px 40px', borderRadius: '50px', fontWeight: 900, cursor: 'pointer', transition: 'transform 0.3s' }}>
+                          UNISCITI
+                        </button>
+                      </div>
+
+                      {/* WhatsApp Button */}
+                      <a 
+                        href="https://wa.me/351920193049" 
+                        target="_blank" 
+                        rel="noreferrer"
+                        style={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          gap: '15px', 
+                          background: '#25D366', 
+                          color: '#fff', 
+                          padding: '1.2rem 3.5rem', 
+                          borderRadius: '100px', 
+                          fontSize: '1.1rem', 
+                          fontWeight: 900, 
+                          textDecoration: 'none',
+                          boxShadow: '0 15px 40px rgba(37, 211, 102, 0.25)',
+                          transition: 'all 0.3s ease'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      >
+                        <Phone size={24} fill="#fff" />
+                        CONTATTACI SU WHATSAPP
+                      </a>
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Decorative background logo */}
+                <div style={{ position: 'absolute', bottom: '-50px', right: '-50px', opacity: 0.03, pointerEvents: 'none' }}>
+                  <img src="/herbalife-official-precise.png" alt="logo" style={{ width: '400px' }} />
+                </div>
+              </div>
+            )}
+            {/* RECOVERY: Ensure both sections appear even if category count is low */}
+            {idx === Math.min(7, dynamicCategories.length - 1) && idx !== 12 && (
+               /* This covers the 8th position or the end if shorter */
+               null // Just a placeholder check to not duplicate if already handled
+            )}
+            
+            {/* Show RatingWidget specifically after the 13th category OR at the very end if catalog is shorter */}
+            {(idx === 12 || (dynamicCategories.length < 13 && idx === dynamicCategories.length - 1)) && <RatingWidget />}
+          </React.Fragment>
         );
       })}
+    </>
+  );
+};
+
+const RatingWidget = () => {
+  const { t } = useTranslation();
+  const [hovered, setHovered] = useState(-1);
+  const [sent, setSent] = useState(false);
+  
+  return (
+    <div 
+      className="rating-section-lux" 
+      style={{ 
+        margin: '6rem calc(50% - 50vw)', 
+        width: '100vw', 
+        background: '#fcfdfa',
+        padding: '5rem 5%',
+        position: 'relative',
+        overflow: 'hidden',
+        boxSizing: 'border-box',
+        borderTop: '1px solid #f0f0f0',
+        borderBottom: '1px solid #f0f0f0',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        style={{ 
+          background: '#fff', 
+          padding: '3.5rem', 
+          borderRadius: '40px', 
+          boxShadow: '0 15px 50px rgba(0,0,0,0.04)', 
+          border: '1.5px solid #f0f2ee',
+          textAlign: 'center',
+          maxWidth: '800px',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '15px'
+        }}
+      >
+        {!sent ? (
+          <>
+            <span className="premium-tag-lux" style={{ color: 'var(--primary)', letterSpacing: '8px', fontWeight: 900, fontSize: '0.8rem', textTransform: 'uppercase' }}>FEEDBACK</span>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: 900, letterSpacing: '-0.04em', color: '#000', marginBottom: '5px' }}>
+              {t('rating_title')}
+            </h2>
+            <p style={{ color: '#666', fontSize: '1.1rem', fontWeight: 600, marginBottom: '1.5rem' }}>{t('rating_sub')}</p>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+              <div 
+                style={{ display: 'flex', gap: '12px' }}
+                onMouseLeave={() => setHovered(-1)}
+              >
+                {[...Array(5)].map((_, i) => (
+                  <motion.span 
+                    key={i} 
+                    onMouseEnter={() => setHovered(i)}
+                    onClick={() => setSent(true)}
+                    whileHover={{ scale: 1.25, rotate: 15 }}
+                    whileTap={{ scale: 0.9 }}
+                    style={{ 
+                      fontSize: 'clamp(2.5rem, 10vw, 4.5rem)', 
+                      color: i <= hovered ? 'var(--primary)' : '#e0e0e0', 
+                      cursor: 'pointer', 
+                      lineHeight: 1,
+                      transition: 'color 0.1s' 
+                    }}
+                  >
+                    ★
+                  </motion.span>
+                ))}
+              </div>
+              
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '10px' }}>
+                <span style={{ fontSize: '1.4rem', fontWeight: 900, color: '#000' }}>4.9 / 5.0</span>
+                <span style={{ color: '#aaa', fontWeight: 600, fontSize: '0.9rem' }}>{t('rating_count')}</span>
+              </div>
+            </div>
+
+            <p style={{ color: '#999', fontSize: '0.95rem', fontWeight: 500, marginTop: '20px' }}>
+              {t('rating_cta')}
+            </p>
+          </>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            style={{ padding: '2rem 0', textAlign: 'center' }}
+          >
+            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>✨</div>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '10px' }}>{t('rating_thanks')}</h2>
+            <button onClick={() => setSent(false)} style={{ marginTop: '20px', background: 'none', border: 'none', color: '#bbb', fontWeight: 800, cursor: 'pointer', fontSize: '0.8rem', textDecoration: 'underline' }}>Valuta di nuovo</button>
+          </motion.div>
+        )}
+      </motion.div>
+      
+      <div style={{ position: 'absolute', bottom: '-20px', left: '10%', opacity: 0.03, pointerEvents: 'none' }}>
+        <img src="/herbalife-official-precise.png" alt="logo" style={{ width: '250px' }} />
+      </div>
     </div>
   );
 };
@@ -350,6 +623,7 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
   const idValue = params['*'] || params.id || '';
   const navigate = useNavigate();
   const location = useLocation();
+  const fromUpsell = location.state?.fromUpsell;
   
   // Normalize ID for robust matching
   const normalizeId = (val) => decodeURIComponent(val || '').replace(/\/\//g, '/').toLowerCase();
@@ -365,7 +639,8 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
   const handleAddToCartDetail = () => {
     if (isAdding) return;
     setIsAdding(true);
-    addToCart && addToCart(product, quantity, currentFlavor, false); // Just add to cart silently first
+    // If from upsell, we want to buy now with discount
+    addToCart && addToCart(product, quantity, currentFlavor, fromUpsell, fromUpsell); 
     setTimeout(() => {
       setIsAdding(false);
     }, 900);
@@ -446,8 +721,9 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
                 £{(currentPrice * 1.2).toFixed(2)}
               </span>
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                <div className="price-tag-lux" style={{ display: 'inline-block', background: 'var(--primary)', color: '#fff', padding: '10px 24px', borderRadius: '16px', fontSize: '2.5rem', fontWeight: 800, lineHeight: 1 }}>
-                  £{currentPrice.toFixed(2)}
+                <div className="price-tag-lux" style={{ display: 'inline-block', background: 'var(--primary)', color: '#fff', padding: '10px 24px', borderRadius: '16px', fontSize: '2.5rem', fontWeight: 800, lineHeight: 1, position: 'relative' }}>
+                  £{(fromUpsell ? currentPrice * 0.8 : currentPrice).toFixed(2)}
+                  {fromUpsell && <span style={{ position: 'absolute', top: '-10px', right: '-10px', background: '#ff4d4d', color: '#fff', fontSize: '0.8rem', padding: '4px 8px', borderRadius: '10px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>-20%</span>}
                 </div>
                 {isInCart && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '15px', background: '#f0fff4', padding: '8px 20px', borderRadius: '50px', border: '2px solid var(--primary)' }}>
@@ -462,16 +738,57 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
             </div>
             
           </div>
+            
+          {/* Enhanced Description Sections */}
+          {(() => {
+            const foundKey = Object.keys(PRODUCT_ENHANCEMENTS).find(k => product.name.includes(k) || (t(product.type)||'').includes(k));
+            const enhanced = foundKey ? PRODUCT_ENHANCEMENTS[foundKey] : null;
+            
+            if (!enhanced) {
+              return <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: '#444', marginBottom: '3rem' }}>{product.description || t('premium_formula')}</p>;
+            }
 
-          <div style={{ display: 'flex', gap: '15px', marginBottom: '3rem' }}>
+            return (
+              <div className="enhanced-info-lux" style={{ marginTop: '2rem' }}>
+                <div style={{ marginBottom: '2.5rem' }}>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '1rem', color: '#000' }}>
+                    {t('product_overview') || 'Dettagli Prodotto'}
+                  </h4>
+                  <p style={{ fontSize: '1.15rem', lineHeight: '1.7', color: '#444' }}>{enhanced.description}</p>
+                </div>
+
+                <div style={{ marginBottom: '2.5rem' }}>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '1rem', color: '#000' }}>
+                    {t('key_benefits') || 'Benefici Chiave'}
+                  </h4>
+                  <ul style={{ paddingLeft: '1.5rem', margin: 0 }}>
+                    {enhanced.benefits.map((b, i) => (
+                      <li key={i} style={{ fontSize: '1.05rem', color: '#444', marginBottom: '8px', lineHeight: '1.5' }}>{b}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div style={{ marginBottom: '3rem' }}>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '1rem', color: '#000' }}>
+                    {t('usage') || 'Modalità d\'uso'}
+                  </h4>
+                  <p style={{ fontSize: '1.05rem', lineHeight: '1.6', color: '#444', fontStyle: 'italic', padding: '15px', background: '#f9f9f9', borderRadius: '12px', borderLeft: '4px solid var(--primary)' }}>
+                    {enhanced.usage}
+                  </p>
+                </div>
+              </div>
+            );
+          })()}
+
+          <div style={{ display: 'flex', gap: '15px' }}>
             <motion.button 
               onClick={(e) => {
                 e.stopPropagation();
                 if (isInCart) {
-                  // "Compra ora" -> trigger upsell
-                  triggerUpsell(product);
+                  // Direct navigation to checkout
+                  navigate('/checkout');
                 } else {
-                  // "Aggiungi al carrello" -> silent add
+                  // "Aggiungi al carrello" -> check if we should add with discount
                   handleAddToCartDetail();
                 }
               }}
@@ -532,7 +849,7 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
                   animate={isAdding ? { opacity: [1, 0, 1] } : { opacity: 1 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {isInCart ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello')}
+                  {fromUpsell ? t('add_and_continue') : (isInCart ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello'))}
                 </motion.span>
               </span>
             </motion.button>
@@ -1177,10 +1494,13 @@ const App = () => {
       if (!event.target.closest('.cat-picker-lux') && catOpen) {
         setCatOpen(false);
       }
+      if (!event.target.closest('.cat-menu-btn') && catMenuOpen) {
+        setCatMenuOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
 
-    if (catOpen || searchOpen) {
+    if (catOpen || searchOpen || catMenuOpen) {
       document.documentElement.classList.add('no-scroll-lux');
       if (window.lenis) window.lenis.stop();
     } else {
@@ -1193,7 +1513,7 @@ const App = () => {
       document.documentElement.classList.remove('no-scroll-lux');
       if (window.lenis) window.lenis.start();
     };
-  }, [langOpen, searchOpen, catOpen]);
+  }, [langOpen, searchOpen, catOpen, catMenuOpen]);
 
   const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
 
@@ -1255,10 +1575,42 @@ const App = () => {
             }
           `}</style>
         </div>
+        <div className="logo-hamburger-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="logo-container" style={{ cursor: 'pointer', textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+            <img src="/herbalife-logo.png" alt="Herbalife Logo" className="logo-lux" style={{ height: scrolled ? '34px' : '46px', transition: 'all 0.4s' }} />
+          </Link>
 
-        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="logo-container" style={{ cursor: 'pointer', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <img src="/herbalife-logo.png" alt="Herbalife Logo" className="logo-lux" style={{ height: scrolled ? '28px' : '38px', transition: 'all 0.4s' }} />
-        </Link>
+          <motion.button
+            key="cat-menu-btn"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            onClick={(e) => { e.stopPropagation(); setCatMenuOpen(!catMenuOpen); }}
+            className={`icon-btn-lux ${catMenuOpen ? 'active' : ''} cat-menu-btn`}
+            style={{ 
+              background: 'none',
+              color: 'var(--primary)',
+              borderRadius: '12px', padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', border: 'none', transition: 'all 0.3s ease',
+              zIndex: 10
+            }}
+          >
+            <Menu size={32} />
+          </motion.button>
+
+          <span className="owner-name-lux" style={{ 
+            marginLeft: '5px',
+            fontFamily: "'Outfit', sans-serif", 
+            fontSize: '0.82rem', 
+            fontWeight: 900, 
+            letterSpacing: '2.5px', 
+            textTransform: 'uppercase', 
+            color: '#000',
+            whiteSpace: 'nowrap',
+            transition: 'all 0.3s'
+          }}>
+            Lorenzo Giustarini
+          </span>
+        </div>
 
         <div className="nav-actions-lux">
           <div className="lang-picker-box">
@@ -1285,7 +1637,7 @@ const App = () => {
             <button className="icon-btn-lux search-trigger-lux" onClick={() => { setSearchOpen(!searchOpen); setTimeout(() => document.getElementById('search-input')?.focus(), 100); }}><Search size={22} /></button>
             <AnimatePresence>
               {searchOpen && (
-                <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} className="search-dropdown-lux" style={{ position: 'absolute', top: 'calc(100% + 20px)', right: '-50px', background: '#fff', borderRadius: '24px', boxShadow: '0 20px 50px rgba(0,0,0,0.15)', padding: '24px', zIndex: 9999, border: '1px solid #eee', cursor: 'default' }} onClick={(e) => e.stopPropagation()}>
+                <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} className="search-dropdown-lux" style={{ position: 'absolute', top: 'calc(100% + 20px)', right: '0px', width: '350px', background: '#fff', borderRadius: '24px', boxShadow: '0 20px 50px rgba(0,0,0,0.15)', padding: '24px', zIndex: 9999, border: '1px solid #eee', cursor: 'default' }} onClick={(e) => e.stopPropagation()}>
                   <div style={{ display: 'flex', alignItems: 'center', borderBottom: '2px solid #f0f0f0', paddingBottom: '15px' }}>
                     <Search size={20} color="#999" style={{ marginRight: '15px' }} />
                     <input id="search-input" type="text" placeholder={t('search_placeholder')} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: '100%', fontSize: '1.1rem', fontWeight: 600, border: 'none', outline: 'none', background: 'transparent', fontFamily: "'Outfit', sans-serif", color: '#000' }} autoComplete="off" />
@@ -1318,41 +1670,24 @@ const App = () => {
           </div>
 
           <AnimatePresence>
-            {scrolled && (
-              <motion.button
-                key="cat-menu-btn"
-                initial={{ opacity: 0, scale: 0.8, x: 20 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.8, x: 20 }}
-                onClick={(e) => { e.stopPropagation(); setCatMenuOpen(!catMenuOpen); }}
-                className={`icon-btn-lux ${catMenuOpen ? 'active' : ''}`}
-                style={{ 
-                  background: catMenuOpen ? 'var(--primary)' : 'rgba(120, 190, 32, 0.08)',
-                  color: catMenuOpen ? '#fff' : 'var(--primary)',
-                  borderRadius: '12px', padding: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  marginLeft: '10px', cursor: 'pointer', border: 'none', transition: 'all 0.3s ease'
-                }}
-              >
-                <LayoutGrid size={22} />
-              </motion.button>
-            )}
-          </AnimatePresence>
-
-          <AnimatePresence>
-            {scrolled && catMenuOpen && (
+            {catMenuOpen && (
               <motion.div
                 initial={{ opacity: 0, y: 15, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 15, scale: 0.95 }}
+                className="cat-dropdown-lux"
                 style={{
-                  position: 'absolute', top: 'calc(100% + 20px)', right: '70px',
+                  position: 'absolute', top: 'calc(100% + 15px)', left: '100px', // Adjusted to follow the group
                   background: 'rgba(255, 255, 255, 0.98)', backdropFilter: 'blur(30px)', borderRadius: '24px',
-                  padding: '15px', boxShadow: '0 25px 60px rgba(0,0,0,0.15)', width: '260px', zIndex: 11000,
-                  border: '1px solid rgba(120, 190, 32, 0.1)'
+                  padding: '24px', boxShadow: '0 25px 60px rgba(0,0,0,0.12)', width: '320px', zIndex: 11000,
+                  border: '1px solid rgba(120, 190, 32, 0.08)',
+                  maxHeight: '450px', overflowY: 'auto',
+                  scrollbarWidth: 'none', msOverflowStyle: 'none'
                 }}
+                data-lenis-prevent
                 onClick={(e) => e.stopPropagation()}
               >
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <span style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', color: '#999', letterSpacing: '2px', marginBottom: '10px', padding: '0 10px' }}>{t('categories')}</span>
                   {dynamicCategories.map(cat => (
                     <div 
@@ -1364,15 +1699,23 @@ const App = () => {
                         setCatMenuOpen(false);
                       }}
                       style={{ 
-                        display: 'flex', alignItems: 'center', gap: '15px', padding: '10px', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s'
+                        display: 'flex', alignItems: 'center', gap: '18px', padding: '12px 10px', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s'
                       }}
                       onMouseEnter={(e)=>e.currentTarget.style.background='rgba(120, 190, 32, 0.05)'}
                       onMouseLeave={(e)=>e.currentTarget.style.background='transparent'}
                     >
-                      <div style={{ width: '32px', height: '32px', background: '#f8f8f8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px' }}>
-                         <img src={products.find(p => (t(p.type)||p.type) === cat || p.category === cat)?.image || 'https://via.placeholder.com/30'} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                      <div style={{ width: '52px', height: '52px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0', background: 'transparent' }}>
+                         <img 
+                           src={
+                             products.find(p => (t(p.type)||p.type) === cat || p.category === cat)?.image || 
+                             products.find(p => p.name.includes('H24') || p.type.includes('Sport'))?.image ||
+                             'https://images.herbalife.com/content/dam/herbalife/global/products/pdp/214k_global_en_pdp_01.jpg'
+                           } 
+                           alt={cat} 
+                           style={{ width: '100%', height: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }} 
+                         />
                       </div>
-                      <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#333' }}>{cat}</span>
+                      <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#000', letterSpacing: '0.5px' }}>{cat}</span>
                     </div>
                   ))}
                 </div>
@@ -1408,15 +1751,7 @@ const App = () => {
         </div>
       </nav>
 
-      <CategoryStickyBar 
-        categories={dynamicCategories} 
-        scrolled={scrolled} 
-        t={t} 
-        location={location} 
-        navigate={navigate} 
-        scrollToSection={scrollToSection} 
-        products={products}
-      />
+
 
       <AnimatePresence>
         {toastMessage && (
@@ -1485,7 +1820,7 @@ const App = () => {
                     <span>£{totalCartPrice.toFixed(2)}</span>
                   </div>
                   <button 
-                    onClick={() => { setCartOpen(false); triggerUpsell(); }}
+                    onClick={() => { setCartOpen(false); navigate('/checkout'); }}
                     style={{ width: '100%', padding: '1.3rem', background: 'var(--primary)', color: '#fff', border: 'none', borderRadius: '24px', fontSize: '1.2rem', fontWeight: 800, cursor: 'pointer', boxShadow: '0 10px 20px rgba(120, 190, 32, 0.2)', transition: 'transform 0.2s' }} 
                     onMouseEnter={(e)=>e.currentTarget.style.transform='translateY(-2px)'} 
                     onMouseLeave={(e)=>e.currentTarget.style.transform='translateY(0)'}
@@ -1532,15 +1867,15 @@ const App = () => {
                 <img src="/herbalife-logo.png" alt="Herbalife Logo" style={{ height: '36px', filter: 'brightness(0) invert(1)', cursor: 'pointer' }} />
                 <div style={{ width: '1px', height: '100px', background: 'rgba(255,255,255,0.15)' }} />
                 <div style={{ textAlign: 'left', lineHeight: 1.6, fontSize: '0.85rem', color: '#888' }}>
-                  <div style={{ fontWeight: 800, color: '#fff', fontSize: '1.2rem', marginBottom: '4px' }}>Giangiacomo Cristanelli</div>
-                  <div style={{ fontStyle: 'normal' }}>Via al Poggio 5, 6834 Morbio Inferiore</div>
-                  <div style={{ fontStyle: 'normal' }}>Ticino, Svizzera</div>
-                  <div style={{ marginTop: '8px', fontWeight: 700, color: 'var(--primary)' }}>Tel: +41 763665607</div>
-                  <div style={{ fontWeight: 700, color: 'var(--primary)' }}>info@hlshopnow.com</div>
+                  <div style={{ fontWeight: 800, color: '#fff', fontSize: '1.2rem', marginBottom: '4px' }}>Lorenzo Giustarini</div>
+                  <div style={{ fontStyle: 'normal' }}>Rua de Mertola, 9, 7780-172</div>
+                  <div style={{ fontStyle: 'normal' }}>Castro Verde (Beja), Portogallo</div>
+                  <div style={{ marginTop: '8px', fontWeight: 700, color: 'var(--primary)' }}>Tel: +35 1920 193 049</div>
+                  <div style={{ fontWeight: 700, color: 'var(--primary)' }}>lorenzogiustarini@example.com</div>
                 </div>
               </Link>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', marginTop: '1.5rem', maxWidth: '380px' }}>
-                <a href="https://wa.me/41763665607" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', background: '#25D366', color: '#fff', textDecoration: 'none', padding: '14px 24px', borderRadius: '50px', fontSize: '1rem', fontWeight: 800, transition: 'all 0.3s', boxShadow: '0 10px 20px rgba(37, 211, 102, 0.2)' }}>
+                <a href="https://wa.me/351920193049" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', background: '#25D366', color: '#fff', textDecoration: 'none', padding: '14px 24px', borderRadius: '50px', fontSize: '1rem', fontWeight: 800, transition: 'all 0.3s', boxShadow: '0 10px 20px rgba(37, 211, 102, 0.2)' }}>
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.878-.788-1.47-1.761-1.643-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
                   {t('whatsapp_contact')}
                 </a>
@@ -1573,7 +1908,7 @@ const App = () => {
           <div style={{ borderTop: '1px solid #333', paddingTop: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
             <PaymentIcons />
             <p style={{ color: '#666', fontSize: '0.8rem', textAlign: 'center', lineHeight: 1.8 }}>
-              © 2026, Giangiacomo Cristanelli · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
+              © 2026, Lorenzo Giustarini · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
             </p>
           </div>
         </motion.div>
@@ -1611,7 +1946,7 @@ const App = () => {
         .footer-email-input::placeholder { color: #888; }
         .footer-email-btn:hover { background: #eee !important; }
         .bubbles-inner-lux { scrollbar-width: none !important; -ms-overflow-style: none !important; }
-        .bubbles-inner-lux::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
+        .bubbles-inner-lux::-webkit-scrollbar, .cat-dropdown-lux::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
         .cat-bubble-label { opacity: 1; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .cat-bubble-item:hover .cat-bubble-label { color: var(--primary) !important; scale: 1.05; }
         .cat-bubble-item:hover .glass-icon-circle { border-color: var(--primary) !important; background: rgba(255, 255, 255, 0.7); }

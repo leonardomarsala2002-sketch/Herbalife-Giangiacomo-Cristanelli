@@ -36,12 +36,12 @@ const POLICY_TEXTS = {
       title: "Politica di Rimborso",
       body: `
         <div className="rte">
-            <p><strong>Garanzia di rimborso di 30 giorni</strong><br>Herbalife garantisce la qualità e la freschezza dei suoi prodotti per la nutrizione e la cura della persona. Se per qualsiasi motivo non sei completamente soddisfatto di qualsiasi prodotto Herbalife® acquistato direttamente da Herbalife o da un Distributore Indipendente Herbalife, puoi restituirlo entro 30 giorni dal ricevimento per un rimborso completo o uno scambio di prodotto. I rimborsi possono essere richiesti inviandoci un'email a giangiacomo@example.com</p>
+            <p><strong>Garanzia di rimborso di 30 giorni</strong><br>Herbalife garantisce la qualità e la freschezza dei suoi prodotti per la nutrizione e la cura della persona. Se per qualsiasi motivo non sei completamente soddisfatto di qualsiasi prodotto Herbalife® acquistato direttamente da Herbalife o da un Distributore Indipendente Herbalife, puoi restituirlo entro 30 giorni dal ricevimento per un rimborso completo o uno scambio di prodotto. I rimborsi possono essere richiesti inviandoci un'email a lorenzogiustarini@example.com</p>
             <p><br><strong>La Politica</strong><br>La nostra politica dura 30 giorni. Se sono passati 30 giorni dal tuo acquisto, purtroppo non possiamo offrirti un rimborso o uno scambio. Per completare il tuo reso, richiediamo una ricevuta o una prova d'acquisto. Si prega di non rispedire l'acquisto al produttore.</p>
             <p><br><strong>Rimborsi (se applicabile)</strong><br>Una volta ricevuto e ispezionato il tuo reso, ti invieremo un'email per informarti che abbiamo ricevuto l'articolo restituito. Ti informeremo anche dell'approvazione o del rifiuto del tuo rimborso. Se approvato, il rimborso verrà elaborato e un credito verrà automaticamente applicato alla tua carta di credito o al metodo di pagamento originale, entro un certo numero di giorni.</p>
-            <p><br><strong>Rimborsi tardivi o mancanti (se applicabile)</strong><br>Se non hai ancora ricevuto un rimborso, controlla di nuovo il tuo conto bancario. Quindi contatta la società della tua carta di credito, potrebbe volerci del tempo prima che il rimborso venga ufficialmente registrato. Successivamente contatta la tua banca. Spesso c'è un tempo di elaborazione prima che un rimborso venga registrato. Se hai fatto tutto questo e non hai ancora ricevuto il rimborso, ti preghiamo di contattarci all'indirizzo giangiacomo@example.com</p>
-            <p><br><strong>Scambi (se applicabile)</strong><br>Sostituiamo gli articoli solo se sono difettosi o danneggiati. Se hai bisogno di scambiarlo con lo stesso articolo, inviaci un'email a giangiacomo@example.com e invia il tuo articolo a: Herbalife, The Atrium 1 Harefield Road Uxbridge Middlesex UB8 1HB.</p>
-            <p><br><strong>Spedizione</strong><br>Per restituire il tuo prodotto, devi spedirlo a: Herbalife, The Atrium 1 Harefield Road Uxbridge Middlesex UB8 1HB. Sarai responsabile del pagamento delle tue spese di spedizione per la restituzione del tuo articolo. Le spese di spedizione non sono rimborsabili. Se ricevi un rimborso, il costo della spedizione di ritorno verrà detratto dal rimborso. A seconda di dove vivi, il tempo necessario affinché il prodotto sostituito ti raggiunga può variare. Se stai spedendo un articolo superiore a £75, dovresti considerare l'utilizzo di un servizio di spedizione tracciabile o l'acquisto di un'assicurazione sulla spedizione. Non garantiamo che riceveremo l'articolo restituito.</p>
+            <p><br><strong>Rimborsi tardivi o mancanti (se applicabile)</strong><br>Se non hai ancora ricevuto un rimborso, controlla di nuovo il tuo conto bancario. Quindi contatta la società della tua carta di credito, potrebbe volerci del tempo prima che il rimborso venga ufficialmente registrato. Successivamente contatta la tua banca. Spesso c'è un tempo di elaborazione prima che un rimborso venga registrato. Se hai fatto tutto questo e non hai ancora ricevuto il rimborso, ti preghiamo di contattarci all'indirizzo lorenzogiustarini@example.com</p>
+            <p><br><strong>Scambi (se applicabile)</strong><br>Sostituiamo gli articoli solo se sono difettosi o danneggiati. Se hai bisogno di scambiarlo con lo stesso articolo, inviaci un'email a lorenzogiustarini@example.com e invia il tuo articolo a: Herbalife, Rua de Mertola, 9, 7780-172 Castro Verde (Beja), Portogallo.</p>
+            <p><br><strong>Spedizione</strong><br>Per restituire il tuo prodotto, devi spedirlo a: Herbalife, Rua de Mertola, 9, 7780-172 Castro Verde (Beja), Portogallo. Sarai responsabile del pagamento delle tue spese di spedizione per la restituzione del tuo articolo. Le spese di spedizione non sono rimborsabili. Se ricevi un rimborso, il costo della spedizione di ritorno verrà detratto dal rimborso. A seconda di dove vivi, il tempo necessario affinché il prodotto sostituito ti raggiunga può variare. Se stai spedendo un articolo superiore a £75, dovresti considerare l'utilizzo di un servizio di spedizione tracciabile o l'acquisto di un'assicurazione sulla spedizione. Non garantiamo che riceveremo l'articolo restituito.</p>
         </div>`
     },
     privacy: {
@@ -71,7 +71,7 @@ const POLICY_TEXTS = {
         <div className="rte">
             <h1>Termini e Condizioni</h1>
             <h2>ARTICOLO 1 - VALIDITÀ</h2>
-            <p>Questi termini e condizioni si applicano alla vendita di tutti i prodotti offerti su questo sito web. L'editore è "Giangiacomo Cristanelli", Tel: +41763665607.</p>
+            <p>Questi termini e condizioni si applicano alla vendita di tutti i prodotti offerti su questo sito web. L'editore è "Lorenzo Giustarini", Tel: +35 1920 193 049.</p>
             <h2>ARTICOLO 2 - PRODOTTI</h2>
             <p>I prodotti offerti su questo sito web sono clinicamente testati per dimostrarne l'efficacia e la sicurezza. Le foto pubblicate sul sito non vincolano il venditore.</p>
             <h2>ARTICOLO 3 - PREZZI</h2>
@@ -98,12 +98,12 @@ const POLICY_TEXTS = {
       title: "Refund Policy",
       body: `
         <div className="rte">
-            <p><strong>30 Day Money-back Guarantee</strong><br>Herbalife guarantees the quality and freshness of its nutrition and personal care products. If for any reason you are not completely satisfied with any Herbalife® product purchased directly from Herbalife or a Herbalife Independent Distributor, you may return it within 30 days from receipt for a full refund or product exchange. Refunds may be obtained by emailing us at giangiacomo@example.com</p>
+            <p><strong>30 Day Money-back Guarantee</strong><br>Herbalife guarantees the quality and freshness of its nutrition and personal care products. If for any reason you are not completely satisfied with any Herbalife® product purchased directly from Herbalife or a Herbalife Independent Distributor, you may return it within 30 days from receipt for a full refund or product exchange. Refunds may be obtained by emailing us at lorenzogiustarini@example.com</p>
             <p><br><strong>The Policy</strong><br>Our policy lasts 30 days. If 30 days have gone by since your purchase, unfortunately, we can’t offer you a refund or exchange. To complete your return, we require a receipt or proof of purchase. Please do not send your purchase back to the manufacturer.</p>
             <p><br><strong>Refunds (if applicable)</strong><br>Once your return is received and inspected, we will send you an email to notify you that we have received your returned item. We will also notify you of the approval or rejection of your refund. If you are approved, then your refund will be processed, and a credit will automatically be applied to your credit card or original method of payment, within a certain amount of days.</p>
-            <p><br><strong>Late or missing refunds (if applicable)</strong><br>If you haven’t received a refund yet, first check your bank account again. Then contact your credit card company, it may take some time before your refund is officially posted. Next contact your bank. There is often some processing time before a refund is posted. If you’ve done all of this and you still have not received your refund yet, please contact us at giangiacomo@example.com</p>
-            <p><br><strong>Exchanges (if applicable)</strong><br>We only replace items if they are defective or damaged. If you need to exchange it for the same item, send us an email at giangiacomo@example.com and send your item to: Herbalife, The Atrium 1 Harefield Road Uxbridge Middlesex UB8 1HB.</p>
-            <p><br><strong>Shipping</strong><br>To return your product, you should mail your product to: Herbalife, The Atrium 1 Harefield Road Uxbridge Middlesex UB8 1HB. You will be responsible for paying for your own shipping costs for returning your item. Shipping costs are non-refundable. If you receive a refund, the cost of return shipping will be deducted from your refund. Depending on where you live, the time it may take for your exchanged product to reach you, may vary. If you are shipping an item over £75, you should consider using a trackable shipping service or purchasing shipping insurance. We don’t guarantee that we will receive your returned item.</p>
+            <p><br><strong>Late or missing refunds (if applicable)</strong><br>If you haven’t received a refund yet, first check your bank account again. Then contact your credit card company, it may take some time before your refund is officially posted. Next contact your bank. There is often some processing time before a refund is posted. If you’ve done all of this and you still have not received your refund yet, please contact us at lorenzogiustarini@example.com</p>
+            <p><br><strong>Exchanges (if applicable)</strong><br>We only replace items if they are defective or damaged. If you need to exchange it for the same item, send us an email at lorenzogiustarini@example.com and send your item to: Herbalife, Rua de Mertola, 9, 7780-172 Castro Verde (Beja), Portogallo.</p>
+            <p><br><strong>Shipping</strong><br>To return your product, you should mail your product to: Herbalife, Rua de Mertola, 9, 7780-172 Castro Verde (Beja), Portogallo. You will be responsible for paying for your own shipping costs for returning your item. Shipping costs are non-refundable. If you receive a refund, the cost of return shipping will be deducted from your refund. Depending on where you live, the time it may take for your exchanged product to reach you, may vary. If you are shipping an item over £75, you should consider using a trackable shipping service or purchasing shipping insurance. We don’t guarantee that we will receive your returned item.</p>
         </div>`
     },
     privacy: {
@@ -133,7 +133,7 @@ const POLICY_TEXTS = {
         <div className="rte">
             <h1>Terms of Service</h1>
             <h2>ARTICLE 1 - VALIDITY</h2>
-            <p>These terms and conditions apply to the sale of all products offered on this website. The publisher is "Giangiacomo Cristanelli", Tel: +41763665607.</p>
+            <p>These terms and conditions apply to the sale of all products offered on this website. The publisher is "Lorenzo Giustarini", Tel: +35 1920 193 049.</p>
             <h2>ARTICLE 2 - PRODUCTS</h2>
             <p>The products offered on this website are clinically tested to prove their effectiveness and safety. Photos do not bind the seller.</p>
             <h2>ARTICLE 3 - PRICE INFORMATION</h2>
@@ -160,7 +160,7 @@ const POLICY_TEXTS = {
       title: "Politique de Remboursement",
       body: `
         <div className="rte">
-            <p><strong>Garantie de remboursement de 30 jours</strong><br>Herbalife garantit la qualité et la fraîcheur de ses produits de nutrition et de soins personnels. Si, pour une raison quelconque, vous n'êtes pas entièrement satisfait d'un produit Herbalife® acheté directement auprès d'Herbalife ou d'un distributeur indépendant Herbalife, vous pouvez le retourner dans les 30 jours suivant sa réception pour un remboursement complet ou un échange de produit. Vous pouvez obtenir un remboursement en nous envoyant un e-mail à giangiacomo@example.com</p>
+            <p><strong>Garantie de remboursement de 30 jours</strong><br>Herbalife garantit la qualité et la fraîcheur de ses produits de nutrition et de soins personnels. Si, pour une raison quelconque, vous n'êtes pas entièrement satisfait d'un produit Herbalife® acheté directement auprès d'Herbalife ou d'un distributeur indépendant Herbalife, vous pouvez le retourner dans les 30 jours suivant sa réception pour un remboursement complet ou un échange de produit. Vous pouvez obtenir un remboursement en nous envoyant un e-mail à lorenzogiustarini@example.com</p>
             <p><br><strong>La Politique</strong><br>Notre politique dure 30 jours. Si 30 jours se sont écoulés depuis votre achat, nous ne pouvons malheureusement pas vous proposer de remboursement ou d'échange. Pour effectuer votre retour, nous exigeons un reçu ou une preuve d'achat. Veuillez ne pas renvoyer votre achat au fabricant.</p>
             <p><br><strong>Remboursements (le cas échéant)</strong><br>Une fois votre retour reçu et inspecté, nous vous enverrons un e-mail pour vous informer que nous avons reçu votre article retourné. Nous vous informerons également de l'approbation ou du rejet de votre remboursement. Si vous êtes approuvé, votre remboursement sera traité et un crédit sera automatiquement appliqué à votre carte de crédit ou à votre mode de paiement d'origine, dans un certain nombre de jours.</p>
         </div>`
@@ -184,7 +184,7 @@ const POLICY_TEXTS = {
         <div className="rte">
             <h1>Termes et Conditions</h1>
             <h2>ARTICLE 1 - VALIDITÉ</h2>
-            <p>Ces conditions s'appliquent à la vente de tous les produits proposés sur ce site web. L'éditeur est "Giangiacomo Cristanelli", Tél : +41763665607.</p>
+            <p>Ces conditions s'appliquent à la vente de tous les produits proposés sur ce site web. L'éditeur est "Lorenzo Giustarini", Tél : +35 1920 193 049.</p>
             <h2>ARTICLE 2 - PRODUITS</h2>
             <p>Les produits proposés sur ce site sont testés cliniquement. Les photos ne lient pas le vendeur.</p>
             <h2>ARTICLE 3 - INFORMATIONS SUR LES PRIX</h2>
@@ -199,7 +199,7 @@ const POLICY_TEXTS = {
       title: "Política de Reembolso",
       body: `
         <div className="rte">
-            <p><strong>Garantía de devolución de dinero de 30 días</strong><br>Herbalife garantiza la calidad y frescura de sus productos de nutrición y cuidado personal. Si por alguna razón no está completamente satisfecho con cualquier producto Herbalife® comprado directamente a Herbalife o a un Distribuidor Independiente de Herbalife, puede devolverlo dentro de los 30 días posteriores a su recepción para obtener un reembolso completo o un cambio de producto. Los reembolsos se pueden obtener enviándonos un correo electrónico a giangiacomo@example.com</p>
+            <p><strong>Garantía de devolución de dinero de 30 días</strong><br>Herbalife garantiza la calidad y frescura de sus productos de nutrición y cuidado personal. Si por alguna razón no está completamente satisfecho con cualquier producto Herbalife® comprado directamente a Herbalife o a un Distribuidor Independiente de Herbalife, puede devolverlo dentro de los 30 días posteriores a su recepción para obtener un reembolso completo o un cambio de producto. Los reembolsos se pueden obtener enviándonos un correo electrónico a lorenzogiustarini@example.com</p>
             <p><br><strong>La Política</strong><br>Nuestra política dura 30 días. Si han pasado 30 días desde su compra, lamentablemente no podemos ofrecerle un reembolso o cambio. Para completar su devolución, requerimos un recibo o comprobante de compra. No devuelva su compra al fabricante.</p>
             <p><br><strong>Reembolsos (si corresponde)</strong><br>Una vez que se reciba e inspeccione su devolución, le enviaremos un correo electrónico para notificarle que hemos recibido su artículo devuelto. También le notificaremos la aprobación o el rechazo de su reembolso. Si se aprueba, se procesará su reembolso y se aplicará automáticamente un crédito a su tarjeta de crédito o método de pago original.</p>
         </div>`
@@ -223,7 +223,7 @@ const POLICY_TEXTS = {
         <div className="rte">
             <h1>Términos y Condiciones</h1>
             <h2>ARTÍCULO 1 - VALIDEZ</h2>
-            <p>Estos términos y condiciones se aplican a la venta de todos los productos ofrecidos en este sitio web. El editor es "Giangiacomo Cristanelli", Tel: +41763665607.</p>
+            <p>Estos términos y condiciones se aplican a la venta de todos los productos ofrecidos en este sitio web. El editor es "Lorenzo Giustarini", Tel: +35 1920 193 049.</p>
             <h2>ARTÍCULO 2 - PRODUCTOS</h2>
             <p>Los productos ofrecidos en este sitio han sido probados clínicamente. Las fotos no vinculan al vendedor.</p>
             <h2>ARTÍCULO 3 - PRECIOS</h2>
