@@ -519,11 +519,35 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsel
           </React.Fragment>
         );
       })}
+      {/* Rating Widget now only on Home and Success */}
+      <RatingWidget />
     </>
   );
 };
 
+
+const Success = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  return (
+    <div style={{ padding: '12rem 2rem 8rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
+      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', damping: 12 }} style={{ width: '100px', height: '100px', background: 'var(--primary)', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem' }}>
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </motion.div>
+      <h1 style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '1rem' }}>{t('order_success_title') || 'Grazie per l\'acquisto!'}</h1>
+      <p style={{ fontSize: '1.2rem', color: '#666', marginBottom: '3rem' }}>{t('order_success_p') || 'Il tuo ordine è in fase di elaborazione. Riceverai presto un\'email di conferma.'}</p>
+      <button onClick={() => navigate('/')} style={{ padding: '1.2rem 2.5rem', background: '#000', color: '#fff', border: 'none', borderRadius: '50px', fontWeight: 800, cursor: 'pointer' }}>
+        {t('back_home') || 'Torna alla Home'}
+      </button>
+      <div style={{ marginTop: '6rem' }}>
+        <RatingWidget />
+      </div>
+    </div>
+  );
+};
+
 const RatingWidget = () => {
+
   const { t } = useTranslation();
   const [hovered, setHovered] = useState(-1);
   const [sent, setSent] = useState(false);
@@ -1907,7 +1931,9 @@ const App = () => {
         <Route path="/product/:id" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />} />
         <Route path="/products/:id" element={<ProductPage products={products} loading={loading} t={t} quantity={quantity} setQuantity={setQuantity} addToCart={addToCart} cartItems={cartItems} triggerUpsell={triggerUpsell} />} />
         <Route path="/checkout" element={<Checkout cartItems={cartItems} totalItems={totalCartItems} totalPrice={totalCartPrice} navigate={navigate} t={t} createCheckout={createCheckout} triggerUpsell={triggerUpsell} />} />
+        <Route path="/success" element={<Success />} />
         <Route path="/policies/refund-policy" element={<RefundPolicy />} />
+
         <Route path="/policies/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/policies/terms-of-service" element={<TermsOfService />} />
         <Route path="/pages/do-not-sell-or-share-my-personal-information" element={<DoNotSell />} />
@@ -1915,7 +1941,8 @@ const App = () => {
         <Route path="/policies/contact-information" element={<Contact />} />
       </Routes>
 
-      <RatingWidget />
+
+
       <footer className="footer-lux" style={{ borderTop: '1px solid #1a1a1a', background: 'var(--text-main)', color: 'white', position: 'relative', zIndex: 10 }}>
         <motion.div 
           className="container" 
@@ -1982,7 +2009,8 @@ const App = () => {
             <PaymentIcons />
             <p style={{ color: '#666', fontSize: '0.8rem', textAlign: 'center', lineHeight: 1.8 }}>
               © 2026, Lorenzo Giustarini · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
-              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V6</span>
+              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V7</span>
+
 
 
 
