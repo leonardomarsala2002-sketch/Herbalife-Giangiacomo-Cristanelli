@@ -421,22 +421,20 @@ html, body, #root, .app {
   overflow-x: hidden !important;
   width: 100%;
   position: relative;
-  max-width: 100vw;
 }
 
-.footer-grid-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 4rem; margin-bottom: 5rem; }
-.footer-logo-link { display: flex; align-items: center; gap: 20px; text-decoration: none; margin-bottom: 2.5rem; }
+.footer-logo-link-lux { display: flex; align-items: center; gap: 20px; text-decoration: none; margin-bottom: 2.5rem; }
 .footer-logo-sep { width: 1px; height: 100px; background: rgba(255,255,255,0.15); }
-.footer-email-form { display: flex; background: rgba(255,255,255,0.08); padding: 0.4rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; margin-top: 0.5rem; }
-.footer-email-input-wrap { flex: 1; display: flex; align-items: center; padding: 0 1rem; gap: 10px; }
+.footer-email-form-lux { display: flex; background: rgba(255,255,255,0.08); padding: 0.4rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; margin-top: 0.5rem; }
+.footer-email-input-wrap-lux { flex: 1; display: flex; align-items: center; padding: 0 1rem; gap: 10px; }
 
 @media (max-width: 1024px) {
-  .footer-grid-row { gap: 2.5rem; }
-  .footer-logo-link { flex-direction: column; align-items: flex-start; gap: 15px; }
-  .footer-logo-sep { display: none; }
-  .footer-email-form { flex-direction: column; border-radius: 20px; padding: 10px; }
-  .footer-email-input-wrap { padding: 10px 0; width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px; }
-  .footer-email-btn { width: 100%; justify-content: center; }
+  .upsell-grid-lux { grid-template-columns: 1fr !important; }
+  .footer-logo-link-lux { flex-direction: column !important; align-items: flex-start !important; gap: 15px !important; }
+  .footer-logo-sep { display: none !important; }
+  .footer-email-form-lux { flex-direction: column !important; border-radius: 20px !important; padding: 10px !important; }
+  .footer-email-input-wrap-lux { padding: 10px 0 !important; width: 100% !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important; margin-bottom: 10px !important; }
+  .footer-email-btn { width: 100% !important; justify-content: center !important; }
   
   .navbar {
     top: 75px;
@@ -444,13 +442,14 @@ html, body, #root, .app {
     padding: 0.6rem 0.8rem !important;
     border-radius: 20px !important;
   }
-  .scrolling-banners-container, .community-section-lux {
+  .scrolling-banners-container {
     width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    left: 0 !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding: 0 1rem !important;
+  }
+  .community-section-lux {
+    width: 100% !important;
+    margin: 4rem 0 !important;
+    padding: 3rem 1rem !important;
   }
   .upsell-card-lux {
     padding: 1rem !important;
@@ -468,7 +467,7 @@ html, body, #root, .app {
     box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
   }
   .announcement-row {
-    font-size: 0.5rem !important; /* Force super small */
+    font-size: 0.5rem !important;
     padding: 4px !important;
     height: 30px !important;
     width: 100% !important;
@@ -511,7 +510,11 @@ html, body, #root, .app {
     top: 110px !important;
     max-height: 70vh !important;
   }
+  .scroll-sidebar-lux {
+    display: none !important;
+  }
 }
+
 
 
 @media (max-width: 480px) {

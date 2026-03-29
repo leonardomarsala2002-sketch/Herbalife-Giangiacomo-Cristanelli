@@ -188,7 +188,9 @@ const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, 
           <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '1rem', fontWeight: 600 }}>{t('upsell_p')}</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', padding: '10px 10px 150px', flex: 1 }}>
+        <div className="upsell-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', padding: '10px 10px 140px', flex: 1 }}>
+ military
+
 
           {suggested.map(p => (
             <motion.div 
@@ -1918,14 +1920,16 @@ const App = () => {
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
           
-            <div className="footer-grid-row">
-            <div className="footer-id-column">
-              <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="footer-logo-link">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem', marginBottom: '5rem' }}>
+            <div>
+              <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="footer-logo-link-lux">
+
+
 
                 <img src="/herbalife-logo.png" alt="Herbalife Logo" style={{ height: '36px', filter: 'brightness(0) invert(1)', cursor: 'pointer' }} />
-                <div className="footer-logo-sep" />
-
+                <div style={{ width: '1px', height: '100px', background: 'rgba(255,255,255,0.15)' }} className="footer-logo-sep" />
                 <div style={{ textAlign: 'left', lineHeight: 1.6, fontSize: '0.85rem', color: '#888' }}>
+
                   <div style={{ fontWeight: 800, color: '#fff', fontSize: '1.2rem', marginBottom: '4px' }}>Lorenzo Giustarini</div>
                   <div style={{ fontStyle: 'normal' }}>Rua de Mertola, 9, 7780-172</div>
                   <div style={{ fontStyle: 'normal' }}>Castro Verde (Beja), Portugal</div>
@@ -1939,11 +1943,13 @@ const App = () => {
                   {t('whatsapp_contact')}
                 </a>
 
-                <div className="footer-email-form">
-                  <div className="footer-email-input-wrap">
+                <div className="footer-email-form-lux">
+                  <div className="footer-email-input-wrap-lux">
                     <Mail size={18} color="#999" />
                     <input type="email" placeholder={t('hero_email_placeholder')} style={{ border: 'none', outline: 'none', background: 'transparent', width: '100%', fontSize: '0.95rem', color: '#fff' }} className="footer-email-input" />
                   </div>
+
+
 
                   <button style={{ background: 'var(--primary)', color: '#fff', padding: '0.8rem 1.4rem', borderRadius: '50px', border: 'none', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} className="footer-email-btn">
                     <span>{t('hero_join')}</span>
@@ -1969,7 +1975,8 @@ const App = () => {
             <PaymentIcons />
             <p style={{ color: '#666', fontSize: '0.8rem', textAlign: 'center', lineHeight: 1.8 }}>
               © 2026, Lorenzo Giustarini · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
-              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V2</span>
+              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V3</span>
+
             </p>
 
           </div>
