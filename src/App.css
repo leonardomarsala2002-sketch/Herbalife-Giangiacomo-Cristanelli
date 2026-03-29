@@ -452,8 +452,9 @@ html, body, #root, .app {
 @media (max-width: 1024px) {
   .product-page-container, .checkout-container-lux { padding: 7rem 5% 4rem; }
   .back-btn-lux { margin-bottom: 2rem; }
+  .footer-info-content-lux { text-align: center !important; width: 100% !important; margin-top: 10px !important; }
   .upsell-grid-lux { grid-template-columns: 1fr !important; }
-  .footer-logo-link-lux { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 15px !important; }
+  .footer-logo-link-lux { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 15px !important; margin-bottom: 2rem !important; }
   .footer-logo-sep { display: none !important; }
   .footer-email-form-lux { flex-direction: column !important; border-radius: 20px !important; padding: 10px !important; }
   .footer-email-input-wrap-lux { padding: 10px 0 !important; width: 100% !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important; margin-bottom: 10px !important; }
