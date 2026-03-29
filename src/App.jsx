@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Routes, Route, useNavigate, useParams, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring, useTransform, useMotionValue, animate } from 'framer-motion';
-import { ShoppingCart, Search, ArrowUpRight, ChevronDown, Mail, X, ArrowLeft, Phone, LayoutGrid, Menu } from 'lucide-react';
+import { ShoppingCart, Search, ArrowUpRight, ChevronDown, Mail, X, ArrowLeft, ArrowRight, Phone, LayoutGrid, Menu } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ProductCard from './components/ProductCard';
 import { RefundPolicy, PrivacyPolicy, TermsOfService, DoNotSell, Contact } from './components/Policies';
