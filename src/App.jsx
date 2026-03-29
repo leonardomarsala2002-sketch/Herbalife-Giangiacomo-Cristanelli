@@ -684,7 +684,8 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
         {t('back') || 'Indietro'}
       </button>
 
-      <div className="product-page-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '6rem', alignItems: 'start' }}>
+      <div className="product-page-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(250px, 100%, 400px), 1fr))', gap: 'clamp(2rem, 5vw, 6rem)', alignItems: 'start' }}>
+
         <div>
           <div className="product-img-box-lux" style={{ background: '#fff', padding: '2rem', borderRadius: '40px', boxShadow: '0 20px 60px rgba(0,0,0,0.03)', display: 'flex', justifyContent: 'center', minHeight: '380px', marginBottom: '2.5rem' }}>
             <img src={currentImage} alt={product.name} style={{ width: '100%', maxWidth: '380px', objectFit: 'contain' }} />
@@ -695,7 +696,8 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
               <span style={{ fontWeight: 800, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '1.8rem', color: '#000' }}>
                 Opzioni / Gusti <span style={{ color: 'var(--primary)' }}>*</span>
               </span>
-              <div className="flavor-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '14px' }}>
+              <div className="flavor-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '10px' }}>
+
                 {product.variants.map(v => {
                   const isActive = activeVariant && activeVariant.id === v.id;
                   return (
@@ -880,7 +882,8 @@ const Checkout = ({ cartItems, totalItems, totalPrice, navigate, t, createChecko
       </button>
 
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '5rem', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(250px, 100%, 350px), 1fr))', gap: '2rem', alignItems: 'start' }}>
+
 
         <div>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '2.5rem', letterSpacing: '-0.02em' }}>{t('checkout_title')}</h2>
@@ -1962,7 +1965,9 @@ const App = () => {
             <PaymentIcons />
             <p style={{ color: '#666', fontSize: '0.8rem', textAlign: 'center', lineHeight: 1.8 }}>
               © 2026, Lorenzo Giustarini · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
+              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V2</span>
             </p>
+
           </div>
         </motion.div>
       </footer>
