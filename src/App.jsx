@@ -190,7 +190,8 @@ const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, 
           <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '1rem', fontWeight: 600 }}>{t('upsell_p')}</p>
         </div>
 
-        <div className="upsell-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', padding: '20px 20px 100px', flex: 1, overflowY: 'auto' }}>
+        <div className="upsell-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '15px', padding: '20px 15px 120px', flex: 1, overflowY: 'auto' }}>
+
 
           {suggested.map(p => (
             <motion.div 
@@ -457,13 +458,15 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsel
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3rem' }}>
                       {/* Email Signup */}
-                      <div style={{ width: '100%', maxWidth: '500px', display: 'flex', gap: '15px', background: '#fff', padding: '10px', borderRadius: '100px', boxShadow: '0 20px 50px rgba(0,0,0,0.05)', border: '1px solid #eee' }}>
+                      <div className="email-form-lux" style={{ width: '100%', maxWidth: '500px', display: 'flex', gap: '15px', background: '#fff', padding: '10px', borderRadius: '100px', boxShadow: '0 20px 50px rgba(0,0,0,0.05)', border: '1px solid #eee' }}>
+
                         <input 
                           type="email" 
                           placeholder="La tua email..." 
                           style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', padding: '0 25px', fontSize: '1rem', fontWeight: 600, fontFamily: 'Outfit, sans-serif' }}
                         />
-                        <button style={{ background: 'var(--primary)', color: '#fff', border: 'none', padding: '15px 40px', borderRadius: '50px', fontWeight: 900, cursor: 'pointer', transition: 'transform 0.3s' }}>
+                        <button className="email-join-btn-lux" style={{ background: 'var(--primary)', color: '#fff', border: 'none', padding: '15px 40px', borderRadius: '50px', fontWeight: 900, cursor: 'pointer', transition: 'transform 0.3s' }}>
+
                           UNISCITI
                         </button>
                       </div>

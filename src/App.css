@@ -469,6 +469,9 @@ html, body, #root, .app {
   .footer-email-form-lux { flex-direction: column !important; border-radius: 20px !important; padding: 10px !important; }
   .footer-email-input-wrap-lux { padding: 10px 0 !important; width: 100% !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important; margin-bottom: 10px !important; }
   .footer-email-btn { width: 100% !important; justify-content: center !important; }
+
+  .email-form-lux { flex-direction: column !important; border-radius: 24px !important; padding: 20px !important; gap: 20px !important; }
+  .email-join-btn-lux { width: 100% !important; padding: 18px !important; }
   
   .navbar {
     top: 75px;
