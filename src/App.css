@@ -547,6 +547,9 @@ html, body, #root, .app {
     top: 110px !important;
     max-height: 70vh !important;
   }
+  .member-disclosure-inner-lux { padding: 30px 20px !important; }
+  .member-disclosure-grid-lux { grid-template-columns: 1fr !important; gap: 30px !important; }
+  .member-disclosure-sep-lux { display: none !important; }
   .scroll-sidebar-lux {
     display: none !important;
   }

@@ -88,6 +88,7 @@ const MemberDisclosure = ({ onClose }) => {
       <motion.div 
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
+        className="member-disclosure-lux"
         style={{
           background: 'white',
           width: '100%', maxWidth: '850px',
@@ -98,7 +99,8 @@ const MemberDisclosure = ({ onClose }) => {
           fontFamily: 'Outfit, sans-serif'
         }}
       >
-        <div style={{ border: '3px solid #78BE20', padding: '40px 30px', position: 'relative' }}>
+        <div className="member-disclosure-inner-lux" style={{ border: '3px solid #78BE20', padding: '40px 30px', position: 'relative' }}>
+
           <button 
             onClick={onClose}
             style={{
@@ -115,7 +117,8 @@ const MemberDisclosure = ({ onClose }) => {
             <p style={{ color: '#666', fontSize: '0.95rem', margin: '0 0 10px' }}>This website is operated by the following Herbalife Independent Member:</p>
             <h2 style={{ fontSize: '1.6rem', fontWeight: '800', color: '#000' }}>Lorenzo Giustarini</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '40px' }}>
+          <div className="member-disclosure-grid-lux" style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '40px' }}>
+
             <div style={{ textAlign: 'center' }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 800, marginBottom: '20px' }}>EXISTING CUSTOMER?</h3>
               <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: '#444' }}>
@@ -124,7 +127,8 @@ const MemberDisclosure = ({ onClose }) => {
                 your products from your existing Member. Alternatively, <span onClick={onClose} style={{ fontWeight: 800, textDecoration: 'underline', cursor: 'pointer' }}>click here</span> to continue.
               </p>
             </div>
-            <div style={{ height: '100%', background: '#eee' }} />
+            <div className="member-disclosure-sep-lux" style={{ height: '100%', background: '#eee' }} />
+
             <div style={{ textAlign: 'center' }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 800, marginBottom: '20px' }}>ALREADY A MEMBER?</h3>
               <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: '#444' }}>To purchase via your own account please visit MyHerbalife.com</p>
@@ -2004,7 +2008,8 @@ const App = () => {
             <PaymentIcons />
             <p style={{ color: '#666', fontSize: '0.8rem', textAlign: 'center', lineHeight: 1.8 }}>
               © 2026, Lorenzo Giustarini · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
-              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V12</span>
+              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V13</span>
+
 
 
 
