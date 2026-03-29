@@ -1237,8 +1237,7 @@ const App = () => {
   };
 
   const createCheckout = async () => {
-    const SHOP = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN;
-    const TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
+
     
     // Prepare lines for the modern Cart API
     const lines = cartItems
@@ -1269,12 +1268,12 @@ const App = () => {
     `;
 
     try {
-      const response = await fetch(`https://${SHOP}/api/2024-04/graphql.json?t=${Date.now()}`, {
+      const response = await fetch('/api/shopify', {
         method: 'POST',
         headers: {
-          'X-Shopify-Storefront-Access-Token': TOKEN,
           'Content-Type': 'application/json'
         },
+
         body: JSON.stringify({ 
           query: mutation,
           variables: { 
@@ -1327,8 +1326,7 @@ const App = () => {
     window.addEventListener('scroll', handleScroll);
 
     const fetchShopify = async () => {
-      const SHOP = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN;
-      const TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
+
       const currentLang = i18n.language.toUpperCase(); // IT, EN, etc.
       
       const query = `
@@ -1366,13 +1364,13 @@ const App = () => {
         }
       `;
       try {
-        const response = await fetch(`https://${SHOP}/api/2024-04/graphql.json?t=${Date.now()}`, {
+        const response = await fetch('/api/shopify', {
           method: 'POST',
           headers: {
-            'X-Shopify-Storefront-Access-Token': TOKEN,
             'Content-Type': 'application/json',
             'Accept-Language': i18n.language
           },
+
           body: JSON.stringify({ 
             query,
             variables: { language: currentLang }
@@ -2008,7 +2006,8 @@ const App = () => {
             <PaymentIcons />
             <p style={{ color: '#666', fontSize: '0.8rem', textAlign: 'center', lineHeight: 1.8 }}>
               © 2026, Lorenzo Giustarini · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
-              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V13</span>
+              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V14</span>
+
 
 
 
