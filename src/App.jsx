@@ -176,8 +176,9 @@ const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, 
     >
       <motion.div 
         initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
-        style={{ width: '96%', maxWidth: '1450px', maxHeight: '96vh', position: 'relative', background: '#fff', padding: '1.5rem', borderRadius: '40px', boxShadow: '0 30px 120px rgba(0,0,0,0.2)', display: 'flex', flexDirection: 'column' }}
+        style={{ width: '96%', maxWidth: '1450px', maxHeight: '96vh', position: 'relative', background: '#fff', padding: '0', borderRadius: '40px', boxShadow: '0 30px 120px rgba(0,0,0,0.2)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}
       >
+
         <button onClick={onClose} style={{ position: 'absolute', top: '25px', right: '25px', background: '#f5f5f5', border: 'none', width: '45px', height: '45px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100 }}><X size={24} /></button>
         
         <div style={{ textAlign: 'center', padding: '2rem 1rem 1rem', flexShrink: 0 }}>
@@ -188,10 +189,7 @@ const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, 
           <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '1rem', fontWeight: 600 }}>{t('upsell_p')}</p>
         </div>
 
-        <div className="upsell-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', padding: '10px 10px 140px', flex: 1 }}>
- military
-
-
+        <div className="upsell-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', padding: '20px', flex: 1, overflowY: 'auto' }}>
           {suggested.map(p => (
             <motion.div 
               key={p.id} 
@@ -681,8 +679,8 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
   );
 
   return (
-    <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '14rem 5% 4rem' }}>
-      <button onClick={() => navigate(-1)} style={{ display: 'flex', alignItems: 'center', gap: '8px', border: 'none', background: 'none', cursor: 'pointer', marginBottom: '2rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.6, fontSize: '0.8rem' }}>
+    <div className="container product-page-container" style={{ maxWidth: '1400px', margin: '0 auto' }}>
+      <button onClick={() => navigate(-1)} className="back-btn-lux">
         <ArrowLeft size={18} />
         {t('back') || 'Indietro'}
       </button>
@@ -878,8 +876,9 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
 
 const Checkout = ({ cartItems, totalItems, totalPrice, navigate, t, createCheckout, triggerUpsell }) => {
   return (
-    <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: 'clamp(8rem, 20vw, 16rem) 5% 8rem' }}>
-       <button onClick={() => navigate(-1)} style={{ display: 'flex', alignItems: 'center', gap: '8px', border: 'none', background: 'none', cursor: 'pointer', marginBottom: '4rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.6, fontSize: '0.8rem' }}>
+    <div className="container checkout-container-lux" style={{ maxWidth: '900px', margin: '0 auto' }}>
+       <button onClick={() => navigate(-1)} className="back-btn-lux">
+
         <ArrowLeft size={18} />
         {t('back')}
       </button>
@@ -1975,7 +1974,7 @@ const App = () => {
             <PaymentIcons />
             <p style={{ color: '#666', fontSize: '0.8rem', textAlign: 'center', lineHeight: 1.8 }}>
               © 2026, Lorenzo Giustarini · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
-              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V3</span>
+              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V4</span>
 
             </p>
 
