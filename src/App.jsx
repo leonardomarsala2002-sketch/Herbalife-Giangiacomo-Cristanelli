@@ -526,9 +526,10 @@ const RatingWidget = () => {
     <div 
       className="rating-section-lux" 
       style={{ 
-        margin: '6rem calc(50% - 50vw)', 
-        width: '100vw', 
+        margin: '6rem 0', 
+        width: '100%', 
         background: '#fcfdfa',
+
         padding: '5rem 5%',
         position: 'relative',
         overflow: 'hidden',
@@ -872,13 +873,15 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
 
 const Checkout = ({ cartItems, totalItems, totalPrice, navigate, t, createCheckout, triggerUpsell }) => {
   return (
-    <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: '16rem 5% 8rem' }}>
+    <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: 'clamp(8rem, 20vw, 16rem) 5% 8rem' }}>
        <button onClick={() => navigate(-1)} style={{ display: 'flex', alignItems: 'center', gap: '8px', border: 'none', background: 'none', cursor: 'pointer', marginBottom: '4rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.6, fontSize: '0.8rem' }}>
         <ArrowLeft size={18} />
         {t('back')}
       </button>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '4rem', alignItems: 'start' }}>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '5rem', alignItems: 'start' }}>
+
         <div>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '2.5rem', letterSpacing: '-0.02em' }}>{t('checkout_title')}</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
