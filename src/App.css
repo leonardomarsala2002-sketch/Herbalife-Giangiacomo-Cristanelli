@@ -539,7 +539,7 @@ html, body, #root, .app {
     padding-left: 15px !important;
     padding-right: 15px !important;
   }
-  .search-dropdown-lux {
+  .search-dropdown-lux, .cat-dropdown-lux {
     position: fixed !important;
     width: calc(100% - 20px) !important;
     left: 10px !important;

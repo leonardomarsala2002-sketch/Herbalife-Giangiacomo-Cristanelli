@@ -2004,7 +2004,8 @@ const App = () => {
             <PaymentIcons />
             <p style={{ color: '#666', fontSize: '0.8rem', textAlign: 'center', lineHeight: 1.8 }}>
               © 2026, Lorenzo Giustarini · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
-              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V11</span>
+              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V12</span>
+
 
 
 
