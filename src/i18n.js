@@ -109,8 +109,12 @@ const resources = {
       "rating_sub": "Qual è la tua esperienza con il nostro servizio?",
       "rating_thanks": "Grazie per il tuo feedback!",
       "rating_count": "(128 valutazioni)",
-      "rating_cta": "Clicca su una stella per inviare il tuo voto"
+      "rating_cta": "Clicca su una stella per inviare il tuo voto",
+      "product_overview": "Dettagli Prodotto",
+      "key_benefits": "Benefici Chiave",
+      "usage": "Modalità d'uso"
     }
+
   },
   en: {
     translation: {
@@ -213,8 +217,12 @@ const resources = {
       "rating_sub": "How is your experience with our service?",
       "rating_thanks": "Thanks for your feedback!",
       "rating_count": "(128 reviews)",
-      "rating_cta": "Click a star to submit your rating"
+      "rating_cta": "Click a star to submit your rating",
+      "product_overview": "Product Overview",
+      "key_benefits": "Key Benefits",
+      "usage": "Usage"
     }
+
   },
   fr: {
     translation: {
@@ -323,8 +331,12 @@ const resources = {
       "rating_sub": "Quelle est votre expérience avec notre service ?",
       "rating_thanks": "Merci pour votre feedback !",
       "rating_count": "(128 évaluations)",
-      "rating_cta": "Cliquez sur une étoile per inviare il tuo voto"
+      "rating_cta": "Cliquez sur une étoile per inviare il tuo voto",
+      "product_overview": "Détails du Produit",
+      "key_benefits": "Bénéfices Clés",
+      "usage": "Usage"
     }
+
   },
   es: {
     translation: {
@@ -433,8 +445,12 @@ const resources = {
       "rating_sub": "¿Cómo es tu experiencia con nuestro servicio?",
       "rating_thanks": "¡Gracias por tus comentarios!",
       "rating_count": "(128 valoraciones)",
-      "rating_cta": "Haz clic en una estrella para enviar tu voto"
+      "rating_cta": "Haz clic en una estrella para enviar tu voto",
+      "product_overview": "Detalles del Producto",
+      "key_benefits": "Beneficios Clave",
+      "usage": "Modo de empleo"
     }
+
   }
 };
 
