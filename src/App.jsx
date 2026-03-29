@@ -188,7 +188,8 @@ const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, 
           <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '1rem', fontWeight: 600 }}>{t('upsell_p')}</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px', padding: '20px 20px 180px', flex: 1 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', padding: '10px 10px 150px', flex: 1 }}>
+
           {suggested.map(p => (
             <motion.div 
               key={p.id} 
@@ -1917,11 +1918,13 @@ const App = () => {
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem', marginBottom: '5rem' }}>
-            <div>
-              <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ display: 'flex', alignItems: 'center', gap: '20px', textDecoration: 'none', marginBottom: '2.5rem' }}>
+            <div className="footer-grid-row">
+            <div className="footer-id-column">
+              <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="footer-logo-link">
+
                 <img src="/herbalife-logo.png" alt="Herbalife Logo" style={{ height: '36px', filter: 'brightness(0) invert(1)', cursor: 'pointer' }} />
-                <div style={{ width: '1px', height: '100px', background: 'rgba(255,255,255,0.15)' }} />
+                <div className="footer-logo-sep" />
+
                 <div style={{ textAlign: 'left', lineHeight: 1.6, fontSize: '0.85rem', color: '#888' }}>
                   <div style={{ fontWeight: 800, color: '#fff', fontSize: '1.2rem', marginBottom: '4px' }}>Lorenzo Giustarini</div>
                   <div style={{ fontStyle: 'normal' }}>Rua de Mertola, 9, 7780-172</div>
@@ -1936,11 +1939,12 @@ const App = () => {
                   {t('whatsapp_contact')}
                 </a>
 
-                <div style={{ display: 'flex', background: 'rgba(255,255,255,0.08)', padding: '0.4rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '50px', marginTop: '0.5rem' }}>
-                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 1rem', gap: '10px' }}>
+                <div className="footer-email-form">
+                  <div className="footer-email-input-wrap">
                     <Mail size={18} color="#999" />
                     <input type="email" placeholder={t('hero_email_placeholder')} style={{ border: 'none', outline: 'none', background: 'transparent', width: '100%', fontSize: '0.95rem', color: '#fff' }} className="footer-email-input" />
                   </div>
+
                   <button style={{ background: 'var(--primary)', color: '#fff', padding: '0.8rem 1.4rem', borderRadius: '50px', border: 'none', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} className="footer-email-btn">
                     <span>{t('hero_join')}</span>
                     <ArrowUpRight size={16} />
