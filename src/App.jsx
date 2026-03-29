@@ -190,7 +190,7 @@ const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, 
           <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '1rem', fontWeight: 600 }}>{t('upsell_p')}</p>
         </div>
 
-        <div className="upsell-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '15px', padding: '20px 15px 120px', flex: 1, overflowY: 'auto' }}>
+        <div className="upsell-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '15px', padding: '20px 15px 120px', flex: 1, overflowY: 'auto', justifyItems: 'center', maxWidth: '1300px', margin: '0 auto', width: '100%' }}>
 
 
           {suggested.map(p => (
@@ -2004,7 +2004,8 @@ const App = () => {
             <PaymentIcons />
             <p style={{ color: '#666', fontSize: '0.8rem', textAlign: 'center', lineHeight: 1.8 }}>
               © 2026, Lorenzo Giustarini · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
-              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V9</span>
+              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V11</span>
+
 
 
 
