@@ -781,7 +781,11 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
             <motion.button 
               onClick={(e) => {
                 e.stopPropagation();
-                if (isInCart) { navigate('/checkout'); } else { handleAddToCartDetail(); }
+                if (isInCart) {
+                  navigate('/checkout');
+                } else {
+                  handleAddToCartDetail();
+                }
               }}
               className={`cart-btn-main-lux ${isAdding || isInCart ? 'active' : ''}`}
               animate={{ 
@@ -790,18 +794,60 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
                   ? ['0 6px 25px rgba(120, 190, 32, 0.5)', '0 12px 35px rgba(120, 190, 32, 0.7)', '0 6px 25px rgba(120, 190, 32, 0.5)']
                   : ['0 4px 15px rgba(120, 190, 32, 0.1)', '0 8px 25px rgba(120, 190, 32, 0.3)', '0 4px 15px rgba(120, 190, 32, 0.1)']
               }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
               style={{ 
-                flex: 1, padding: '1.2rem', 
+                flex: 1, 
+                padding: '1.2rem', 
                 background: (isAdding || isInCart) ? 'var(--primary)' : '#fff', 
                 color: (isAdding || isInCart) ? '#fff' : 'var(--primary)', 
-                border: (isAdding || isInCart) ? 'none' : '2.5px solid var(--primary)', 
-                borderRadius: '50px', fontSize: '1.1rem', fontWeight: 900, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' 
-              }}
+                border: '2px solid var(--primary)', 
+                borderRadius: '50px', 
+                fontSize: '1.1rem', 
+                fontWeight: 800, 
+                cursor: 'pointer', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                gap: '15px', 
+                whiteSpace: 'nowrap',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'background 0.5s ease, color 0.5s ease'
+              }} 
             >
-              <ShoppingCart size={22} />
-              <span>{isAdding ? '...' : (isInCart ? t('procedi') : t('add_to_cart'))}</span>
-              <ArrowRight size={20} />
+              {/* LINEAR CART CROSSING */}
+              {isAdding && (
+                <motion.div
+                  initial={{ left: '-20%' }}
+                  animate={{ left: '120%' }}
+                  transition={{ duration: 0.8, ease: "linear" }}
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    zIndex: 2,
+                    pointerEvents: 'none',
+                    color: '#fff'
+                  }}
+                >
+                  <ShoppingCart size={28} fill="currentColor" />
+                </motion.div>
+              )}
+
+              <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '15px' }}>
+                {!isAdding && !isInCart && <ShoppingCart size={22} />}
+                <motion.span 
+                  animate={isAdding ? { opacity: [1, 0, 1] } : { opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  {fromUpsell ? t('add_and_continue') : (isInCart ? (t('buy_now') || 'Compra ora') : (t('add_to_cart') || 'Aggiungi al carrello'))}
+                </motion.span>
+                {(isAdding || isInCart) && !isAdding && <ArrowRight size={20} />}
+              </span>
             </motion.button>
           </div>
             
