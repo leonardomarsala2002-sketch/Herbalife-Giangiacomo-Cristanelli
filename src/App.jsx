@@ -348,11 +348,12 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsel
                   position: 'relative', 
                   minHeight: '350px', 
 
-                  width: '100vw', 
-                  left: '50%', 
-                  right: '50%', 
-                  marginLeft: '-50vw', 
-                  marginRight: '-50vw',
+                  width: '100%', 
+                  left: '0', 
+                  right: '0', 
+                  marginLeft: '0', 
+                  marginRight: '0',
+
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center' 
@@ -425,9 +426,10 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsel
               <div 
                 className="community-section-lux" 
                 style={{ 
-                  margin: '8rem calc(50% - 50vw)', 
-                  width: '100vw', 
+                  margin: '8rem 0', 
+                  width: '100%', 
                   background: '#f8fbf4',
+
                   padding: '6rem 5%',
                   position: 'relative',
                   overflow: 'hidden',
