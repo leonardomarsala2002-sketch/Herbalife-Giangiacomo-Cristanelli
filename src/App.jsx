@@ -183,13 +183,15 @@ const UpsellModal = ({ isOpen, onClose, product, products, addToCart, navigate, 
         
         <div style={{ textAlign: 'center', padding: '2rem 1rem 1rem', flexShrink: 0 }}>
           <span className="premium-tag-lux" style={{ color: 'var(--primary)', letterSpacing: '8px', fontWeight: 900, fontSize: '0.85rem', display: 'block', marginBottom: '1rem', textTransform: 'uppercase' }}>{t('upsell_exclusive')}</span>
-          <h2 style={{ fontSize: '3rem', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.1, color: '#000' }}>
+          <h2 className="upsell-title-lux" style={{ fontSize: '3rem', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.1, color: '#000' }}>
             {t('upsell_title')}
           </h2>
+
           <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '1rem', fontWeight: 600 }}>{t('upsell_p')}</p>
         </div>
 
-        <div className="upsell-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', padding: '20px', flex: 1, overflowY: 'auto' }}>
+        <div className="upsell-grid-lux" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', padding: '20px 20px 100px', flex: 1, overflowY: 'auto' }}>
+
           {suggested.map(p => (
             <motion.div 
               key={p.id} 
@@ -679,8 +681,9 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
   );
 
   return (
-    <div className="container product-page-container" style={{ maxWidth: '1400px', margin: '0 auto' }}>
-      <button onClick={() => navigate(-1)} className="back-btn-lux">
+    <div className="container product-page-container">
+        <button onClick={() => navigate(-1)} className="back-btn-lux">
+
         <ArrowLeft size={18} />
         {t('back') || 'Indietro'}
       </button>
@@ -876,8 +879,9 @@ const ProductPage = ({ products, loading, t, quantity, setQuantity, addToCart, c
 
 const Checkout = ({ cartItems, totalItems, totalPrice, navigate, t, createCheckout, triggerUpsell }) => {
   return (
-    <div className="container checkout-container-lux" style={{ maxWidth: '900px', margin: '0 auto' }}>
+    <div className="container checkout-container-lux">
        <button onClick={() => navigate(-1)} className="back-btn-lux">
+
 
         <ArrowLeft size={18} />
         {t('back')}
@@ -1975,7 +1979,8 @@ const App = () => {
             <PaymentIcons />
             <p style={{ color: '#666', fontSize: '0.8rem', textAlign: 'center', lineHeight: 1.8 }}>
               © 2026, Lorenzo Giustarini · <Link to="/policies/privacy-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_privacy')}</Link> · <Link to="/policies/contact-information" style={{color:'#666', textDecoration:'none'}}>{t('policy_contact')}</Link> · <Link to="/policies/refund-policy" style={{color:'#666', textDecoration:'none'}}>{t('policy_refund')}</Link> · <Link to="/policies/terms-of-service" style={{color:'#666', textDecoration:'none'}}>{t('policy_terms')}</Link>
-              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V5</span>
+              <br/><span style={{opacity: 0.2, fontSize: '0.6rem'}}>V6</span>
+
 
 
             </p>
