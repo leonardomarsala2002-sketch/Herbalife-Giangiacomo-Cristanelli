@@ -418,7 +418,9 @@ html, body, #root, .app {
   overflow-x: hidden !important;
   width: 100%;
   position: relative;
+  max-width: 100vw;
 }
+
 
 @media (max-width: 1024px) {
   .navbar {
@@ -428,15 +430,19 @@ html, body, #root, .app {
     border-radius: 20px !important;
   }
   .navbar.scrolled {
-    top: 10px !important;
+    top: 5px !important;
   }
-  .owner-name-lux {
-    font-size: 0.7rem !important;
-    letter-spacing: 1.5px !important;
-    max-width: 120px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .card-lux, .card-lux:hover {
+    border-color: transparent !important;
+    transform: none !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
   }
+  .announcement-row {
+    font-size: 0.55rem !important;
+    padding: 4px 5px !important;
+    height: 30px !important;
+  }
+
   .nav-actions-lux {
     gap: 0.5rem !important;
   }
@@ -465,10 +471,7 @@ html, body, #root, .app {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
   }
-  .owner-name-lux {
-    max-width: 100px;
-    font-size: 0.65rem !important;
-  }
+
   .search-dropdown-lux {
     position: fixed !important;
     width: calc(100% - 20px) !important;
@@ -490,9 +493,7 @@ html, body, #root, .app {
 }
 
 @media (max-width: 480px) {
-  .owner-name-lux {
-    display: none; /* Hide on very small screens to avoid clutter */
-  }
+
   .logo-lux {
     height: 28px !important;
   }
@@ -501,3 +502,66 @@ html, body, #root, .app {
 .upsell-card-lux { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; }
 .upsell-card-lux:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 30px 70px rgba(0,0,0,0.1) !important; }
 .no-scroll-lux { overflow: hidden !important; height: 100vh !important; }
+
+/* SCROLL SIDEBAR - LIQUID MINIMALIST EDITION */
+.scroll-sidebar-lux {
+  position: fixed;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 220px;
+  width: 40px; /* Wider for hover target */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.scroll-track-lux {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+}
+
+.scroll-pill-lux {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 24px;
+  background: var(--primary);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(120, 190, 32, 0.3);
+  transition: width 0.3s, height 0.3s, background 0.3s;
+}
+
+.scroll-label-lux {
+  position: absolute;
+  right: 15px; /* Positioned to the side */
+  top: 50%;
+  transform: translate(0, -50%) rotate(-90deg);
+  transform-origin: center right;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.15);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+
+@media (max-width: 1024px) {
+  .scroll-sidebar-lux {
+    display: none;
+  }
+}
+
+
+

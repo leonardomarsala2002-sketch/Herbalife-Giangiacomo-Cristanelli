@@ -347,6 +347,7 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsel
                   overflow: 'visible', 
                   position: 'relative', 
                   minHeight: '350px', 
+
                   width: '100vw', 
                   left: '50%', 
                   right: '50%', 
@@ -377,11 +378,11 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsel
                           <motion.span 
                             animate={{ scale: [1, 1.05, 1], opacity: [1, 0.8, 1] }}
                             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.05 }}
-                            style={{ fontSize: '4.3rem', fontWeight: 1000, textTransform: 'uppercase', letterSpacing: '-2px', fontFamily: "'Outfit', sans-serif" }}
+                            style={{ fontSize: 'clamp(1.8rem, 8vw, 4.3rem)', fontWeight: 1000, textTransform: 'uppercase', letterSpacing: '-2px', fontFamily: "'Outfit', sans-serif" }}
                           >
                             {t('SCONTI') || 'SCONTI'}
                           </motion.span>
-                          <img src="/herbalife-official-precise.png" alt="Herbalife" style={{ height: '5rem', width: 'auto', objectFit: 'contain' }} />
+                          <img src="/herbalife-official-precise.png" alt="Herbalife" style={{ height: 'clamp(2.5rem, 10vw, 5rem)', width: 'auto', objectFit: 'contain' }} />
                         </div>
                       ))}
                     </motion.div>
@@ -402,11 +403,11 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsel
                     >
                       {[...Array(40)].map((_, i) => (
                         <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '25px', padding: '0 35px' }}>
-                          <img src="/herbalife-official-precise.png" alt="Herbalife" style={{ height: '5rem', width: 'auto', objectFit: 'contain' }} />
+                          <img src="/herbalife-official-precise.png" alt="Herbalife" style={{ height: 'clamp(2.5rem, 10vw, 5rem)', width: 'auto', objectFit: 'contain' }} />
                           <motion.span 
                             animate={{ scale: [1, 1.05, 1], opacity: [1, 0.8, 1] }}
                             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.05 }}
-                            style={{ fontSize: '4.3rem', fontWeight: 1000, textTransform: 'uppercase', letterSpacing: '-2px', fontFamily: "'Outfit', sans-serif" }}
+                            style={{ fontSize: 'clamp(1.8rem, 8vw, 4.3rem)', fontWeight: 1000, textTransform: 'uppercase', letterSpacing: '-2px', fontFamily: "'Outfit', sans-serif" }}
                           >
                             {t('SCONTI') || 'SCONTI'}
                           </motion.span>
@@ -466,27 +467,29 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsel
                       <a 
                         href="https://wa.me/351920193049" 
                         target="_blank" 
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         style={{ 
                           display: 'flex', 
                           alignItems: 'center', 
-                          gap: '15px', 
+                          justifyContent: 'center', 
+                          gap: '10px', 
                           background: '#25D366', 
                           color: '#fff', 
-                          padding: '1.2rem 3.5rem', 
-                          borderRadius: '100px', 
-                          fontSize: '1.1rem', 
-                          fontWeight: 900, 
-                          textDecoration: 'none',
-                          boxShadow: '0 15px 40px rgba(37, 211, 102, 0.25)',
-                          transition: 'all 0.3s ease'
+                          textDecoration: 'none', 
+                          padding: '14px 28px', 
+                          borderRadius: '50px', 
+                          fontSize: '1rem', 
+                          fontWeight: 800, 
+                          transition: 'all 0.3s', 
+                          boxShadow: '0 10px 20px rgba(37, 211, 102, 0.2)' 
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                        onMouseEnter={(e)=>e.currentTarget.style.transform='translateY(-2px)'}
+                        onMouseLeave={(e)=>e.currentTarget.style.transform='translateY(0)'}
                       >
-                        <Phone size={24} fill="#fff" />
-                        CONTATTACI SU WHATSAPP
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.878-.788-1.47-1.761-1.643-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                        {t('whatsapp_contact')}
                       </a>
+
                     </div>
                   </motion.div>
                 </div>
@@ -504,7 +507,7 @@ const Home = ({ products, t, addToCart, cartItems, scrollYProgress, triggerUpsel
             )}
             
             {/* Show RatingWidget specifically after the 13th category OR at the very end if catalog is shorter */}
-            {(idx === 12 || (dynamicCategories.length < 13 && idx === dynamicCategories.length - 1)) && <RatingWidget />}
+            {/* Rating Widget removed from here to be placed globally before footer */}
           </React.Fragment>
         );
       })}
@@ -904,17 +907,24 @@ const Checkout = ({ cartItems, totalItems, totalPrice, navigate, t, createChecko
               <span style={{ color: '#666', fontWeight: 600 }}>{t('items')} ({totalItems})</span>
               <span style={{ fontWeight: 800 }}>£{totalPrice.toFixed(2)}</span>
             </div>
+            {totalPrice > 400 && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--primary)', fontWeight: 800 }}>
+                <span>{t('discount_applied')} (-10%)</span>
+                <span>-£{(totalPrice * 0.1).toFixed(2)}</span>
+              </div>
+            )}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ color: '#666', fontWeight: 600 }}>{t('checkout_shipping')}</span>
-              <span style={{ color: totalPrice < 65 ? 'var(--text-main)' : 'var(--primary)', fontWeight: 800 }}>
-                {totalPrice < 65 ? '£8.00' : t('free')}
+              <span style={{ color: (totalPrice > 400 ? totalPrice * 0.9 : totalPrice) < 65 ? 'var(--text-main)' : 'var(--primary)', fontWeight: 800 }}>
+                {(totalPrice > 400 ? totalPrice * 0.9 : totalPrice) < 65 ? '£8.00' : t('free')}
               </span>
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.8rem', fontWeight: 900, marginBottom: '2.5rem' }}>
             <span>{t('total')}</span>
-            <span>£{(totalPrice + (totalPrice < 65 ? 8 : 0)).toFixed(2)}</span>
+            <span>£{((totalPrice > 400 ? totalPrice * 0.9 : totalPrice) + ((totalPrice > 400 ? totalPrice * 0.9 : totalPrice) < 65 ? 8 : 0)).toFixed(2)}</span>
           </div>
+
 
           <div style={{ marginBottom: '2rem' }}>
             <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '1.5rem', color: '#666' }}>{t('secure_payments')}</span>
@@ -1030,6 +1040,34 @@ const CategoryStickyBar = ({ categories, scrolled, t, location, navigate, scroll
     </motion.div>
   );
 };
+
+const ScrollSidebar = ({ scrollYProgress }) => {
+  const yPos = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  
+  return (
+    <div className="scroll-sidebar-lux">
+      <div className="scroll-track-lux">
+        <div className="scroll-label-lux">
+          JOURNEY
+        </div>
+
+        <motion.div 
+          className="scroll-pill-lux" 
+          style={{ top: yPos }}
+          animate={{
+            height: [24, 40, 24],
+            backgroundColor: ['var(--primary)', '#a0ffea', 'var(--primary)']
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+    </div>
+  );
+};
+
+
+
+
 const App = () => {
   const { t, i18n } = useTranslation();
   const [products, setProducts] = useState([]);
@@ -1199,7 +1237,12 @@ const App = () => {
         },
         body: JSON.stringify({ 
           query: mutation,
-          variables: { input: { lines } }
+          variables: { 
+            input: { 
+              lines,
+              discountCodes: hasDiscount ? ["DISCOUNT10"] : []
+            } 
+          }
         })
       });
       const result = await response.json();
@@ -1224,6 +1267,11 @@ const App = () => {
 
   const totalCartItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const totalCartPrice = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const discountThreshold = 400;
+  const discountRate = 0.10;
+  const hasDiscount = totalCartPrice > discountThreshold;
+  const discountAmount = hasDiscount ? totalCartPrice * discountRate : 0;
+  const finalPriceAfterDiscount = totalCartPrice - discountAmount;
 
   const languages = [
     { code: 'it', name: 'Italiano', flag: 'https://flagcdn.com/w40/it.png' },
@@ -1546,6 +1594,8 @@ const App = () => {
         </div>
       </div>
 
+      <ScrollSidebar scrollYProgress={scrollYProgress} />
+
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} style={{
         background: scrolled ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.55)',
         backdropFilter: 'blur(35px) saturate(180%)',
@@ -1597,19 +1647,8 @@ const App = () => {
             <Menu size={32} />
           </motion.button>
 
-          <span className="owner-name-lux" style={{ 
-            marginLeft: '5px',
-            fontFamily: "'Outfit', sans-serif", 
-            fontSize: '0.82rem', 
-            fontWeight: 900, 
-            letterSpacing: '2.5px', 
-            textTransform: 'uppercase', 
-            color: '#000',
-            whiteSpace: 'nowrap',
-            transition: 'all 0.3s'
-          }}>
-            Lorenzo Giustarini
-          </span>
+          {/* Lorenzo Giustarini name removed from header */}
+
         </div>
 
         <div className="nav-actions-lux">
@@ -1815,9 +1854,17 @@ const App = () => {
               </div>
               {cartItems.length > 0 && (
                 <div style={{ padding: '30px', borderTop: '1px solid #f0f0f0', background: '#fafafa' }}>
+                  {hasDiscount && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', color: 'var(--primary)', fontSize: '0.92rem', fontWeight: 800 }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                        <span style={{ fontSize: '1.1rem' }}>🎁</span> {t('discount_applied')}
+                      </span>
+                      <span>-£{discountAmount.toFixed(2)}</span>
+                    </div>
+                  )}
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', fontSize: '1.4rem', fontWeight: 900 }}>
                     <span>{t('checkout_total')}</span>
-                    <span>£{totalCartPrice.toFixed(2)}</span>
+                    <span>£{finalPriceAfterDiscount.toFixed(2)}</span>
                   </div>
                   <button 
                     onClick={() => { setCartOpen(false); navigate('/checkout'); }}
@@ -1851,6 +1898,7 @@ const App = () => {
         <Route path="/policies/contact-information" element={<Contact />} />
       </Routes>
 
+      <RatingWidget />
       <footer className="footer-lux" style={{ borderTop: '1px solid #1a1a1a', background: 'var(--text-main)', color: 'white', position: 'relative', zIndex: 10 }}>
         <motion.div 
           className="container" 
@@ -1869,7 +1917,7 @@ const App = () => {
                 <div style={{ textAlign: 'left', lineHeight: 1.6, fontSize: '0.85rem', color: '#888' }}>
                   <div style={{ fontWeight: 800, color: '#fff', fontSize: '1.2rem', marginBottom: '4px' }}>Lorenzo Giustarini</div>
                   <div style={{ fontStyle: 'normal' }}>Rua de Mertola, 9, 7780-172</div>
-                  <div style={{ fontStyle: 'normal' }}>Castro Verde (Beja), Portogallo</div>
+                  <div style={{ fontStyle: 'normal' }}>Castro Verde (Beja), Portugal</div>
                   <div style={{ marginTop: '8px', fontWeight: 700, color: 'var(--primary)' }}>Tel: +35 1920 193 049</div>
                   <div style={{ fontWeight: 700, color: 'var(--primary)' }}>lorenzogiustarini@example.com</div>
                 </div>
