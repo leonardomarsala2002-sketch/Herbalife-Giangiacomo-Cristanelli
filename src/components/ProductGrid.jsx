@@ -9,8 +9,7 @@ const ProductGrid = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const SHOP = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN;
-      const TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
+      // We are now using the secure /api/shopify proxy, so we don't need tokens here.
 
       const query = `
         {
@@ -44,10 +43,9 @@ const ProductGrid = () => {
       `;
 
       try {
-        const response = await fetch(`https://${SHOP}/api/2024-04/graphql.json`, {
+        const response = await fetch('/api/shopify', {
           method: 'POST',
           headers: {
-            'X-Shopify-Storefront-Access-Token': TOKEN,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({ query })
